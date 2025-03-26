@@ -14,7 +14,7 @@ const MatchRow = ({ match, noPins }) => {
           onClick={() =>
             navigate(
               `/fullgame/${match.gmid}/?sid=${match.etid}&match_name=${
-                match.ename || match.name
+                match.ename
               }`
             )
           }

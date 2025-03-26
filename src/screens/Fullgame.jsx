@@ -92,7 +92,7 @@ const Fullgame = () => {
           win_amount: selectedBet?.odds * betAmount,
           loss_amount: betAmount,
           gtype: selectedBet?.mname,
-          match_name: match_name,
+          market_name: match_name,
         }
       );
       if (response.data.success) {
@@ -293,8 +293,8 @@ const Fullgame = () => {
                   <div className="relative">
                     {data.section.map((item, sectionIndex) => (
                       <React.Fragment key={sectionIndex}>
-                        <div className="flex relative text-[15px] text-sm border-t border-gray-200">
-                          <div className="w-1/2 p-2 font-medium">
+                        <div style={{borderTop: "0.1px solid black"}} className="flex relative text-[12px] text-sm">
+                          <div className="w-1/2 p-2 font-bold text-[12px]">
                             {item?.nat}
                           </div>
 
@@ -305,52 +305,116 @@ const Fullgame = () => {
                               {item.gstatus}
                             </div>
                           ) : (
-                            <div className=" w-1/2 flex h-full">
-                              <button
-                                onClick={() =>
-                                  handleBackClick(
-                                    dataIndex,
-                                    sectionIndex,
-                                    item,
-                                    item.odds[item.odds.length / 2 - 1]?.odds,
-                                    data.mname,
-                                    data.gmid,
-                                    data.mid
-                                  )
-                                }
-                                className="w-full bg-transparent"
-                              >
-                                <div className="bg-[#72bbef] text-center font-bold">
-                                  {item.odds[item.odds.length / 2 - 1]?.odds}
-
-                                  {/* {item.odds.length / 2} */}
+                            <>
+                              {data.mname.toString().toLowerCase() !==
+                                "bookmaker" &&
+                              data.mname.toString().toLowerCase() !==
+                                "match_odds" ? (
+                                <div className=" w-1/2 flex h-full">
+                                  <button
+                                    onClick={() =>
+                                      handleLayClick(
+                                        dataIndex,
+                                        sectionIndex,
+                                        item,
+                                        item.odds[item.odds.length / 2]?.odds,
+                                        data.mname,
+                                        data.gmid,
+                                        data.mid
+                                      )
+                                    }
+                                    className="w-full bg-transparent"
+                                  >
+                                    <div className="bg-[#faa9ba] text-center font-bold">
+                                      {item.odds[item.odds.length / 2]?.odds}
+                                    </div>
+                                    <div className="bg-[#faa9ba] text-center">
+                                      {item.odds[item.odds.length / 2]?.size}
+                                    </div>
+                                  </button>
+                                  <button
+                                    onClick={() =>
+                                      handleBackClick(
+                                        dataIndex,
+                                        sectionIndex,
+                                        item,
+                                        item.odds[item.odds.length / 2 - 1]
+                                          ?.odds,
+                                        data.mname,
+                                        data.gmid,
+                                        data.mid
+                                      )
+                                    }
+                                    className="w-full bg-transparent"
+                                  >
+                                    <div className="bg-[#72bbef] text-center font-bold">
+                                      {
+                                        item.odds[item.odds.length / 2 - 1]
+                                          ?.odds
+                                      }
+                                    </div>
+                                    <div className="bg-[#72bbef] text-center">
+                                      {
+                                        item.odds[item.odds.length / 2 - 1]
+                                          ?.size
+                                      }
+                                    </div>
+                                  </button>
                                 </div>
-                                <div className="bg-[#72bbef] text-center">
-                                  {item.odds[item.odds.length / 2 - 1]?.size}
+                              ) : (
+                                <div className=" w-1/2 flex h-full">
+                                  <button
+                                    onClick={() =>
+                                      handleBackClick(
+                                        dataIndex,
+                                        sectionIndex,
+                                        item,
+                                        item.odds[item.odds.length / 2 - 1]
+                                          ?.odds,
+                                        data.mname,
+                                        data.gmid,
+                                        data.mid
+                                      )
+                                    }
+                                    className="w-full bg-transparent"
+                                  >
+                                    <div className="bg-[#72bbef] text-center font-bold">
+                                      {
+                                        item.odds[item.odds.length / 2 - 1]
+                                          ?.odds
+                                      }
+                                    </div>
+                                    <div className="bg-[#72bbef] text-center">
+                                      {
+                                        item.odds[item.odds.length / 2 - 1]
+                                          ?.size
+                                      }
+                                    </div>
+                                  </button>
+                                  <button
+                                    onClick={() =>
+                                      handleLayClick(
+                                        dataIndex,
+                                        sectionIndex,
+                                        item,
+                                        item.odds[item.odds.length / 2]?.odds,
+                                        data.mname,
+                                        data.gmid,
+                                        data.mid
+                                      )
+                                    }
+                                    className="w-full bg-transparent"
+                                  >
+                                    <div className="bg-[#faa9ba] text-center font-bold">
+                                      {item.odds[item.odds.length / 2]?.odds}
+                                    </div>
+                                    <div className="bg-[#faa9ba] text-center">
+                                      {item.odds[item.odds.length / 2]?.size}
+                                    </div>
+                                  </button>
                                 </div>
-                              </button>
-                              <button
-                                onClick={() =>
-                                  handleLayClick(
-                                    dataIndex,
-                                    sectionIndex,
-                                    item,
-                                    item.odds[item.odds.length / 2]?.odds,
-                                    data.mname,
-                                    data.gmid,
-                                    data.mid
-                                  )
-                                }
-                                className="w-full bg-transparent"
-                              >
-                                <div className="bg-[#faa9ba] text-center font-bold">
-                                  {item.odds[item.odds.length / 2]?.odds}
-                                </div>
-                                <div className="bg-[#faa9ba] text-center">
-                                  {item.odds[item.odds.length / 2]?.size}
-                                </div>
-                              </button>
-                            </div>
+                              )}
+                            </>
                           )}
                           {/* <div className="w-1/4 relative border-l border-gray-300"></div>
 
@@ -481,14 +545,6 @@ const Fullgame = () => {
                               </div>
                             </div>
                           )}
-
-                        {data?.status === "SUSPENDED" && (
-                          <div className="absolute w-full h-full border border-red-500 flex items-center justify-center z-10 inset-0 bg-black/50">
-                            <span className="text-red-500 font-extrabold text-xl">
-                              SUSPENDED
-                            </span>
-                          </div>
-                        )}
                       </React.Fragment>
                     ))}
 
