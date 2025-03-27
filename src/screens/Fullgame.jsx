@@ -25,7 +25,7 @@ const Fullgame = () => {
   const [searchParams] = useSearchParams();
   const sid = searchParams.get("sid");
   const match_name = searchParams.get("match_name");
-
+  const [updatedBet, setupdatedBet] = useState("")
   const [selectedBet, setSelectedBet] = useState(null);
   const [betAmount, setBetAmount] = useState(0);
   const betAmounts = [5, 100, 200, 300, 500, 1000, 2000, 5000];
@@ -82,6 +82,13 @@ const Fullgame = () => {
 
     try {
       setBetLoading(true);
+      let updatedBet = selectedBet?.odds
+      
+      if(selectedBet?.mname === "Bookmaker"){
+        updatedBet = selectedBet?.odds / 100;
+        
+      }
+      
       const response = await axios.post(
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
         {
@@ -89,10 +96,10 @@ const Fullgame = () => {
           bet_type: selectedBet?.type,
           user_id: user?.user_id,
           bet_name: selectedBet?.team,
-          betvalue: selectedBet?.odds,
+          betvalue:  selectedBet?.odds,
           match_id: selectedBet?.gmid,
           market_type: selectedBet?.type,
-          win_amount: selectedBet?.odds * betAmount,
+          win_amount: updatedBet * betAmount,
           loss_amount: betAmount,
           gtype: selectedBet?.mname,
           market_name: match_name,
@@ -125,7 +132,7 @@ const Fullgame = () => {
       await fetchGameDetails();
       setLoader(false);
     } catch (error) {
-      console.log(error);
+      console.log("error in fullgame");
     }
   }, [apiData, loder]);
 
@@ -137,7 +144,6 @@ const Fullgame = () => {
     socket.emit("joinRoom", { gmid: id, sid });
 
     const handleMatchDetails = (data) => {
-      console.log("📥 Received data:", data);
       setApiData(data?.data);
     };
 
@@ -317,7 +323,7 @@ const Fullgame = () => {
 
                   <div className="relative">
                     {data.section.map((item, sectionIndex) => (
-                      <React.Fragment key={sectionIndex}>
+                      <React.Fragment key={item.sid}>
                         <div className="flex border-t border-gray-400 relative text-[12px] text-sm">
                           <div className="w-1/2 p-2 font-bold text-[12px]">
                             {item?.nat}

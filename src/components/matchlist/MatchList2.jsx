@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import MatchRow from "./MatchRow";
 import CountryTab from "../CountryTab";
+import { Link } from "react-router";
 
 const MatchList = ({
   matchList,
@@ -116,6 +117,11 @@ const MatchList = ({
             </tr>
           </thead>
         )}
+        {/* <Link to="/BallByBall" style={{color: "#2789ce"}} className="py-8 px-2 font-bold">
+          Ball By Ball <span className="text-red-500 text-sm font-semibold ml-2 color-change-animation">
+            In-Play
+          </span>
+        </Link> */}
         <tbody className="bg-gradient-to-b from-[#ffffff] to-[#ffffff] align-middle border border-inherit">
           {renderMatches(displayedMatches)}
         </tbody>

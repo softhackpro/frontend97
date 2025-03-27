@@ -19,7 +19,9 @@ const BetDetailsScreen = () => {
         { user_id: user?.user_id }
       );
       // console.log(response.data);
-      setData(response.data.data);
+      setData(response?.data?.data);
+      console.log(response?.data?.data, "data is coming");
+      
     } catch (error) {
       // console.log(error.message);
     }
@@ -54,7 +56,7 @@ const BetDetailsScreen = () => {
           data.map((d, index) => (
             <div key={d.id || index} className="border-b border-gray-400">
               <div className="w-full text-sm p-2 flex items-center justify-between text-blue-800 font-semibold">
-                <p>{d?.match_name}</p>
+                <p>{d?.market_name}</p>
                 <div className="p-1 border border-gray-200">
                   <FaChevronRight
                     onClick={() => toggleBetExpand(d.id || index)}

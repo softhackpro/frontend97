@@ -50,7 +50,7 @@ const HeaderBlue = () => {
       {/* Middle - PTI and Exposure */}
       <div className="text-sm text-center">
         <p>
-          Main PTI <span className="font-bold">{balanceData?.balance}</span>
+          Main PTI <span className="font-bold">{balanceData?.balance - balanceData?.bet_balance}</span>
         </p>
         <p>
           Exposure{" "}
