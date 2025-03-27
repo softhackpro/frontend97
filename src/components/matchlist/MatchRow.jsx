@@ -5,7 +5,7 @@ import OddsTable from "./OddsTable";
 
 const MatchRow = ({ match, noPins }) => {
   const navigate = useNavigate();
-
+  
   return (
     <tr key={`match-${match.gmid}`} className="border-b border-[#c8ced3]">
       

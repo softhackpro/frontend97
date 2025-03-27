@@ -14,7 +14,7 @@ import LoginModal from "../components/modals/LoginModal";
 import toast from "react-hot-toast";
 import { socket } from "../main";
 import { FaTv } from "react-icons/fa";
-
+import { IoIosArrowDown } from "react-icons/io";
 const Fullgame = () => {
   const [activeTab, setActiveTab] = useState("Winner");
   const [activeSection, setActiveSection] = useState("Winner");
@@ -36,9 +36,9 @@ const Fullgame = () => {
   const navigate = useNavigate();
   const location = useLocation(); // Store the current location
   const [betLoading, setBetLoading] = useState(false);
-
+  const [matchdetail, setMatchDetail] = useState()
   const [openTv, setOpenTv] = useState(false);
-
+  const [openScore, setScore] = useState(false);
   const [openModalSection, setOpenModalSection] = useState({
     dataIndex: null,
     sectionIndex: null,
@@ -53,6 +53,7 @@ const Fullgame = () => {
         sid: sid,
       });
       setApiData(response.data.data);
+      
     } catch (error) {
       console.error(error);
     } finally {
@@ -227,19 +228,27 @@ const Fullgame = () => {
   if (loder) {
     return <CircularHorizontalLoader />;
   }
-
+  const scoreClicked = async() =>{
+    const res = await axios.get(`https://titan97.live/get-matchdetails?gmid=${id}&sid=${sid}`)
+    console.log(res.data);
+    setMatchDetail(res.data.data[0])
+    setScore(!openScore)
+  }
   return (
     <div className="w-full sm:max-w-3xl mx-auto overflow-hidden rounded shadow relative">
       {/* Header */}
 
       <div className=" from-blue-500 to-green-500 text-lg  p-2  bg-blue-600 items-center flex justify-between w-full h-8 ">
         <p className=" font-bold text-white  ">Cricket</p>
-        <p>
+        <div className="flex flex-row">
           <FaTv
             onClick={() => setOpenTv(!openTv)}
             className=" cursor-pointer text-white"
-          />
-        </p>
+          /> &nbsp; &nbsp;
+          <IoIosArrowDown 
+            onClick={scoreClicked}
+            className=" cursor-pointer text-white"/>
+        </div>
       </div>
 
       <div
@@ -249,6 +258,18 @@ const Fullgame = () => {
       >
         <iframe
           src={`https://titan97.live/get-livesports?gmid=${id}&sid=${sid}`}
+          className="w-full h-screen"
+          allowFullScreen
+        />
+      </div>
+
+      <div
+        className={`transition-[max-height] duration-[1000ms] ease-in-out overflow-hidden ${
+          openScore ? "max-h-[1000px]" : "max-h-0"
+        }`}
+      >
+        <iframe
+          src={`https://titan97.live/get-score?gtv=${matchdetail?.gtv}&sid=${sid}`}
           className="w-full h-screen"
           allowFullScreen
         />
