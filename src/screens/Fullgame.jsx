@@ -13,6 +13,7 @@ import AgeVerificationModal from "../components/modals/AgeVerificationModal";
 import LoginModal from "../components/modals/LoginModal";
 import toast from "react-hot-toast";
 import { socket } from "../main";
+import { FaTv } from "react-icons/fa";
 
 const Fullgame = () => {
   const [activeTab, setActiveTab] = useState("Winner");
@@ -35,6 +36,8 @@ const Fullgame = () => {
   const navigate = useNavigate();
   const location = useLocation(); // Store the current location
   const [betLoading, setBetLoading] = useState(false);
+
+  const [openTv, setOpenTv] = useState(false);
 
   const [openModalSection, setOpenModalSection] = useState({
     dataIndex: null,
@@ -62,20 +65,20 @@ const Fullgame = () => {
       setShowAgeVerificationModal(true);
       return;
     }
-    // const d = {
-    //   selection_id: selectedBet?.mid,
-    //   bet_type: selectedBet?.type,
-    //   user_id: user?.user_id,
-    //   bet_name: selectedBet?.team,
-    //   betvalue: selectedBet?.odds,
-    //   match_id: selectedBet?.gmid,
-    //   market_type: selectedBet?.type,
-    //   win_amount: selectedBet?.odds * betAmount,
-    //   loss_amount: betAmount,
-    //   gtype: selectedBet?.mname,
-    //   match_name: match_name,
-    // };
-    // console.log(d);
+    const d = {
+      selection_id: selectedBet?.mid,
+      bet_type: selectedBet?.type,
+      user_id: user?.user_id,
+      bet_name: selectedBet?.team,
+      betvalue: selectedBet?.odds,
+      match_id: selectedBet?.gmid,
+      market_type: selectedBet?.type,
+      win_amount: selectedBet?.odds * betAmount,
+      loss_amount: betAmount,
+      gtype: selectedBet?.mname,
+      market_name: match_name,
+    };
+    console.log(d);
 
     try {
       setBetLoading(true);
@@ -222,11 +225,26 @@ const Fullgame = () => {
   return (
     <div className="w-full sm:max-w-3xl mx-auto overflow-hidden rounded shadow relative">
       {/* Header */}
-      <div className="relative">
+
+      <div className=" from-blue-500 to-green-500 text-lg  p-2  bg-blue-600 items-center flex justify-between w-full h-8 ">
+        <p className=" font-bold text-white  ">Cricket</p>
+        <p>
+          <FaTv
+            onClick={() => setOpenTv(!openTv)}
+            className=" cursor-pointer text-white"
+          />
+        </p>
+      </div>
+
+      <div
+        className={`transition-[max-height] duration-[1000ms] ease-in-out overflow-hidden ${
+          openTv ? "max-h-[1000px]" : "max-h-0"
+        }`}
+      >
         <iframe
           src={`https://titan97.live/get-livesports?gmid=${id}&sid=${sid}`}
           className="w-full h-screen"
-          allowFullScreen="true"
+          allowFullScreen
         />
       </div>
 
@@ -255,7 +273,14 @@ const Fullgame = () => {
               >
                 <div className="flex justify-between items-center bg-white text-white">
                   <div className="flex w-fit items-center p-2 rounded-tr-xl bg-gray-800">
-                    <span className="font-bold text-xs">{data.mname}</span>
+                    <span className="font-bold text-xs">
+                      {" "}
+                      {["meter", "oddeven", "khado", "fancy1", "fancy"].some(
+                        (type) => data.gtype.toString().toLowerCase() === type
+                      )
+                        ? data.gtype
+                        : data.mname}{" "}
+                    </span>
                     <svg
                       className="w-4 h-4 ml-1"
                       fill="none"
@@ -293,7 +318,7 @@ const Fullgame = () => {
                   <div className="relative">
                     {data.section.map((item, sectionIndex) => (
                       <React.Fragment key={sectionIndex}>
-                        <div style={{borderTop: "0.1px solid black"}} className="flex relative text-[12px] text-sm">
+                        <div className="flex border-t border-gray-400 relative text-[12px] text-sm">
                           <div className="w-1/2 p-2 font-bold text-[12px]">
                             {item?.nat}
                           </div>
@@ -306,10 +331,16 @@ const Fullgame = () => {
                             </div>
                           ) : (
                             <>
-                              {data.mname.toString().toLowerCase() !==
-                                "bookmaker" &&
-                              data.mname.toString().toLowerCase() !==
-                                "match_odds" ? (
+                              {[
+                                "meter",
+                                "oddeven",
+                                "khado",
+                                "fancy1",
+                                "fancy",
+                              ].some(
+                                (type) =>
+                                  data.gtype.toString().toLowerCase() === type
+                              ) ? (
                                 <div className=" w-1/2 flex h-full">
                                   <button
                                     onClick={() =>
@@ -576,6 +607,7 @@ const Fullgame = () => {
         isOpen={showLoginModal}
         onClose={() => setShowLoginModal(false)}
       />
+      <div className=" h-24"></div>
     </div>
   );
 };
