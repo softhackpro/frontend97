@@ -25,7 +25,7 @@ const Fullgame = () => {
   const [searchParams] = useSearchParams();
   const sid = searchParams.get("sid");
   const match_name = searchParams.get("match_name");
-  const [updatedBet, setupdatedBet] = useState("")
+  const [updatedBet, setupdatedBet] = useState("");
   const [selectedBet, setSelectedBet] = useState(null);
   const [betAmount, setBetAmount] = useState(0);
   const betAmounts = [5, 100, 200, 300, 500, 1000, 2000, 5000];
@@ -36,7 +36,7 @@ const Fullgame = () => {
   const navigate = useNavigate();
   const location = useLocation(); // Store the current location
   const [betLoading, setBetLoading] = useState(false);
-  const [matchdetail, setMatchDetail] = useState()
+  const [matchdetail, setMatchDetail] = useState();
   const [openTv, setOpenTv] = useState(false);
   const [openScore, setScore] = useState(false);
   const [openModalSection, setOpenModalSection] = useState({
@@ -53,7 +53,6 @@ const Fullgame = () => {
         sid: sid,
       });
       setApiData(response.data.data);
-      
     } catch (error) {
       console.error(error);
     } finally {
@@ -83,13 +82,12 @@ const Fullgame = () => {
 
     try {
       setBetLoading(true);
-      let updatedBet = selectedBet?.odds
-      
-      if(selectedBet?.mname === "Bookmaker"){
+      let updatedBet = selectedBet?.odds;
+
+      if (selectedBet?.mname === "Bookmaker") {
         updatedBet = selectedBet?.odds / 100;
-        
       }
-      
+
       const response = await axios.post(
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
         {
@@ -97,7 +95,7 @@ const Fullgame = () => {
           bet_type: selectedBet?.type,
           user_id: user?.user_id,
           bet_name: selectedBet?.team,
-          betvalue:  selectedBet?.odds,
+          betvalue: selectedBet?.odds,
           match_id: selectedBet?.gmid,
           market_type: selectedBet?.type,
           win_amount: updatedBet * betAmount,
@@ -228,12 +226,14 @@ const Fullgame = () => {
   if (loder) {
     return <CircularHorizontalLoader />;
   }
-  const scoreClicked = async() =>{
-    const res = await axios.get(`https://titan97.live/get-matchdetails?gmid=${id}&sid=${sid}`)
+  const scoreClicked = async () => {
+    const res = await axios.get(
+      `https://titan97.live/get-matchdetails?gmid=${id}&sid=${sid}`
+    );
     console.log(res.data);
-    setMatchDetail(res.data.data[0])
-    setScore(!openScore)
-  }
+    setMatchDetail(res.data.data[0]);
+    setScore(!openScore);
+  };
   return (
     <div className="w-full sm:max-w-3xl mx-auto overflow-hidden rounded shadow relative">
       {/* Header */}
@@ -244,10 +244,12 @@ const Fullgame = () => {
           <FaTv
             onClick={() => setOpenTv(!openTv)}
             className=" cursor-pointer text-white"
-          /> &nbsp; &nbsp;
-          <IoIosArrowDown 
+          />{" "}
+          &nbsp; &nbsp;
+          <IoIosArrowDown
             onClick={scoreClicked}
-            className=" cursor-pointer text-white"/>
+            className=" cursor-pointer text-white"
+          />
         </div>
       </div>
 
