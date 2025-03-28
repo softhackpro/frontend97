@@ -11,13 +11,13 @@ const MenuList = () => {
     // Sample menu items. You can replace this with your own menu items data.
     const menuItems = [
       { name: "My Profile", action: () => navigate('/myProfile') },
-      { name: "Multi Markets", action: () => console.log("Multi Markets clicked") },
-      { name: "Rolling Commission", action: () => console.log("Rolling Commission clicked") },
-      { name: "Account Statement", action: () => console.log("Account Statement clicked") },
-      { name: "Bets History", action: () => console.log("Bets History clicked") },
-      { name: "Profit & Loss", action: () => console.log("Profit & Loss clicked") },
-      { name: "Password History", action: () => console.log("Password History clicked") },
-      { name: "Activity Log", action: () => console.log("Activity Log clicked") },
+      { name: "Multi Markets", action: () => navigate('/Multi-Markets') },
+      { name: "Rolling Commission", action: () => navigate('/RollingCommision') },
+      { name: "Account Statement", action: () => navigate('/AccountStmt') },
+      { name: "Bets History", action: () => navigate('/BetHistory') },
+      { name: "Profit & Loss", action: () => navigate('/ProfitLoss') },
+      { name: "Password History", action: () => navigate('/PasswordChangeHistory') },
+      { name: "Activity Log", action: () => navigate('/ActivityLog') },
     ];
 
     

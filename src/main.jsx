@@ -31,6 +31,13 @@ import BatDetailsScreen from "./screens/BatDetailspage.jsx";
 import { io } from "socket.io-client";
 import AccountDetails from "./components/Roshan/Profile/AccountDetails.jsx";
 import TestUi from "./components/Roshan/TestUi.jsx";
+import MultiMarketsCard from "./components/Roshan/MultiMarkets.jsx";
+import PasswordChangeHistory from "./components/Roshan/PasswordChangeHistory.jsx";
+import ActivityLog from "./components/Roshan/ActivityLog.jsx";
+import ProfitLoss from "./components/Roshan/ProfitLoss.jsx";
+import BetHistory from "./components/Roshan/BetHistory.jsx";
+import AccountStmt from "./components/Roshan/AccountStmt.jsx";
+import RollingCommision from "./components/Roshan/RollingCommision.jsx";
 export const socket = io("https://titan97.live");
 
 createRoot(document.getElementById("root")).render(
@@ -56,6 +63,13 @@ createRoot(document.getElementById("root")).render(
                 <Route path="/casino" element={<CasinoBox />} />
                 <Route path='/myProfile' element={<AccountDetails />} />
                 <Route path='/BallByBall' element={<TestUi />} />
+                <Route path='/Multi-Markets' element={<MultiMarketsCard />} />
+                <Route path='/PasswordChangeHistory' element={<PasswordChangeHistory />} />
+                <Route path='/ActivityLog' element={<ActivityLog />} />
+                <Route path='/BetHistory' element={<BetHistory />} />
+                <Route path='/RollingCommision' element={<RollingCommision />} />
+                <Route path='/ProfitLoss' element={<ProfitLoss />} />
+                <Route path='/AccountStmt' element={<AccountStmt />} />
               </Route>
               
             </Route>
