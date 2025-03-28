@@ -52,6 +52,8 @@ const Fullgame = () => {
         gmid: id,
         sid: sid,
       });
+      console.log(response.data.data, "ye boo ka detail hai");
+      
       setApiData(response.data.data);
     } catch (error) {
       console.error(error);
@@ -89,6 +91,9 @@ const Fullgame = () => {
       if (selectedBet?.mname === "Bookmaker") {
         updatedBet = (selectedBet?.odds + 0) / 100;
         sendUpdateBet = (selectedBet?.odds + 100) / 100;
+      } else if(selectedBet?.mname === "Normal"){
+        sendUpdateBet = (selectedBet?.size + 100) / 100;
+        updatedBet = selectedBet?.size /100
       }
 
       const response = await axios.post(
@@ -165,7 +170,8 @@ const Fullgame = () => {
     odds,
     mname,
     gmid,
-    mid
+    mid,
+    size
   ) => {
     setSelectedBet({
       team: item.nat,
@@ -174,6 +180,7 @@ const Fullgame = () => {
       mname,
       gmid,
       mid,
+      size
     });
 
     setOpenModalSection({
@@ -189,7 +196,8 @@ const Fullgame = () => {
     odds,
     mname,
     gmid,
-    mid
+    mid,
+    size
   ) => {
     setSelectedBet({
       team: item.nat,
@@ -198,6 +206,7 @@ const Fullgame = () => {
       mname,
       gmid,
       mid,
+      size
     });
     setOpenModalSection({
       dataIndex: dataIndex,
@@ -406,7 +415,8 @@ const Fullgame = () => {
                                           ?.odds,
                                         data.mname,
                                         data.gmid,
-                                        data.mid
+                                        data.mid,
+                                        item.odds[item.odds.length / 2]?.size
                                       )
                                     }
                                     className="w-full bg-transparent"
@@ -437,7 +447,9 @@ const Fullgame = () => {
                                           ?.odds,
                                         data.mname,
                                         data.gmid,
-                                        data.mid
+                                        data.mid,
+                                        data.size,
+                                        item.odds[item.odds.length / 2]?.size
                                       )
                                     }
                                     className="w-full bg-transparent"

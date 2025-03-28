@@ -161,7 +161,7 @@ const TestUi = () => {
                 ))}
             </div>
             <div className="p-2 bg-[#c2d5e4] text-[#3b5160] font-bold text-center text-nowrap text-sm mb-2 overflow-hidden">
-                <p className="text_box">Results are based on stream only. Score board may be different or updated later</p>
+                <p className="text_box">{value.remark}</p>
             </div>
             <div className="bg-black flex items-center gap-1 overflow-scroll">
                 <p className="text-xl font-bold text-white py-2 px-1 text-nowrap">Recent Result</p>
