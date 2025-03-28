@@ -28,6 +28,8 @@ const BetDetailsScreen = () => {
         return acc;
       }, {});
       setData(marketMap);
+      console.log(response);
+      
     } catch (error) {
       console.error("Error fetching bet details:", error.message);
     }
@@ -106,13 +108,18 @@ const BetDetailsScreen = () => {
                   </div>
 
                   {bet.bet_type.toLowerCase() === "back" && (
-                    <div className="w-full grid grid-cols-4 text-xs text-black p-1 border-b bg-blue-300">
-                      <div className="font-semibold">{bet.bet_name}</div>
-                      <div className="text-center">{bet.bet_rate}</div>
-                      <div className="text-center">{bet.loss_amount}</div>
-                      <div className="text-center">{bet.win_amount}</div>
-                    </div>
-                  )}
+  <div className="w-full grid grid-cols-4 text-xs text-black p-1 border-b bg-blue-300">
+    <div className="font-semibold">{bet.bet_name}</div>
+    {bet?.gtype === "MATCH_ODDS" ? (
+      <div className="text-center">{`${bet.bet_rate}`}</div>
+    ) : (
+      <div className="text-center">{`${bet.betvalue}`}</div>
+    )}
+    <div className="text-center">{bet.loss_amount}</div>
+    <div className="text-center">{`${bet.win_amount} (-${bet.loss_amount})`}</div>
+  </div>
+)}
+
 
                   {/* Lay Bet */}
                   <div className="w-full grid grid-cols-4 text-xs text-gray-600 p-1 bg-gray-100">
@@ -125,9 +132,12 @@ const BetDetailsScreen = () => {
                   {bet.bet_type.toLowerCase() === "lay" && (
                     <div className="w-full grid grid-cols-4 text-xs p-1 border-b bg-red-300">
                       <div className="font-semibold">{bet.bet_name}</div>
-                      <div className="text-center">{bet.bet_rate}</div>
+                      {
+                        bet?.gtype === "Bookmaker" ? <div className="text-center">{`${bet.betvalue}`} </div> : <div className="text-center">{`${bet.bet_rate} ()`}</div>
+                      }
+                      
                       <div className="text-center">{bet.loss_amount}</div>
-                      <div className="text-center">{bet.win_amount}</div>
+                      <div className="text-center">{`${bet.win_amount} (-${bet.loss_amount})`}</div>
                     </div>
                   )}
 
