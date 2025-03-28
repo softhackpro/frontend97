@@ -18,61 +18,12 @@ const TestUi = () => {
     }
     useEffect(() => {
         const interval = setInterval(() => {
-            fetchValue(); // Call the function every 2 seconds
-        }, 200000);
-      
+            fetchValue(); // Call API every 2 seconds
+        }, 2000);  // <-- Change this from 200000 to 2000
+    
         return () => clearInterval(interval); // Cleanup on unmount
-      }, [])
-    const stats = [
-        {
-            value1: 2.18,
-            total1: 99900,
-            type1: "RUNS",
-            typeValue1: 0,
-            bg1: "bg-gradient-to-b from-[#c9bf34] via-[#f7eb4c] to-[#c9bf34]",
-            value2: 2.62,
-            total2: 96276,
-            type2: "RUNS",
-            typeValue2: 1,
-            bg2: "bg-gradient-to-b from-[#c9bf34] via-[#f7eb4c] to-[#c9bf34]",
-        },
-        {
-            value1: 7.92,
-            total1: 100000,
-            type1: "RUNS",
-            typeValue1: 2,
-            bg1: "bg-gradient-to-b from-[#c9bf34] via-[#f7eb4c] to-[#c9bf34]",
-            value2: 11,
-            total2: 96276,
-            type2: "RUNS",
-            typeValue2: 3,
-            bg2: "bg-gradient-to-b from-[#c9bf34] via-[#f7eb4c] to-[#c9bf34]",
-        },
-        {
-            value1: 6.52,
-            total1: 99900,
-            type1: "RUNS",
-            typeValue1: 4,
-            bg1: "bg-gradient-to-b from-[#2dcd68] via-[#98ffbe] to-[#168940]",
-            value2: 12.2,
-            total2: 99450,
-            type2: "RUNS",
-            typeValue2: 6,
-            bg2: "bg-gradient-to-b from-[#8b97ff] via-[#a8bdff] to-[#7173fc]",
-        },
-        {
-            value1: 6.87,
-            total1: 100000,
-            type1: "WICKET",
-            typeValue1: null,
-            bg1: "bg-gradient-to-b from-[#e7645a] via-[#f68f87] to-[#ff5043]",
-            value2: 8.67,
-            total2: 100000,
-            type2: "EXTRA RUNS",
-            typeValue2: null,
-            bg2: "bg-gradient-to-b from-[#c9bf34] via-[#f7eb4c] to-[#c9bf34]",
-        },
-    ];
+    }, []);
+    
     const placebet = () => {
         try {
             toast.success("Bet placed")
@@ -101,16 +52,17 @@ const TestUi = () => {
                 <p className="font-semibold text-sm">{value?.mid}</p>
             </div>
             <div>
-                <iframe
-                    width="100%"
-                    height="300"
-                    src="https://titan97.live/get-video/ballbyball"
-                    title="How To Survive in City ? | ft. Village Vlogger Lautu Paswan"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen
-                ></iframe>
+            <iframe
+    width="100%"
+    height="300"
+    src="https://titan97.live/get-video/ballbyball"
+    title="Ball by Ball Live"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+></iframe>
+
             </div>
             <div className="flex justify-between items-center text-white bg-[#243A48] p-1 ">
                 <p className="font-semibold text-lg">Runs</p>
@@ -125,43 +77,50 @@ const TestUi = () => {
                 </button>
             </div>
             <div className="bg-gradient-to-r from-green-300 via-teal-100 to-green-300 py-2 flex flex-row flex-wrap justify-center">
-                {value?.sub.map((stat, index) => (
-                   <div  style={{minWidth: "83px"}} key={index} className="flex flex-row items-center mb-2">
-                   <div className="p-2 border-r-2 border-[#c7c8ca] flex justify-between">
-                       {
-                         stat?.gstatus === "OPEN" ? (<div onClick={placebet} className={`w-[170px] h-[69px] rounded-xl bg-gradient-to-b from-[#c9bf34] via-[#f7eb4c] to-[#c9bf34] flex`}>
-                            <div className="flex-1 border-r-4 border-black border-dashed flex justify-center items-center">
-                                <div className="text-center text-sm">
-                                    <p className="font-bold">{stat.b}</p>
-                                    <p className="font-semibold">{stat.max}</p>
-                                </div>
+            {value?.sub?.length > 0 ? value.sub.map((stat, index) => (
+    <div key={index} style={{ minWidth: "83px" }} className="flex flex-row items-center mb-2">
+        <div className="p-2 border-r-2 border-[#c7c8ca] flex justify-between">
+            {
+                stat?.gstatus === "OPEN" ? (
+                    <div
+                        onClick={placebet}
+                        className={`w-[170px] h-[69px] rounded-xl bg-gradient-to-b ${
+                            stat?.nat === "6 Runs" || stat?.nat === "4 Runs"
+                                ? "from-[#2dcd68] via-[#98ffbe] to-[#168940]"
+                                : "from-[#c9bf34] via-[#f7eb4c] to-[#c9bf34]"
+                        } flex`}
+                    >
+                        <div className="flex-1 border-r-4 border-black border-dashed flex justify-center items-center">
+                            <div className="text-center text-sm">
+                                <p className="font-bold">{stat.b}</p>
+                                <p className="font-semibold">{stat.max}</p>
                             </div>
-                            <div className="flex-[1.5] flex justify-center items-center font-bold">
-                                {
-                                    stat.min ? <span> {stat.nat}  </span> : <span className="text-sm"> {stat.nat} </span>
-                                }
+                        </div>
+                        <div className="flex-[1.5] flex justify-center items-center font-bold">
+                            <span>{stat.nat}</span>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="w-[170px] h-[69px] rounded-xl bg-gradient-to-b from-[#b69ec580] via-[#f7eb4c] to-[#b69ec580] flex">
+                        <div className="flex-1 border-r-4 border-black border-dashed flex justify-center items-center">
+                            <div className="text-center text-sm">
+                                <p className="font-bold">0</p>
+                                <p className="font-semibold">{stat.max}</p>
                             </div>
-                        </div> ) : (<div className={`w-[170px] h-[69px] rounded-xl bg-gradient-to-b from-[#b69ec580] via-[#f7eb4c] to-[#b69ec580] flex`}>
-                           <div className="flex-1 border-r-4 border-black border-dashed flex justify-center items-center">
-                               <div className="text-center text-sm">
-                                   <p className="font-bold">0</p>
-                                   <p className="font-semibold">{stat.max}</p>
-                               </div>
-                           </div>
-                           <div className="flex-[1.5] flex justify-center items-center font-bold">
-                               {
-                                   stat.min ? <span> Suspend  </span> : <span className="text-sm"> Suspend </span>
-                               }
-                           </div>
-                       </div>)
-                       }
-                       
-                   </div>
-               </div>
-                ))}
+                        </div>
+                        <div className="flex-[1.5] flex justify-center items-center font-bold">
+                            <span>Suspend</span>
+                        </div>
+                    </div>
+                )
+            }
+        </div>
+    </div>
+)) : <p className="text-center p-2 text-red-500">No data available</p>}
+
             </div>
             <div className="p-2 bg-[#c2d5e4] text-[#3b5160] font-bold text-center text-nowrap text-sm mb-2 overflow-hidden">
-                <p className="text_box">{value.remark}</p>
+                <p className="text_box">Ball By Ball Titan 97</p>
             </div>
             <div className="bg-black flex items-center gap-1 overflow-scroll">
                 <p className="text-xl font-bold text-white py-2 px-1 text-nowrap">Recent Result</p>
@@ -175,50 +134,3 @@ const TestUi = () => {
 
 export default TestUi;
 
-// function StatCard({
-//     value1,
-//     total1,
-//     type1,
-//     typeValue1,
-//     bg1,
-//     value2,
-//     total2,
-//     type2,
-//     typeValue2,
-//     bg2,
-// }) {
-//     return (
-//         <div className="flex items-center mb-2">
-//             <div className="w-1/2 border-r-2 border-[#c7c8ca] flex justify-center">
-//                 <div className={`w-[170px] h-[69px] rounded-xl ${bg1} flex`}>
-//                     <div className="flex-1 border-r-4 border-black border-dashed flex justify-center items-center">
-//                         <div className="text-center text-sm">
-//                             <p className="font-bold">{value1}</p>
-//                             <p className="font-semibold">{total1}</p>
-//                         </div>
-//                     </div>
-//                     <div className="flex-[1.5] flex justify-center items-center font-bold">
-//                         {
-//                             typeValue2 ? <span> {typeValue1} {type1} </span> : <span className="text-sm"> {type1} </span>
-//                         }
-//                     </div>
-//                 </div>
-//             </div>
-//             <div className="w-1/2 flex justify-center">
-//                 <div className={`w-[170px] h-[69px] rounded-xl ${bg2} flex`}>
-//                     <div className="flex-1 border-r-4 border-black border-dashed flex justify-center items-center">
-//                         <div className="text-center text-sm">
-//                             <p className="font-bold">{value2}</p>
-//                             <p className="font-semibold">{total2}</p>
-//                         </div>
-//                     </div>
-//                     <div className="flex-[1.5] flex justify-center items-center font-bold">
-//                         {
-//                             typeValue2 ? <span> {typeValue2} {type2} </span> : <span className="text-sm"> {type2} </span>
-//                         }
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
