@@ -50,7 +50,10 @@ const HeaderBlue = () => {
       {/* Middle - PTI and Exposure */}
       <div className="text-sm text-center">
         <p>
-          Main PTI <span className="font-bold">{(balanceData?.balance - balanceData?.bet_balance)?.toFixed(2)}</span>
+          Main PTI{" "}
+          <span className="font-bold">
+            {(balanceData?.balance - balanceData?.bet_balance)?.toFixed(2)}
+          </span>
         </p>
         <p>
           Exposure{" "}
@@ -71,9 +74,13 @@ const HeaderBlue = () => {
         >
           <IoMdRefresh className="text-white text-lg" />
         </button>
-        <Link to='/settings'><button className="bg-blue-700 p-2 rounded shadow">
+      
+        <button
+          onClick={() => navigate("/settings")}
+          className="bg-blue-700 p-2 rounded shadow"
+        >
           <FaCog className="text-white text-lg" />
-        </button></Link>
+        </button>
         
       </div>
 
