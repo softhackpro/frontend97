@@ -82,10 +82,13 @@ const Fullgame = () => {
 
     try {
       setBetLoading(true);
-      let updatedBet = selectedBet?.odds;
-
+      let updatedBet = (selectedBet?.odds - 1);
+      let sendUpdateBet = selectedBet?.odds;
+      console.log(selectedBet, "selected bet");
+      
       if (selectedBet?.mname === "Bookmaker") {
-        updatedBet = selectedBet?.odds / 100;
+        updatedBet = (selectedBet?.odds + 0) / 100;
+        sendUpdateBet = (selectedBet?.odds + 100) / 100;
       }
 
       const response = await axios.post(
@@ -96,6 +99,7 @@ const Fullgame = () => {
           user_id: user?.user_id,
           bet_name: selectedBet?.team,
           betvalue: selectedBet?.odds,
+          bet_rate: sendUpdateBet,
           match_id: selectedBet?.gmid,
           market_type: selectedBet?.type,
           win_amount: updatedBet * betAmount,

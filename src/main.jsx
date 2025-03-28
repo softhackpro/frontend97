@@ -30,6 +30,7 @@ import ExposureDetailPopup from "./components/ExposerDetails.jsx";
 import BatDetailsScreen from "./screens/BatDetailspage.jsx";
 import { io } from "socket.io-client";
 import AccountDetails from "./components/Roshan/Profile/AccountDetails.jsx";
+import TestUi from "./components/Roshan/TestUi.jsx";
 export const socket = io("https://titan97.live");
 
 createRoot(document.getElementById("root")).render(
@@ -54,6 +55,7 @@ createRoot(document.getElementById("root")).render(
                 <Route path="/casino/:id" element={<EventDetails />} />
                 <Route path="/casino" element={<CasinoBox />} />
                 <Route path='/myProfile' element={<AccountDetails />} />
+                <Route path='/BallByBall' element={<TestUi />} />
               </Route>
               
             </Route>

@@ -8,8 +8,8 @@ const MatchRow = ({ match, noPins }) => {
   const navigate = useNavigate();
   
   return (
+    <>
     <tr key={`match-${match.gmid}`} className="border-b border-[#c8ced3]">
-      
       {/* Event Name */}
       <td className="px-2 py-2 text-left">
         <a
@@ -57,6 +57,7 @@ const MatchRow = ({ match, noPins }) => {
       {/* Pin Button */}
       <td className="text-center px-2 py-1 ">{!noPins && <PinButton />}</td>
     </tr>
+    </>
   );
 };
 
