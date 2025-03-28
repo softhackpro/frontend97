@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../../services/auth/auth.context";
 import ExposureDetailPopup from "../../ExposerDetails";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const HeaderBlue = () => {
   const { user } = useContext(AuthContext);
@@ -71,9 +71,10 @@ const HeaderBlue = () => {
         >
           <IoMdRefresh className="text-white text-lg" />
         </button>
-        <button className="bg-blue-700 p-2 rounded shadow">
+        <Link to='/settings'><button className="bg-blue-700 p-2 rounded shadow">
           <FaCog className="text-white text-lg" />
-        </button>
+        </button></Link>
+        
       </div>
 
       <ExposureDetailPopup
