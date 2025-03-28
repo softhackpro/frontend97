@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 import PinButton from "./PinButton";
 import OddsTable from "./OddsTable";
+import moment from "moment";
 
 const MatchRow = ({ match, noPins }) => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const MatchRow = ({ match, noPins }) => {
             In-Play
           </span>
         )}
-        {match.stime && <p className="text-gray-600 text-xs">{match.stime}</p>}
+        {match.stime && <p className="text-gray-600 text-xs">{moment(match.stime).format("DD-MM-YYYY HH:mm")}</p>}
       </td>
 
       {/* Match Info Badges */}
