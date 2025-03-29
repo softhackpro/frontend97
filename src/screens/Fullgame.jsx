@@ -17,10 +17,9 @@ import { FaTv } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { SportBookComponents } from "../components/fullgameComponents/SportBookComponents";
 const Fullgame = () => {
-  const [activeTab, setActiveTab] = useState("Winner");
-  const [activeSection, setActiveSection] = useState("Winner");
+  const [activeTab, setActiveTab] = useState("All");
+  const [activeSection, setActiveSection] = useState("All");
   const [apiData, setApiData] = useState([]);
-  const tabs = ["All", "Popular", "Winner", "Bookmakers"];
   const [loder, setLoader] = useState(false);
   const { id } = useParams();
   const [searchParams] = useSearchParams();
@@ -44,8 +43,7 @@ const Fullgame = () => {
     dataIndex: null,
     sectionIndex: null,
   });
-  const [normalData, setNormalData] = useState([]);
-  const [fancyData, setFancyData] = useState([]);
+  const [mainApiData, setMainApiData] = useState([]);
 
   const { user } = useContext(AuthContext);
 
@@ -55,18 +53,7 @@ const Fullgame = () => {
         gmid: id,
         sid: sid,
       });
-      // console.log(response.data.data, "ye boo ka detail hai");
-      // const fData = response.data.data.filter(
-      //   (item) =>
-      //     item.mname === "Normal" ||
-      //     item.mname === "meter" ||
-      //     item.mname === "oddeven" ||
-      //     item.mname === "khado" ||
-      //     item.mname === "fancy1" ||
-      //     item.mname === "fancy" ||
-      //     item.mname === "cricketcasino" ||
-
-      // );
+      setMainApiData(response.data.data);
       setApiData(response.data.data);
     } catch (error) {
       console.error(error);
@@ -80,26 +67,10 @@ const Fullgame = () => {
       setShowAgeVerificationModal(true);
       return;
     }
-    const d = {
-      selection_id: selectedBet?.mid,
-      bet_type: selectedBet?.type,
-      user_id: user?.user_id,
-      bet_name: selectedBet?.team,
-      betvalue: selectedBet?.odds,
-      match_id: selectedBet?.gmid,
-      market_type: selectedBet?.type,
-      win_amount: selectedBet?.odds * betAmount,
-      loss_amount: betAmount,
-      gtype: selectedBet?.mname,
-      market_name: match_name,
-    };
-    console.log(d);
-
     try {
       setBetLoading(true);
       let updatedBet = selectedBet?.odds - 1;
       let sendUpdateBet = selectedBet?.odds;
-      console.log(selectedBet, "selected bet");
 
       if (selectedBet?.mname === "Bookmaker") {
         updatedBet = (selectedBet?.odds + 0) / 100;
@@ -133,7 +104,6 @@ const Fullgame = () => {
       }
       closeModal();
     } catch (error) {
-      // console.log(error);
       toast.error("something went wrong");
     } finally {
       setBetLoading(false);
@@ -152,9 +122,7 @@ const Fullgame = () => {
       setLoader(true);
       await fetchGameDetails();
       setLoader(false);
-    } catch (error) {
-      console.log("error in fullgame");
-    }
+    } catch (error) {}
   }, [apiData, loder]);
 
   useEffect(() => {
@@ -165,7 +133,7 @@ const Fullgame = () => {
     socket.emit("joinRoom", { gmid: id, sid });
 
     const handleMatchDetails = (data) => {
-      setApiData(data?.data);
+      setMainApiData(data?.data);
     };
 
     socket.on("matchDetails", handleMatchDetails);
@@ -247,7 +215,22 @@ const Fullgame = () => {
     );
   };
 
-  // console.log(apiData);
+  const handleFilterOptionsClick = (tab) => {
+    setActiveTab(tab);
+  };
+
+  useEffect(() => {
+    console.log(activeTab);
+    console.log(mainApiData);
+    console.log(apiData);
+
+    if (activeTab === "All") {
+      setApiData(mainApiData);
+      return;
+    }
+    const filteredData = mainApiData.filter((item) => item.mname === activeTab);
+    setApiData(filteredData);
+  }, [mainApiData, activeTab]);
 
   if (loder) {
     return <CircularHorizontalLoader />;
@@ -256,7 +239,6 @@ const Fullgame = () => {
     const res = await axios.get(
       `https://titan97.live/get-matchdetails?gmid=${id}&sid=${sid}`
     );
-    console.log(res.data);
     setMatchDetail(res.data.data[0]);
     setScore(!openScore);
   };
@@ -305,27 +287,42 @@ const Fullgame = () => {
 
       {/* Tabs */}
       <div className="flex overflow-x-scroll scroll-smooth w-full gap-1 p-2 text-white bg-gray-200 border-b border-gray-300">
-        {apiData?.map((tab) => (
-          <button
-            key={tab}
-            className={`p-2 font-bold border-1 text-nowrap border-black rounded-4xl text-sm ${
-              activeTab === tab?.mname
-                ? "bg-[#016630] text-white"
-                : "bg-[#2c485a]"
-            }`}
-            onClick={() => setActiveTab(tab?.mname)}
-          >
-            {tab?.mname}
-          </button>
-        ))}
+        <button
+          className={`p-2 font-bold border-1 text-nowrap border-black rounded-4xl text-sm ${
+            activeTab === "All" ? "bg-[#016630] text-white" : "bg-[#2c485a]"
+          }`}
+          onClick={() => handleFilterOptionsClick("All")}
+        >
+          All
+        </button>
+        {mainApiData?.map((tab) =>
+          [
+            "meter",
+            "oddeven",
+            "khado",
+            "fancy1",
+            "fancy",
+            "cricketcasino",
+          ].includes(tab.gtype.toString().toLowerCase()) ? null : (
+            <button
+              key={tab}
+              className={`p-2 font-bold border-1 text-nowrap border-black rounded-4xl text-sm ${
+                activeTab === tab?.mname
+                  ? "bg-[#016630] text-white"
+                  : "bg-[#2c485a]"
+              }`}
+              onClick={() => handleFilterOptionsClick(tab?.mname)}
+            >
+              {tab?.mname}
+            </button>
+          )
+        )}
       </div>
-      {apiData && apiData.length
+      {true
         ? apiData.map((data, dataIndex) => (
             <div key={dataIndex} className="bg-white relative">
               {/* Winner Section */}
-              <div
-                className={`${activeSection === "Winner" ? "block" : "hidden"}`}
-              >
+              <div>
                 {[
                   "meter",
                   "oddeven",
@@ -351,7 +348,7 @@ const Fullgame = () => {
                               data.gtype.toString().toLowerCase() === type
                           )
                             ? data.mname
-                            : data.mname}{" "}
+                            : data.mname}
                         </span>
                         <svg
                           className="w-4 h-4 ml-1"
@@ -413,7 +410,6 @@ const Fullgame = () => {
                                         data.mname,
                                         data.gmid,
                                         data.mid,
-                                        // data.size,
                                         item.odds[item.odds.length / 2]?.size
                                       )
                                     }
@@ -567,7 +563,7 @@ const Fullgame = () => {
       {/* SportsBook sections  */}
 
       <SportBookComponents
-        data={apiData}
+        data={mainApiData}
         handleBackClick={handleBackClick}
         handleLayClick={handleLayClick}
         isModalOpen={isModalOpen}

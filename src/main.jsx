@@ -38,7 +38,12 @@ import ProfitLoss from "./components/Roshan/ProfitLoss.jsx";
 import BetHistory from "./components/Roshan/BetHistory.jsx";
 import AccountStmt from "./components/Roshan/AccountStmt.jsx";
 import RollingCommision from "./components/Roshan/RollingCommision.jsx";
-export const socket = io("https://titan97.live");
+
+export const socket = io("https://titan97.live", {
+  reconnection: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 1000,
+});
 
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
@@ -61,17 +66,22 @@ createRoot(document.getElementById("root")).render(
                 <Route path="/account" element={<ExchangeHeader />} />
                 <Route path="/casino/:id" element={<EventDetails />} />
                 <Route path="/casino" element={<CasinoBox />} />
-                <Route path='/myProfile' element={<AccountDetails />} />
-                <Route path='/BallByBall' element={<TestUi />} />
-                <Route path='/Multi-Markets' element={<MultiMarketsCard />} />
-                <Route path='/PasswordChangeHistory' element={<PasswordChangeHistory />} />
-                <Route path='/ActivityLog' element={<ActivityLog />} />
-                <Route path='/BetHistory' element={<BetHistory />} />
-                <Route path='/RollingCommision' element={<RollingCommision />} />
-                <Route path='/ProfitLoss' element={<ProfitLoss />} />
-                <Route path='/AccountStmt' element={<AccountStmt />} />
+                <Route path="/myProfile" element={<AccountDetails />} />
+                <Route path="/BallByBall" element={<TestUi />} />
+                <Route path="/Multi-Markets" element={<MultiMarketsCard />} />
+                <Route
+                  path="/PasswordChangeHistory"
+                  element={<PasswordChangeHistory />}
+                />
+                <Route path="/ActivityLog" element={<ActivityLog />} />
+                <Route path="/BetHistory" element={<BetHistory />} />
+                <Route
+                  path="/RollingCommision"
+                  element={<RollingCommision />}
+                />
+                <Route path="/ProfitLoss" element={<ProfitLoss />} />
+                <Route path="/AccountStmt" element={<AccountStmt />} />
               </Route>
-              
             </Route>
           </Routes>
         </Router>
