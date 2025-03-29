@@ -16,6 +16,7 @@ import { socket } from "../main";
 import { FaTv } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { SportBookComponents } from "../components/fullgameComponents/SportBookComponents";
+import { TossSportsConponents } from "../components/fullgameComponents/TossSportsComponents";
 const Fullgame = () => {
   const [activeTab, setActiveTab] = useState("All");
   const [activeSection, setActiveSection] = useState("All");
@@ -44,7 +45,7 @@ const Fullgame = () => {
     sectionIndex: null,
   });
   const [mainApiData, setMainApiData] = useState([]);
-
+  const [tossData, setTossData] = useState([]);
   const { user } = useContext(AuthContext);
 
   const fetchGameDetails = async () => {
@@ -79,6 +80,23 @@ const Fullgame = () => {
         sendUpdateBet = (selectedBet?.size + 100) / 100;
         updatedBet = selectedBet?.size / 100;
       }
+
+      const d = {
+        selection_id: selectedBet?.mid,
+        bet_type: selectedBet?.type,
+        user_id: user?.user_id,
+        bet_name: selectedBet?.team,
+        betvalue: selectedBet?.odds,
+        bet_rate: sendUpdateBet,
+        match_id: selectedBet?.gmid,
+        market_type: selectedBet?.type,
+        win_amount: updatedBet * betAmount,
+        loss_amount: betAmount,
+        gtype: selectedBet?.mname,
+        market_name: match_name,
+      };
+
+      console.log(d);
 
       const response = await axios.post(
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
@@ -142,7 +160,13 @@ const Fullgame = () => {
       socket.off("matchDetails", handleMatchDetails);
       socket.emit("leaveRoom", { gmid: id, sid });
     };
-  }, [id, sid]); // ✅ Keep this dependency array only if `id` and `sid` can change
+  }, [id, sid]);
+
+  useEffect(() => {
+    const filterData = mainApiData.filter((item) => item.gtype === "fancy1");
+    setTossData(filterData);
+    console.log(filterData);
+  }, [mainApiData]);
 
   const handleBackClick = (
     dataIndex,
@@ -318,7 +342,7 @@ const Fullgame = () => {
           )
         )}
       </div>
-      {true
+      {apiData && apiData.length
         ? apiData.map((data, dataIndex) => (
             <div key={dataIndex} className="bg-white relative">
               {/* Winner Section */}
@@ -560,6 +584,20 @@ const Fullgame = () => {
           ))
         : null}
 
+      <TossSportsConponents
+        data={tossData}
+        handleBackClick={handleBackClick}
+        handleLayClick={handleLayClick}
+        isModalOpen={isModalOpen}
+        betAmount={betAmount}
+        setBetAmount={setBetAmount}
+        selectedBet={selectedBet}
+        betAmounts={betAmounts}
+        closeModal={closeModal}
+        betLoading={betLoading}
+        handleBetAmountChange={handleBetAmountChange}
+        placeBat={placeBat}
+      />
       {/* SportsBook sections  */}
 
       <SportBookComponents

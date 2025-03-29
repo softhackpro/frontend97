@@ -29,7 +29,6 @@ const BetDetailsScreen = () => {
       }, {});
       setData(marketMap);
       console.log(response);
-      
     } catch (error) {
       console.error("Error fetching bet details:", error.message);
     }
@@ -42,6 +41,8 @@ const BetDetailsScreen = () => {
   const toggleMarketExpand = (market) => {
     setExpandedMarket((prev) => (prev === market ? null : market));
   };
+
+  console.log(data);
 
   return (
     <div className="w-full h-full container mx-auto min-h-screen bg-white flex flex-col gap-1">
@@ -62,7 +63,17 @@ const BetDetailsScreen = () => {
               className="w-full text-sm p-2 border-b border-gray-400 flex items-center justify-between text-blue-800 font-semibold cursor-pointer hover:bg-blue-100 transition"
               onClick={() => toggleMarketExpand(market)}
             >
-              <p style={{fontFamily: "sans-serif", fontWeight: "bold", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"  }}>{market}</p>
+              <p
+                style={{
+                  fontFamily: "sans-serif",
+                  fontWeight: "bold",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {market}
+              </p>
               <div className="p-1 border border-gray-200">
                 <FaChevronRight
                   className={`transition-transform ${
@@ -108,18 +119,27 @@ const BetDetailsScreen = () => {
                   </div>
 
                   {bet.bet_type.toLowerCase() === "back" && (
-  <div className="w-full grid grid-cols-4 text-xs text-black p-1 border-b bg-blue-300">
-    <div style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}} className="font-semibold">{bet.bet_name}</div>
-    {bet?.gtype === "MATCH_ODDS" ? (
-      <div className="text-center">{`${bet.bet_rate}`}</div>
-    ) : (
-      <div className="text-center">{`${bet.betvalue}`}</div>
-    )}
-    <div className="text-center">{bet.loss_amount}</div>
-    <div className="text-center">{`${bet.win_amount} (-${bet.loss_amount})`}</div>
-  </div>
-)}
-
+                    <div className="w-full grid grid-cols-4 text-xs text-black p-1 border-b bg-blue-300">
+                      <div
+                        style={{
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                        className="font-semibold"
+                      >
+                        {bet.bet_name}
+                      </div>
+                      {bet?.gtype === "MATCH_ODDS" ||
+                      bet?.gtype === "fancy1" ? (
+                        <div className="text-center">{`${bet.bet_rate}`}</div>
+                      ) : (
+                        <div className="text-center">{`${bet.betvalue}`}</div>
+                      )}
+                      <div className="text-center">{bet.loss_amount}</div>
+                      <div className="text-center">{`${bet.win_amount} (-${bet.loss_amount})`}</div>
+                    </div>
+                  )}
 
                   {/* Lay Bet */}
                   <div className="w-full grid grid-cols-4 text-xs text-gray-600 p-1 bg-gray-100">
@@ -131,11 +151,22 @@ const BetDetailsScreen = () => {
 
                   {bet.bet_type.toLowerCase() === "lay" && (
                     <div className="w-full grid grid-cols-4 text-xs p-1 border-b bg-red-300">
-                      <div style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}} className="font-semibold">{bet.bet_name}</div>
-                      {
-                        bet?.gtype === "Bookmaker" ? <div className="text-center">{`${bet.betvalue}`} </div> : <div className="text-center">{`${bet.bet_rate} ()`}</div>
-                      }
-                      
+                      <div
+                        style={{
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                        className="font-semibold"
+                      >
+                        {bet.bet_name}
+                      </div>
+                      {bet?.gtype === "Bookmaker" ? (
+                        <div className="text-center">{`${bet.betvalue}`} </div>
+                      ) : (
+                        <div className="text-center">{`${bet.bet_rate} ()`}</div>
+                      )}
+
                       <div className="text-center">{bet.loss_amount}</div>
                       <div className="text-center">{`${bet.win_amount} (-${bet.loss_amount})`}</div>
                     </div>
