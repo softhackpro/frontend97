@@ -1,9 +1,9 @@
 import React from "react";
 
-const DragonTiger20 = () => {
+const DragonTiger20 = ({game, gmid}) => {
   return (
     <>
-    <iframe src="https://titan97.live/get-video/dt20" frameborder="0"></iframe>
+    <iframe src={`https://titan97.live/get-video/${gmid}`} frameborder="0"></iframe>
     <div className="bg-gray-200 rounded-md w-96 mx-auto text-black">
       {/* Winner Section */}
       <div className="bg-blue-200 p-4 rounded-md shadow-md text-center">

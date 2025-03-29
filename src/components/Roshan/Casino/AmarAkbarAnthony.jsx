@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AmarAkbarAnthony = () => {
+const AmarAkbarAnthony = ({game, gmid}) => {
     const cardData = [
         { card: 'A', suits: ['♠', '♥'] },
         { card: '2', suits: ['♠', '♥'] },
@@ -35,7 +35,7 @@ const AmarAkbarAnthony = () => {
 
   return (
     <>
-    <iframe src="https://titan97.live/get-video/dt20" frameborder="0"></iframe>
+    <iframe src={`https://titan97.live/get-video/${gmid}`} frameborder="0"></iframe>
     <div className="max-w-2xl mx-auto font-sans">
       {/* Header */}
       <div className="bg-slate-800 text-white p-2 font-bold">

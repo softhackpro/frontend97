@@ -62,7 +62,7 @@ const BetDetailsScreen = () => {
               className="w-full text-sm p-2 border-b border-gray-400 flex items-center justify-between text-blue-800 font-semibold cursor-pointer hover:bg-blue-100 transition"
               onClick={() => toggleMarketExpand(market)}
             >
-              <p>{market}</p>
+              <p style={{fontFamily: "sans-serif", fontWeight: "bold", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"  }}>{market}</p>
               <div className="p-1 border border-gray-200">
                 <FaChevronRight
                   className={`transition-transform ${
@@ -109,7 +109,7 @@ const BetDetailsScreen = () => {
 
                   {bet.bet_type.toLowerCase() === "back" && (
   <div className="w-full grid grid-cols-4 text-xs text-black p-1 border-b bg-blue-300">
-    <div className="font-semibold">{bet.bet_name}</div>
+    <div style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}} className="font-semibold">{bet.bet_name}</div>
     {bet?.gtype === "MATCH_ODDS" ? (
       <div className="text-center">{`${bet.bet_rate}`}</div>
     ) : (
@@ -131,7 +131,7 @@ const BetDetailsScreen = () => {
 
                   {bet.bet_type.toLowerCase() === "lay" && (
                     <div className="w-full grid grid-cols-4 text-xs p-1 border-b bg-red-300">
-                      <div className="font-semibold">{bet.bet_name}</div>
+                      <div style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}} className="font-semibold">{bet.bet_name}</div>
                       {
                         bet?.gtype === "Bookmaker" ? <div className="text-center">{`${bet.betvalue}`} </div> : <div className="text-center">{`${bet.bet_rate} ()`}</div>
                       }

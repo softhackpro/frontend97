@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AndarBahar = () => {
+const AndarBahar = ({game, gmid}) => {
     const topRowNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
   const bottomRowNumbers = [9, 10, 11, 12, 13];
 
@@ -8,7 +8,7 @@ const AndarBahar = () => {
   const recentResults = ['B', 'B', 'B', 'B', 'A'];
   return (
     <>
-    <iframe src="https://titan97.live/get-video/dt20" frameborder="0"></iframe>
+    <iframe src={`https://titan97.live/get-video/${gmid}`} frameborder="0"></iframe>
     <div className=" max-w-md mx-auto bg-gray-200 p-4 rounded-lg shadow-md">
       {/* Row A and B with betting options */}
       <div className="mb-4">

@@ -44,6 +44,7 @@ import Andarbahar from "./components/Roshan/Casino/AndarBahar.jsx";
 import Baccarat from "./components/Roshan/Casino/Baccarat.jsx";
 import AmarAkbarAnthony from "./components/Roshan/Casino/AmarAkbarAnthony.jsx";
 import Kbc from "./components/Roshan/Casino/Kbc.jsx";
+import GameUnavailable from "./components/Roshan/Casino/Popup/GameUnavailable.jsx";
 
 export const socket = io("https://titan97.live", {
   reconnection: true,
@@ -88,6 +89,7 @@ createRoot(document.getElementById("root")).render(
                 <Route path="/ProfitLoss" element={<ProfitLoss />} />
                 <Route path="/AccountStmt" element={<AccountStmt />} />
                 <Route path="/demo" element={<Kbc />} />
+                <Route path="/Unavailable" element={<GameUnavailable />} />
               </Route>
             </Route>
           </Routes>

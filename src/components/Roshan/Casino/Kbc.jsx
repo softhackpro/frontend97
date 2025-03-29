@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import RecentResult from '../DownSlider/RecentResult';
 
-const Kbc = () => {
+const Kbc = ({game, gmid}) => {
   return (
     <>
-    <iframe src="https://titan97.live/get-video/dt20" frameborder="0"></iframe>
-    <div className="max-w-xl mx-auto bg-gray-200 p-4 rounded">
+    <iframe src={`https://titan97.live/get-video/${gmid}`} frameborder="0"></iframe>
+    <div style={{maxWidth: "100vw"}} className=" mx-auto bg-gray-200 p-4 rounded">
       {/* [Q1] RED-BLACK Section */}
       <div className="mb-4">
         <div className="text-gray-800 font-bold mb-2">[Q1] RED-BLACK</div>

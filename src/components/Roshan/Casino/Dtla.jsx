@@ -1,9 +1,9 @@
 import React from "react";
 
-const Dtla = () => {
+const Dtla = ({game, gmid}) => {
   return (
     <div className="mb-16 bg-gray-800 p-4 rounded-md w-full text-white">
-        <iframe src="https://titan97.live/get-video/dt20" frameborder="0"></iframe>
+        <iframe src={`https://titan97.live/get-video/${gmid}`} frameborder="0"></iframe>
       {/* Tabs */}
       <div className="flex border-b border-gray-600">
         <button className="flex-1 text-center py-2 border-b-2 border-yellow-400">Dragon</button>

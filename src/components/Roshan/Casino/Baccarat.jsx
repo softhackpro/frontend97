@@ -1,9 +1,9 @@
 import React from "react";
 
-const Baccarat = () => {
+const Baccarat = ({game, gmid}) => {
   return (
     <>
-    <iframe src="https://titan97.live/get-video/dt20" frameborder="0"></iframe>
+    <iframe src={`https://titan97.live/get-video/${gmid}`} frameborder="0"></iframe>
     <div className="bg-gray-100 p-4 rounded-md w-full max-w-md mx-auto text-black">
       {/* Player, Tie, Banker Section */}
       <div className="flex items-center justify-between bg-red-500 text-white p-3 rounded-md shadow-md relative">
