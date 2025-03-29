@@ -57,7 +57,7 @@ export const SportBookComponents = ({
         setDisplayDataOptions([activeGameSSections]);
       }
     }
-  }, [activeGameFSections, activeGameSSections]);
+  }, [activeGameFSections, activeGameSSections, activeSections]);
 
   const fancyNData = [
     {

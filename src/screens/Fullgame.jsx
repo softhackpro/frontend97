@@ -81,6 +81,23 @@ const Fullgame = () => {
         updatedBet = selectedBet?.size / 100;
       }
 
+      const d = {
+        selection_id: selectedBet?.mid,
+        bet_type: selectedBet?.type,
+        user_id: user?.user_id,
+        bet_name: selectedBet?.team,
+        betvalue: selectedBet?.odds,
+        bet_rate: sendUpdateBet,
+        match_id: selectedBet?.gmid,
+        market_type: selectedBet?.type,
+        win_amount: updatedBet * betAmount,
+        loss_amount: betAmount,
+        gtype: selectedBet?.mname,
+        market_name: match_name,
+      };
+
+      console.log(d);
+
       const response = await axios.post(
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
         {
@@ -143,7 +160,7 @@ const Fullgame = () => {
       socket.off("matchDetails", handleMatchDetails);
       socket.emit("leaveRoom", { gmid: id, sid });
     };
-  }, [id, sid]); // ✅ Keep this dependency array only if `id` and `sid` can change
+  }, [id, sid]);
 
   useEffect(() => {
     const filterData = mainApiData.filter((item) => item.gtype === "fancy1");
