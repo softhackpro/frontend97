@@ -35,12 +35,12 @@ const HeaderBlue = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-b from-blue-900 to-blue-800 text-white p-3 flex justify-between items-center shadow-md">
+    <div className="bg-gradient-to-b from-green-900 to-black text-white p-3 flex justify-between items-center shadow-md">
       {/* Left Side - Logo and Title */}
-      <div className="flex items-center space-x-2 shadow">
+      <div className="flex items-center shadow  bg-gradient-to-b from-green-700 to-black px-2 rounded">
         <div
           onClick={() => navigate("/bets")}
-          className="bg-blue-700 p-2 rounded"
+          className=" p-2 rounded"
         >
           <BsCoin className="text-white text-lg" />
         </div>
@@ -70,14 +70,14 @@ const HeaderBlue = () => {
       <div className="flex space-x-2">
         <button
           onClick={() => window.location.reload()}
-          className="bg-blue-700 p-2 rounded shadow"
+          className="bg-gradient-to-b from-green-700 to-black p-2 rounded shadow"
         >
           <IoMdRefresh className="text-white text-lg" />
         </button>
       
         <button
           onClick={() => navigate("/settings")}
-          className="bg-blue-700 p-2 rounded shadow"
+          className="bg-gradient-to-b from-green-700 to-black p-2 rounded shadow"
         >
           <FaCog className="text-white text-lg" />
         </button>

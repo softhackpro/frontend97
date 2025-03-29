@@ -16,7 +16,7 @@ export const SportBookComponents = ({
   handleBetAmountChange,
   placeBat,
 }) => {
-  const [activeSections, setActiveSections] = useState(1);
+  const [activeSections, setActiveSections] = useState(0);
   const [activeGameFSections, setActiveGameFSections] = useState("all");
   const [activeGameSSections, setActiveGameSSections] = useState("all");
   const [displayDataOptions, setDisplayDataOptions] = useState([
@@ -32,12 +32,13 @@ export const SportBookComponents = ({
     if (activeSections === 0) {
       if (activeGameFSections === "all") {
         setDisplayDataOptions([
-          "meter",
-          "oddeven",
-          "khado",
-          "fancy1",
-          "fancy",
-          "cricketcasino",
+          // "meter",
+          // "oddeven",
+          // "khado",
+          // "fancy1",
+          "normal",
+          // "fancy",
+          // "cricketcasino",
         ]);
       } else {
         setDisplayDataOptions([activeGameFSections]);
@@ -181,7 +182,7 @@ export const SportBookComponents = ({
             {/* Winner Section */}
             <div className={``}>
               {[...displayDataOptions].includes(
-                data.gtype.toString().toLowerCase()
+                data.mname.toString().toLowerCase()
               ) ? (
                 <>
                   <div className="flex justify-between items-center bg-white text-white">
@@ -198,8 +199,8 @@ export const SportBookComponents = ({
                         ].some(
                           (type) => data.gtype.toString().toLowerCase() === type
                         )
-                          ? data.mname
-                          : data.mname}{" "}
+                          ? data.gtype
+                          : data.gtype}{" "}
                       </span>
                       <svg
                         className="w-4 h-4 ml-1"
