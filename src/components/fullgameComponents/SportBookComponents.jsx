@@ -59,8 +59,6 @@ export const SportBookComponents = ({
     }
   }, [activeGameFSections, activeGameSSections]);
 
-  console.log(data);
-
   const fancyNData = [
     {
       label: "All",
@@ -126,7 +124,21 @@ export const SportBookComponents = ({
             Fancy Bet
           </div>
           <span className=" flex items-center justify-center w-8 rounded-tr-3xl bg-sky-400">
-            <BsLock />
+            <svg
+              className="w-4 h-4 ml-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="12" cy="12" r="10" strokeWidth="2" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 8v4m0 4h.01"
+              />
+            </svg>
           </span>
         </div>
         <div
@@ -137,7 +149,21 @@ export const SportBookComponents = ({
             Sportsbook
           </div>
           <span className=" flex items-center justify-center w-8 rounded-tr-3xl bg-orange-400">
-            <BsLock />
+            <svg
+              className="w-4 h-4 ml-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="12" cy="12" r="10" strokeWidth="2" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 8v4m0 4h.01"
+              />
+            </svg>
           </span>
         </div>
       </div>

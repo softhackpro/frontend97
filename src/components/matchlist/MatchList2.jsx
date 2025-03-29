@@ -47,6 +47,8 @@ const MatchList = ({
 
   // Function to render match rows based on data structure
   const renderMatches = (matches) => {
+    const sortedMatch = matches.sort((a, b) => b.iplay - a.iplay);
+    matches = sortedMatch;
     return matches.flatMap((match, index) => {
       // Check if match has children
       if (match.children && match.children.length > 0) {
@@ -97,12 +99,22 @@ const MatchList = ({
           </div>
         </div>
       )}
-      <Link to='BallByBall' style={{fontSize: "16px", paddingLeft: "12px", padding: "6px", fontWeight: "bold", color: "#2789ce", fontFamily: "sans-serif"}}>
-            Ball By Ball
-            <span className="text-red-500 text-sm font-semibold ml-2 color-change-animation">
-            In-Play
-          </span>
-          </Link>
+      <Link
+        to="BallByBall"
+        style={{
+          fontSize: "16px",
+          paddingLeft: "12px",
+          padding: "6px",
+          fontWeight: "bold",
+          color: "#2789ce",
+          fontFamily: "sans-serif",
+        }}
+      >
+        Ball By Ball
+        <span className="text-red-500 text-sm font-semibold ml-2 color-change-animation">
+          In-Play
+        </span>
+      </Link>
       <table className="w-full text-[12px] border-b border-[#c8ced3] text-[#212529] bg-transparent align-top mb-4 md:mb-0 md:border-none">
         {!showHeaders && (
           <thead className="bg-[#dddcd6] text-[#000000] hidden md:table-header-group">
@@ -128,7 +140,6 @@ const MatchList = ({
           </span>
         </Link> */}
         <tbody className="bg-gradient-to-b from-[#ffffff] to-[#ffffff] align-middle border border-inherit">
-          
           {renderMatches(displayedMatches)}
         </tbody>
       </table>
