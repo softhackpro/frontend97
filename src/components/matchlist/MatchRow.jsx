@@ -23,14 +23,14 @@ const MatchRow = ({ match, noPins }) => {
           }
           className="text-[#2789ce] no-underline"
         >
-          <p style={{fontSize: "16px", fontWeight: "700", fontFamily: "sans-serif"}}>{match.ename || match.name}</p>
-          
-        </div>
-        {match.iplay && (
+          <p style={{fontSize: "14px", fontWeight: "700", fontFamily: "sans-serif"}}>{match.ename || match.name} {match.iplay && (
           <span className="text-red-500 text-sm font-semibold ml-2 color-change-animation">
             In-Play
           </span>
-        )}
+        )}</p>
+          
+        </div>
+        
         {match.stime && <p className="text-gray-600 text-xs">{moment(match.stime).format("DD-MM-YYYY HH:mm")}</p>}
       </td>
 

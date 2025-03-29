@@ -14,11 +14,13 @@ const CasinoProvider = ({ children }) => {
   }, []);
 
   const fetchCasinoGames = async () => {
-    setLoading(true);
+    setLoading(true); 
     setError(null);
     try {
       const res = await getAllCasinoGame();
-      setAllCasinoGames(res.data.t1);
+      // console.log(res, "from casino context");
+      
+      setAllCasinoGames(res);
     } catch (err) {
       setError(err.message || "Failed to fetch casino games");
     } finally {

@@ -1,13 +1,23 @@
 import { useEffect, useState, useContext, useRef } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { CasinoContext } from "../services/casino/casino.context";
 import LiveStreaming from "../components/LiveStreaming";
 import Cards from "../components/Cards";
 import TeenPaatiScreen from "./TeenPaatiScreen";
+import TestUi from "../components/Roshan/TestUi";
+import AndarBahar from "../components/Roshan/Casino/AndarBahar";
+import AmarAkbarAnthony from "../components/Roshan/Casino/AmarAkbarAnthony";
+import Kbc from "../components/Roshan/Casino/Kbc";
+import Baccarat from "../components/Roshan/Casino/Baccarat";
+import DragonTiger20 from "../components/Roshan/Casino/DragonTiger20";
+import Dtla from "../components/Roshan/Casino/Dtla";
 
 export const EventDetails = () => {
   const { id: gmid } = useParams();
   const { getCasinoDetails } = useContext(CasinoContext);
+  const validGameIds = [
+    "teen", "lucky15", "ballbyball", "ab4", "aaa", "kbc", "baccarat", "dtl20", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3"
+  ];
   // Use ref to maintain stable reference to the context function
   const getCasinoDetailsRef = useRef(getCasinoDetails);
 
@@ -22,6 +32,10 @@ export const EventDetails = () => {
 
   // Fetch game details on component mount - always fetch from API
   useEffect(() => {
+    if (!validGameIds.includes(gmid)) {
+      window.location.href = "/Unavailable"
+      return;
+    }
     const fetchGameDetails = async () => {
       try {
         setLoading(true);
@@ -38,7 +52,7 @@ export const EventDetails = () => {
       } finally {
         setLoading(false);
       }
-    };
+    }; 
 
     fetchGameDetails();
 
@@ -63,6 +77,27 @@ export const EventDetails = () => {
       {game?.gtype?.includes("teen") && (
         <TeenPaatiScreen game={game} gmid={gmid} />
       )}
+      {
+        gmid === "lucky15" || gmid === "ballbyball" ? <TestUi /> : null
+      }
+      {
+        gmid === "ab4" ? <AndarBahar game={game} gmid={gmid}/> : null
+      }
+      {
+        gmid === "aaa" ? <AmarAkbarAnthony game={game} gmid={gmid}/> : null
+      }
+      {
+        gmid === "kbc" ? <Kbc game={game} gmid={gmid}/> : null
+      }
+      {
+        gmid === "baccarat" ? <Baccarat game={game} gmid={gmid}/> : null
+      }
+      {
+        gmid == "dtl20" ? <DragonTiger20 game={game} gmid={gmid}/> : null
+      }
+      {
+        gmid == "dt20" ? <Dtla game={game} gmid={gmid}/> : null
+      }
     </div>
   );
 };
