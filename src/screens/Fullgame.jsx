@@ -413,7 +413,7 @@ const Fullgame = () => {
                                         data.mname,
                                         data.gmid,
                                         data.mid,
-                                        data.size,
+                                        // data.size,
                                         item.odds[item.odds.length / 2]?.size
                                       )
                                     }
@@ -441,7 +441,8 @@ const Fullgame = () => {
                                         item.odds[item.odds.length / 2]?.odds,
                                         data.mname,
                                         data.gmid,
-                                        data.mid
+                                        data.mid,
+                                        item.odds[item.odds.length / 2]?.size
                                       )
                                     }
                                     className="w-full bg-transparent"

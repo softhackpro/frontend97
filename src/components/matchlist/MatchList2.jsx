@@ -97,7 +97,7 @@ const MatchList = ({
           </div>
         </div>
       )}
-      <Link to='BallByBall' style={{fontSize: "12px", paddingLeft: "10px", padding: "6px", fontWeight: "bold", color: "blue"}}>
+      <Link to='BallByBall' style={{fontSize: "16px", paddingLeft: "12px", padding: "6px", fontWeight: "bold", color: "#2789ce", fontFamily: "sans-serif"}}>
             Ball By Ball
             <span className="text-red-500 text-sm font-semibold ml-2 color-change-animation">
             In-Play

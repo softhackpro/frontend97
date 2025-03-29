@@ -12,7 +12,8 @@ const MatchRow = ({ match, noPins }) => {
     <tr key={`match-${match.gmid}`} className="border-b border-[#c8ced3]">
       {/* Event Name */}
       <td className="px-2 py-2 text-left">
-        <a
+        <div
+         
           onClick={() =>
             navigate(
               `/fullgame/${match.gmid}/?sid=${match.etid}&match_name=${
@@ -20,11 +21,11 @@ const MatchRow = ({ match, noPins }) => {
               }`
             )
           }
-          href="#"
-          className="font-bold text-[#2789ce] no-underline"
+          className="text-[#2789ce] no-underline"
         >
-          {match.ename || match.name}
-        </a>
+          <p style={{fontSize: "16px", fontWeight: "700", fontFamily: "sans-serif"}}>{match.ename || match.name}</p>
+          
+        </div>
         {match.iplay && (
           <span className="text-red-500 text-sm font-semibold ml-2 color-change-animation">
             In-Play
