@@ -16,6 +16,7 @@ import { socket } from "../main";
 import { FaTv } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { SportBookComponents } from "../components/fullgameComponents/SportBookComponents";
+import { TossSportsConponents } from "../components/fullgameComponents/TossSportsComponents";
 const Fullgame = () => {
   const [activeTab, setActiveTab] = useState("All");
   const [activeSection, setActiveSection] = useState("All");
@@ -44,7 +45,7 @@ const Fullgame = () => {
     sectionIndex: null,
   });
   const [mainApiData, setMainApiData] = useState([]);
-
+  const [tossData, setTossData] = useState([]);
   const { user } = useContext(AuthContext);
 
   const fetchGameDetails = async () => {
@@ -143,6 +144,12 @@ const Fullgame = () => {
       socket.emit("leaveRoom", { gmid: id, sid });
     };
   }, [id, sid]); // ✅ Keep this dependency array only if `id` and `sid` can change
+
+  useEffect(() => {
+    const filterData = mainApiData.filter((item) => item.gtype === "fancy1");
+    setTossData(filterData);
+    console.log(filterData);
+  }, [mainApiData]);
 
   const handleBackClick = (
     dataIndex,
@@ -318,7 +325,7 @@ const Fullgame = () => {
           )
         )}
       </div>
-      {true
+      {apiData && apiData.length
         ? apiData.map((data, dataIndex) => (
             <div key={dataIndex} className="bg-white relative">
               {/* Winner Section */}
@@ -560,6 +567,20 @@ const Fullgame = () => {
           ))
         : null}
 
+      <TossSportsConponents
+        data={tossData}
+        handleBackClick={handleBackClick}
+        handleLayClick={handleLayClick}
+        isModalOpen={isModalOpen}
+        betAmount={betAmount}
+        setBetAmount={setBetAmount}
+        selectedBet={selectedBet}
+        betAmounts={betAmounts}
+        closeModal={closeModal}
+        betLoading={betLoading}
+        handleBetAmountChange={handleBetAmountChange}
+        placeBat={placeBat}
+      />
       {/* SportsBook sections  */}
 
       <SportBookComponents

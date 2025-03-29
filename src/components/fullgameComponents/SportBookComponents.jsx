@@ -280,56 +280,16 @@ export const SportBookComponents = ({
                                 <button
                                   onClick={() =>
                                     item.odds && item.odds.length > 0
-                                      ? handleBackClick(
-                                          dataIndex,
-                                          sectionIndex,
-                                          item,
-                                          item.odds[
-                                            Math.floor(item.odds.length / 2) - 1
-                                          ]?.odds,
-                                          data.mname,
-                                          data.gmid,
-                                          data.mid,
-                                          data.size,
-                                          item.odds[
-                                            Math.floor(item.odds.length / 2)
-                                          ]?.size
-                                        )
-                                      : null
-                                  }
-                                  className="w-full bg-transparent"
-                                  disabled={
-                                    !item.odds || item.odds.length === 0
-                                  }
-                                >
-                                  <div className="bg-blue-300 text-center font-bold">
-                                    {item.odds && item.odds.length > 0
-                                      ? item.odds[
-                                          Math.floor(item.odds.length / 2) - 1
-                                        ]?.odds
-                                      : "-"}
-                                  </div>
-                                  <div className="bg-blue-300 text-center">
-                                    {item.odds && item.odds.length > 0
-                                      ? item.odds[
-                                          Math.floor(item.odds.length / 2) - 1
-                                        ]?.size
-                                      : "-"}
-                                  </div>
-                                </button>
-                                <button
-                                  onClick={() =>
-                                    item.odds && item.odds.length > 0
                                       ? handleLayClick(
                                           dataIndex,
                                           sectionIndex,
                                           item,
-                                          item.odds[
-                                            Math.floor(item.odds.length / 2)
-                                          ]?.odds,
+                                          item.odds[item.odds.length / 2 - 1]
+                                            ?.odds,
                                           data.mname,
                                           data.gmid,
-                                          data.mid
+                                          data.mid,
+                                          item.odds[item.odds.length / 2]?.size
                                         )
                                       : null
                                   }
@@ -349,6 +309,42 @@ export const SportBookComponents = ({
                                     {item.odds && item.odds.length > 0
                                       ? item.odds[
                                           Math.floor(item.odds.length / 2)
+                                        ]?.size
+                                      : "-"}
+                                  </div>
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    item.odds && item.odds.length > 0
+                                      ? handleBackClick(
+                                          dataIndex,
+                                          sectionIndex,
+                                          item,
+                                          item.odds[item.odds.length / 2 - 1]
+                                            ?.odds,
+                                          data.mname,
+                                          data.gmid,
+                                          data.mid,
+                                          item.odds[item.odds.length / 2]?.size
+                                        )
+                                      : null
+                                  }
+                                  className="w-full bg-transparent"
+                                  disabled={
+                                    !item.odds || item.odds.length === 0
+                                  }
+                                >
+                                  <div className="bg-blue-300 text-center font-bold">
+                                    {item.odds && item.odds.length > 0
+                                      ? item.odds[
+                                          Math.floor(item.odds.length / 2) - 1
+                                        ]?.odds
+                                      : "-"}
+                                  </div>
+                                  <div className="bg-blue-300 text-center">
+                                    {item.odds && item.odds.length > 0
+                                      ? item.odds[
+                                          Math.floor(item.odds.length / 2) - 1
                                         ]?.size
                                       : "-"}
                                   </div>
