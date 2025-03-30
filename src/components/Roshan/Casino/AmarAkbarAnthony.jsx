@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import BettingPage from './Popup/BettingPage';
 
 const AmarAkbarAnthony = ({game, gmid}) => {
+  const [ModalOpen, setModalOpen] = useState(false)
     const cardData = [
         { card: 'A', suits: ['♠', '♥'] },
         { card: '2', suits: ['♠', '♥'] },
@@ -61,12 +63,12 @@ const AmarAkbarAnthony = ({game, gmid}) => {
           </div>
           <div className="grid grid-cols-2">
             <div className="bg-blue-200 p-1 text-center">
-              <div className="font-bold text-lg">{item.back}</div>
-              <div className="text-xs">{item.amount}</div>
+              <div  className="font-bold text-lg">{item.back}</div>
+              <div onClick={()=>setModalOpen(true)} className="text-xs">{item.amount}</div>
             </div>
             <div className="bg-pink-200 p-1 text-center">
               <div className="font-bold text-lg">{item.lay}</div>
-              <div className="text-xs">{item.amount}</div>
+              <div onClick={()=>setModalOpen(true)} className="text-xs">{item.amount}</div>
             </div>
           </div>
         </div>
@@ -83,7 +85,7 @@ const AmarAkbarAnthony = ({game, gmid}) => {
             Min/Max100 - 100000
           </div>
           {oddEvenData.map((item, index) => (
-            <div key={index} className={`${item.color} text-white p-2 text-center`}>
+            <div onClick={()=>setModalOpen(true)} key={index} className={`${item.color} text-white p-2 text-center`}>
               <div className="font-bold">{item.type}</div>
               <div className="text-lg font-bold">{item.odds}</div>
               <div className="text-sm">300000</div>
@@ -100,7 +102,7 @@ const AmarAkbarAnthony = ({game, gmid}) => {
             Min/Max100 - 100000
           </div>
           {colorData.map((item, index) => (
-            <div key={index} className={`${item.color} text-white p-2 text-center`}>
+            <div onClick={()=>setModalOpen(true)} key={index} className={`${item.color} text-white p-2 text-center`}>
               <div className="font-bold">{item.type}</div>
               <div className="text-lg font-bold">{item.odds}</div>
               <div className="text-sm">300000</div>
@@ -117,7 +119,7 @@ const AmarAkbarAnthony = ({game, gmid}) => {
             Min/Max100 - 100000
           </div>
           {overUnderData.map((item, index) => (
-            <div key={index} className={`${item.color} text-white p-2 text-center`}>
+            <div onClick={()=>setModalOpen(true)} key={index} className={`${item.color} text-white p-2 text-center`}>
               <div className="font-bold">{item.type}</div>
               <div className="text-lg font-bold">{item.odds}</div>
               <div className="text-sm">300000</div>
@@ -152,13 +154,16 @@ const AmarAkbarAnthony = ({game, gmid}) => {
               <span className="text-red-600 text-xl">{item.suits[1]}</span>
             </div>
           </div>
-          <div className="bg-blue-400 p-2 text-center">
+          <div onClick={()=>setModalOpen(true)} className="bg-blue-400 p-2 text-center">
             <div className="font-bold">12.00</div>
             <div className="text-sm">50000</div>
           </div>
         </div>
       ))}
     </div>
+    {
+    ModalOpen ? (<BettingPage setisModalopen={setModalOpen}/>) : null
+  }
     </>
     
   );
