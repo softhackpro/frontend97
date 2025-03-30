@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import BettingPage from "./Popup/BettingPage";
 
 const Dtla = ({game, gmid}) => {
-  return (
+  const [ModalOpen, setModalOpen] = useState(false)
+  return (<>
     <div className="mb-16 bg-gray-800 p-4 rounded-md w-full text-white">
         <iframe src={`https://titan97.live/get-video/${gmid}`} frameborder="0"></iframe>
       {/* Tabs */}
@@ -13,7 +15,7 @@ const Dtla = ({game, gmid}) => {
 
       {/* Betting Options */}
       <div className="mt-4 space-y-2">
-        <div className="flex justify-between items-center bg-gray-700 p-2 rounded-md">
+        <div onClick={()=>setModalOpen(true)} className="flex justify-between items-center bg-gray-700 p-2 rounded-md">
           <span>Winner</span>
           <button className="bg-blue-500 px-4 py-1 rounded-md">2.94</button>
         </div>
@@ -32,12 +34,12 @@ const Dtla = ({game, gmid}) => {
           </button>
         </div>
 
-        <div className="flex justify-between items-center bg-gray-700 p-2 rounded-md">
+        <div onClick={()=>setModalOpen(true)} className="flex justify-between items-center bg-gray-700 p-2 rounded-md">
           <span>Odd</span>
           <button className="bg-blue-500 px-4 py-1 rounded-md">1.83</button>
         </div>
 
-        <div className="flex justify-between items-center bg-gray-700 p-2 rounded-md">
+        <div onClick={()=>setModalOpen(true)} className="flex justify-between items-center bg-gray-700 p-2 rounded-md">
           <span>Even</span>
           <button className="bg-blue-500 px-4 py-1 rounded-md">2.12</button>
         </div>
@@ -69,6 +71,10 @@ const Dtla = ({game, gmid}) => {
         </div>
       </div>
     </div>
+    {
+      ModalOpen ? (<BettingPage setisModalopen={setModalOpen}/>) : null
+    }
+    </>
   );
 };
 

@@ -8,7 +8,7 @@ const RecentResult = () => {
 
   return (
     <>
-    <div className="mb-15 flex items-center bg-black text-white p-2">
+    <div className="flex items-center bg-black text-white p-2">
       <h2 style={{ minWidth: "94px" }} className="font-bold mr-4 text-sm">
         Recent Result
       </h2>
