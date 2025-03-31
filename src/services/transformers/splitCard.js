@@ -27,7 +27,7 @@ export const splitTeenCards = (cards) => {
 
 // Example usage
 const cardsArray = ["JCC", "8CC", "10SS", "2SS", "8SS", "3CC"];
-// console.log(splitTeenCards(cardsArray));
+// //(splitTeenCards(cardsArray));
 
 export const splitPokerCards = (cardsArray) => {
   let Player_A = [];
@@ -50,7 +50,7 @@ export const splitPokerCards = (cardsArray) => {
     { cards: Board, playerName: "Board" },
   ];
 };
-// console.log(splitPokerCards([8, 2, 6, 2, 10, 10, 19, 15]));
+// //(splitPokerCards([8, 2, 6, 2, 10, 10, 19, 15]));
 
 export const splitDTL = (cardsArray) => {
   let dragon = cardsArray[0];

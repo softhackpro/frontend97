@@ -18,7 +18,7 @@ const CasinoProvider = ({ children }) => {
     setError(null);
     try {
       const res = await getAllCasinoGame();
-      // console.log(res, "from casino context");
+      // //(res, "from casino context");
       
       setAllCasinoGames(res);
     } catch (err) {
@@ -47,7 +47,7 @@ const CasinoProvider = ({ children }) => {
   };
 
   const fetchCasinoResult = async (type, mid) => {
-    console.log("here");
+    //("here");
     
     setLoading(true);
     setError(null);

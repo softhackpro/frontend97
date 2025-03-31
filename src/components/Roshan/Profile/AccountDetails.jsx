@@ -20,7 +20,7 @@ const AccountDetails = () => {
     const fetchData = async () => {
       const data = JSON.parse(localStorage.getItem("user"));
       const user_id = data.user_id;
-      // console.log(user_id)
+      // //(user_id)
       try {
         const result = await axios.post(
           "https://admin.titan97.live/Apicall/myprofile",
@@ -28,7 +28,7 @@ const AccountDetails = () => {
             user_id: user_id,
           }
         );
-        console.log(result);
+        //(result);
         setUserData((prev) => ({
           ...prev,
           name: result.data.profile_info.user_id,
@@ -36,7 +36,7 @@ const AccountDetails = () => {
           exposureLimit: result.data.profile_info.min_sports_exp,
         }));
       } catch (error) {
-        console.log(error);
+        //(error);
       }
     };
 

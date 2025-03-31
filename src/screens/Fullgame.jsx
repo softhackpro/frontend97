@@ -47,6 +47,11 @@ const Fullgame = () => {
   const [mainApiData, setMainApiData] = useState([]);
   const [tossData, setTossData] = useState([]);
   const { user } = useContext(AuthContext);
+  const [betAmountShow, setBetAmountShow] = useState(null);
+  const [winAmount, setWinAmount] = useState(0);
+  const [lossAmount, setLossAmount] = useState(0);
+  const [betOpenType, setBetOpenType] = useState(null);
+  const [betOpenTypeName, setBetOpenTypeName] = useState(null);
 
   const fetchGameDetails = async () => {
     try {
@@ -96,7 +101,7 @@ const Fullgame = () => {
         market_name: match_name,
       };
 
-      console.log(d);
+      //(d);
 
       const response = await axios.post(
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
@@ -140,7 +145,7 @@ const Fullgame = () => {
       setLoader(true);
       await fetchGameDetails();
       setLoader(false);
-    } catch (error) {}
+    } catch (error) { }
   }, [apiData, loder]);
 
   useEffect(() => {
@@ -165,7 +170,7 @@ const Fullgame = () => {
   useEffect(() => {
     const filterData = mainApiData.filter((item) => item.gtype === "fancy1");
     setTossData(filterData);
-    console.log(filterData);
+    //(filterData);
   }, [mainApiData]);
 
   const handleBackClick = (
@@ -192,6 +197,16 @@ const Fullgame = () => {
       dataIndex: dataIndex,
       sectionIndex: sectionIndex,
     });
+
+
+    setBetAmountShow(mname);
+    const win_amount = (betAmount - 1) * odds
+    setWinAmount(win_amount);
+    setLossAmount(betAmount);
+    setBetOpenType("Back")
+    setBetOpenTypeName(item.nat)
+    //(win_amount, item.odds, betAmount);
+
   };
 
   const handleLayClick = (
@@ -217,6 +232,16 @@ const Fullgame = () => {
       dataIndex: dataIndex,
       sectionIndex: sectionIndex,
     });
+    setBetAmountShow(mname);
+    const loss_amount = (betAmount - 1) * odds
+    setLossAmount(loss_amount)
+    setWinAmount(betAmount);
+    setBetOpenType("Lay")
+    setBetOpenTypeName(item.nat)
+    console.log("ddddddddddddddddddddd");
+
+    console.log(loss_amount, odds, betAmount);
+
   };
 
   const handleBetAmountChange = (amount) => {
@@ -244,9 +269,9 @@ const Fullgame = () => {
   };
 
   useEffect(() => {
-    console.log(activeTab);
-    console.log(mainApiData);
-    console.log(apiData);
+    //(activeTab);
+    //(mainApiData);
+    //(apiData);
 
     if (activeTab === "All") {
       setApiData(mainApiData);
@@ -266,6 +291,9 @@ const Fullgame = () => {
     setMatchDetail(res.data.data[0]);
     setScore(!openScore);
   };
+
+  //(betAmountShow);
+
   return (
     <div className="w-full sm:max-w-3xl mx-auto overflow-hidden rounded shadow relative">
       {/* Header */}
@@ -286,9 +314,8 @@ const Fullgame = () => {
       </div>
 
       <div
-        className={`transition-[max-height] duration-[1000ms] ease-in-out overflow-hidden ${
-          openTv ? "max-h-[1000px]" : "max-h-0"
-        }`}
+        className={`transition-[max-height] duration-[1000ms] ease-in-out overflow-hidden ${openTv ? "max-h-[1000px]" : "max-h-0"
+          }`}
       >
         <iframe
           src={`https://titan97.live/get-livesports?gmid=${id}&sid=${sid}`}
@@ -298,9 +325,8 @@ const Fullgame = () => {
       </div>
 
       <div
-        className={`transition-[max-height] duration-[1000ms] ease-in-out overflow-hidden ${
-          openScore ? "max-h-[1000px]" : "max-h-0"
-        }`}
+        className={`transition-[max-height] duration-[1000ms] ease-in-out overflow-hidden ${openScore ? "max-h-[1000px]" : "max-h-0"
+          }`}
       >
         <iframe
           src={`https://titan97.live/get-score?gtv=${matchdetail?.gtv}&sid=${sid}`}
@@ -312,9 +338,8 @@ const Fullgame = () => {
       {/* Tabs */}
       <div className="flex overflow-x-scroll scroll-smooth w-full gap-1 p-2 text-white bg-gray-200 border-b border-gray-300">
         <button
-          className={`p-2 font-bold border-1 text-nowrap border-black rounded-4xl text-sm ${
-            activeTab === "All" ? "bg-[#016630] text-white" : "bg-[#2c485a]"
-          }`}
+          className={`p-2 font-bold border-1 text-nowrap border-black rounded-4xl text-sm ${activeTab === "All" ? "bg-[#016630] text-white" : "bg-[#2c485a]"
+            }`}
           onClick={() => handleFilterOptionsClick("All")}
         >
           All
@@ -330,11 +355,10 @@ const Fullgame = () => {
           ].includes(tab.gtype.toString().toLowerCase()) ? null : (
             <button
               key={tab}
-              className={`p-2 font-bold border-1 text-nowrap border-black rounded-4xl text-sm ${
-                activeTab === tab?.mname
-                  ? "bg-[#016630] text-white"
-                  : "bg-[#2c485a]"
-              }`}
+              className={`p-2 font-bold border-1 text-nowrap border-black rounded-4xl text-sm ${activeTab === tab?.mname
+                ? "bg-[#016630] text-white"
+                : "bg-[#2c485a]"
+                }`}
               onClick={() => handleFilterOptionsClick(tab?.mname)}
             >
               {tab?.mname}
@@ -344,244 +368,270 @@ const Fullgame = () => {
       </div>
       {apiData && apiData.length
         ? apiData.map((data, dataIndex) => (
-            <div key={dataIndex} className="bg-white relative">
-              {/* Winner Section */}
-              <div>
-                {[
-                  "meter",
-                  "oddeven",
-                  "khado",
-                  "fancy1",
-                  "fancy",
-                  "cricketcasino",
-                ].includes(data.gtype.toString().toLowerCase()) ? null : (
-                  <>
-                    <div className="flex justify-between items-center bg-white text-white">
-                      <div className="flex w-fit items-center p-2 rounded-tr-xl bg-gray-800">
-                        <span className="font-bold text-xs">
-                          {" "}
-                          {[
-                            "meter",
-                            "oddeven",
-                            "khado",
-                            "fancy1",
-                            "fancy",
-                            "cricketcasino",
-                          ].some(
-                            (type) =>
-                              data.gtype.toString().toLowerCase() === type
-                          )
-                            ? data.mname
-                            : data.mname}
-                        </span>
-                        <svg
-                          className="w-4 h-4 ml-1"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <circle cx="12" cy="12" r="10" strokeWidth="2" />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M12 8v4m0 4h.01"
-                          />
-                        </svg>
-                      </div>
-                      <div className="text-xs text-black mr-2 font-semibold">
-                        Matched € 9.6K
-                      </div>
+          <div key={dataIndex} className="bg-white relative">
+            {/* Winner Section */}
+            <div>
+              {[
+                "meter",
+                "oddeven",
+                "khado",
+                "fancy1",
+                "fancy",
+                "cricketcasino",
+              ].includes(data.gtype.toString().toLowerCase()) ? null : (
+                <>
+                  <div className="flex justify-between items-center bg-white text-white">
+                    <div className="flex w-fit items-center p-2 rounded-tr-xl bg-gray-800">
+                      <span className="font-bold text-xs">
+                        {" "}
+                        {[
+                          "meter",
+                          "oddeven",
+                          "khado",
+                          "fancy1",
+                          "fancy",
+                          "cricketcasino",
+                        ].some(
+                          (type) =>
+                            data.gtype.toString().toLowerCase() === type
+                        )
+                          ? data.mname
+                          : data.mname}
+                      </span>
+                      <svg
+                        className="w-4 h-4 ml-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle cx="12" cy="12" r="10" strokeWidth="2" />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M12 8v4m0 4h.01"
+                        />
+                      </svg>
                     </div>
-                    <div className="border-b text-[5px] border-gray-300">
-                      {dataIndex === 0 && (
-                        <div className="flex font-bold text-sm">
-                          <div className="w-1/2 p-2"></div>
-                          <div className="w-1/4 p-2 text-center bg-[#72bbef] border-l border-gray-300">
-                            Back
-                          </div>
-                          <div className="w-1/4 p-2 text-center bg-[#faa9ba] border-l border-gray-300">
-                            Lay
-                          </div>
+                    <div className="text-xs text-black mr-2 font-semibold">
+                      Matched € 9.6K
+                    </div>
+                  </div>
+                  <div className="border-b text-[5px] border-gray-300">
+                    {dataIndex === 0 && (
+                      <div className="flex font-bold text-sm">
+                        <div className="w-1/2 p-2"></div>
+                        <div className="w-1/4 p-2 text-center bg-[#72bbef] border-l border-gray-300">
+                          Back
                         </div>
-                      )}
+                        <div className="w-1/4 p-2 text-center bg-[#faa9ba] border-l border-gray-300">
+                          Lay
+                        </div>
+                      </div>
+                    )}
 
-                      <div className="relative">
-                        {data.section.map((item, sectionIndex) => (
-                          <React.Fragment key={item.sid}>
-                            <div className="flex border-t border-gray-400 relative text-[12px] text-sm">
-                              <div className="w-1/2 p-2 font-bold text-[12px]">
-                                {item?.nat}
-                              </div>
+                    <div className="relative">
+                      {data.section.map((item, sectionIndex) => (
+                        <React.Fragment key={item.sid}>
+                          <div className="flex border-t border-gray-400 relative text-[12px] text-sm">
+                            <div className="w-1/2 p-2 font-bold flex flex-col text-[12px]">
+                              <p>{item?.nat}</p>
+                              {
+                                betAmountShow && betAmount && betAmountShow === data.mname ? (
+                                  <div>
+                                    {
+                                      data.mname === 'MATCH_ODDS' ? (
+                                        betOpenType === "Lay" ? (
+                                          betOpenTypeName === item.nat ? (
+                                            <p className={` text-red-500 `} > ( {(betAmount * (item.odds[item.odds.length / 2]?.odds - 1)).toFixed(2)}  )</p>
+                                          ) : <p className={`text-green-500 `} > ( {betAmount.toFixed(2)}  )</p>
+                                        ) : betOpenTypeName === item.nat ? (
+                                          <p className={`text-green-500 `} > ( {(betAmount * (item.odds[item.odds.length / 2 - 1]?.odds - 1)).toFixed(2)}   )</p>
+                                        ) : <p className={` text-red-500 `} > ( {betAmount.toFixed(2)} )</p>
+                                      ) : (
 
-                              {item.gstatus !== "" &&
+                                        //   Bhaiya this is for you yha pe rate point me nahi nai h to isme 1 minus hoga ya nai pata nai aur call kriyega 
+                                        betOpenType === "Lay" ? (
+                                          betOpenTypeName === item.nat ? (
+                                            <p className={` text-red-500 `} > ( {(betAmount * (item.odds[item.odds.length / 2]?.odds - 1)).toFixed(2)}  )</p>
+                                          ) : <p className={`text-green-500 `} > ( {betAmount.toFixed(2)}  )</p>
+                                        ) : betOpenTypeName === item.nat ? (
+                                          <p className={`text-green-500 `} > ( {(betAmount * (item.odds[item.odds.length / 2 - 1]?.odds - 1)).toFixed(2)}   )</p>
+                                        ) : <p className={` text-red-500 `} > ( {betAmount.toFixed(2)} )</p>
+                                      )
+                                    }
+                                  </div>
+                                ) : null
+                              }
+                            </div>
+                            {item.gstatus !== "" &&
                               item.gstatus !== "ACTIVE" &&
                               item.gstatus !== "OPEN" ? (
-                                <div className="text-black font-semibold flex items-center justify-center w-1/2 bg-red-500/30">
-                                  {item.gstatus}
-                                </div>
-                              ) : (
-                                <div className="w-1/2 flex h-full">
-                                  <button
-                                    onClick={() =>
-                                      handleBackClick(
-                                        dataIndex,
-                                        sectionIndex,
-                                        item,
-                                        item.odds[item.odds.length / 2 - 1]
-                                          ?.odds,
-                                        data.mname,
-                                        data.gmid,
-                                        data.mid,
-                                        item.odds[item.odds.length / 2]?.size
-                                      )
+                              <div className="text-black font-semibold flex items-center justify-center w-1/2 bg-red-500/30">
+                                {item.gstatus}
+                              </div>
+                            ) : (
+                              <div className="w-1/2 flex h-full">
+                                <button
+                                  onClick={() =>
+                                    handleBackClick(
+                                      dataIndex,
+                                      sectionIndex,
+                                      item,
+                                      item.odds[item.odds.length / 2 - 1]
+                                        ?.odds,
+                                      data.mname,
+                                      data.gmid,
+                                      data.mid,
+                                      item.odds[item.odds.length / 2]?.size
+                                    )
+                                  }
+                                  className="w-full bg-[#72bbef] "
+                                >
+                                  <div className=" bg-[#72bbef] text-center font-bold">
+                                    {
+                                      item.odds[item.odds.length / 2 - 1]
+                                        ?.odds
                                     }
-                                    className="w-full bg-transparent"
-                                  >
-                                    <div className="bg-[#72bbef] text-center font-bold">
-                                      {
-                                        item.odds[item.odds.length / 2 - 1]
-                                          ?.odds
-                                      }
-                                    </div>
-                                    <div className="bg-[#72bbef] text-center">
-                                      {
-                                        item.odds[item.odds.length / 2 - 1]
-                                          ?.size
-                                      }
-                                    </div>
-                                  </button>
-                                  <button
-                                    onClick={() =>
-                                      handleLayClick(
-                                        dataIndex,
-                                        sectionIndex,
-                                        item,
-                                        item.odds[item.odds.length / 2]?.odds,
-                                        data.mname,
-                                        data.gmid,
-                                        data.mid,
-                                        item.odds[item.odds.length / 2]?.size
-                                      )
+                                  </div>
+                                  <div className=" bg-[#72bbef] text-center">
+                                    {
+                                      item.odds[item.odds.length / 2 - 1]
+                                        ?.size
                                     }
-                                    className="w-full bg-transparent"
+                                  </div>
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    handleLayClick(
+                                      dataIndex,
+                                      sectionIndex,
+                                      item,
+                                      item.odds[item.odds.length / 2]?.odds,
+                                      data.mname,
+                                      data.gmid,
+                                      data.mid,
+                                      item.odds[item.odds.length / 2]?.size
+                                    )
+                                  }
+                                  className="w-full bg-[#faa9ba] "
+                                >
+                                  <div className=" text-center font-bold">
+                                    {item.odds[item.odds.length / 2]?.odds}
+                                  </div>
+                                  <div className=" text-center">
+                                    {item.odds[item.odds.length / 2]?.size}
+                                  </div>
+                                </button>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Inline Betting Modal */}
+                          {isModalOpen(dataIndex, sectionIndex) &&
+                            selectedBet && (
+                              <div className="w-full bg-[#d3edd0] text-lg text-black rounded-md shadow-lg border border-[#beddf4] p-1">
+                                <div className="flex justify-between gap-1 items-center mb-2">
+                                  <div
+                                    className="flex w-1/2 border-1 border-[#aaaaaa] items-center rounded-md"
+                                    style={{ backgroundColor: "#fcfcfc" }}
                                   >
-                                    <div className="bg-[#faa9ba] text-center font-bold">
-                                      {item.odds[item.odds.length / 2]?.odds}
-                                    </div>
-                                    <div className="bg-[#faa9ba] text-center">
-                                      {item.odds[item.odds.length / 2]?.size}
-                                    </div>
-                                  </button>
-                                </div>
-                              )}
-                            </div>
-
-                            {/* Inline Betting Modal */}
-                            {isModalOpen(dataIndex, sectionIndex) &&
-                              selectedBet && (
-                                <div className="w-full bg-[#d3edd0] text-lg text-black rounded-md shadow-lg border border-[#beddf4] p-1">
-                                  <div className="flex justify-between gap-1 items-center mb-2">
-                                    <div
-                                      className="flex w-1/2 border-1 border-[#aaaaaa] items-center rounded-md"
-                                      style={{ backgroundColor: "#fcfcfc" }}
-                                    >
-                                      <button className="p-2 text-blue-800">
-                                        <span className="text-xl font-bold">
-                                          −
-                                        </span>
-                                      </button>
-                                      <input
-                                        type="text"
-                                        value={selectedBet.odds}
-                                        className="p-2 text-center w-full border-r border-l border-[#aaaaaa] bg-gray-100"
-                                        readOnly
-                                      />
-                                      <button className="p-2 text-blue-800">
-                                        <span className="text-xl font-bold">
-                                          +
-                                        </span>
-                                      </button>
-                                    </div>
-                                    <div
-                                      className="flex border-1 border-[#aaaaaa] items-center w-1/2 rounded-md"
-                                      style={{ backgroundColor: "#fcfcfc" }}
-                                    >
-                                      <button
-                                        onClick={() =>
-                                          setBetAmount(
-                                            Math.max(0, betAmount - 100)
-                                          )
-                                        }
-                                        className="p-2 text-blue-800"
-                                      >
-                                        <span className="text-sm font-bold">
-                                          −
-                                        </span>
-                                      </button>
-                                      <input
-                                        type="text"
-                                        value={betAmount}
-                                        onChange={(e) =>
-                                          setBetAmount(Number(e.target.value))
-                                        }
-                                        className="p-2 text-center border-l border-[#aaaaaa] w-full border-r bg-gray-100"
-                                      />
-                                      <button
-                                        onClick={() =>
-                                          setBetAmount(betAmount + 100)
-                                        }
-                                        className="p-2 text-blue-800 rounded-xl"
-                                      >
-                                        <span className="text-xl font-bold">
-                                          +
-                                        </span>
-                                      </button>
-                                    </div>
-                                  </div>
-
-                                  <div className="grid grid-cols-4 mt-2 gap-2 mb-2">
-                                    {betAmounts.map((amount) => (
-                                      <button
-                                        key={amount}
-                                        onClick={() =>
-                                          handleBetAmountChange(amount)
-                                        }
-                                        className="bg-white border-1 border-black py-1 text-center rounded hover:bg-gray-100 text-sm"
-                                      >
-                                        {amount}
-                                      </button>
-                                    ))}
-                                  </div>
-
-                                  <div className="flex space-x-2 mt-4">
-                                    <button
-                                      onClick={closeModal}
-                                      className="w-1/2 py-2 text-center rounded border border-green-300 text-sm bg-white hover:bg-gray-100"
-                                    >
-                                      Cancel
+                                    <button className="p-2 text-blue-800">
+                                      <span className="text-xl font-bold">
+                                        −
+                                      </span>
                                     </button>
+                                    <input
+                                      type="text"
+                                      value={selectedBet.odds}
+                                      className="p-2 text-center w-full border-r border-l border-[#aaaaaa] bg-gray-100"
+                                      readOnly
+                                    />
+                                    <button className="p-2 text-blue-800">
+                                      <span className="text-xl font-bold">
+                                        +
+                                      </span>
+                                    </button>
+                                  </div>
+                                  <div
+                                    className="flex border-1 border-[#aaaaaa] items-center w-1/2 rounded-md"
+                                    style={{ backgroundColor: "#fcfcfc" }}
+                                  >
                                     <button
-                                      disabled={betLoading}
-                                      onClick={() => placeBat()}
-                                      className="w-1/2 py-2 text-center text-sm text-white rounded font-medium"
-                                      style={{ backgroundColor: "#4a6da7" }}
+                                      onClick={() =>
+                                        setBetAmount(
+                                          Math.max(0, betAmount - 100)
+                                        )
+                                      }
+                                      className="p-2 text-blue-800"
                                     >
-                                      {betLoading ? "loading" : "Place Bet"}
+                                      <span className="text-sm font-bold">
+                                        −
+                                      </span>
+                                    </button>
+                                    <input
+                                      type="text"
+                                      value={betAmount}
+                                      onChange={(e) =>
+                                        setBetAmount(Number(e.target.value))
+                                      }
+                                      className="p-2 text-center border-l border-[#aaaaaa] w-full border-r bg-gray-100"
+                                    />
+                                    <button
+                                      onClick={() =>
+                                        setBetAmount(betAmount + 100)
+                                      }
+                                      className="p-2 text-blue-800 rounded-xl"
+                                    >
+                                      <span className="text-xl font-bold">
+                                        +
+                                      </span>
                                     </button>
                                   </div>
                                 </div>
-                              )}
-                          </React.Fragment>
-                        ))}
-                      </div>
+
+                                <div className="grid grid-cols-4 mt-2 gap-2 mb-2">
+                                  {betAmounts.map((amount) => (
+                                    <button
+                                      key={amount}
+                                      onClick={() =>
+                                        handleBetAmountChange(amount)
+                                      }
+                                      className="bg-white border-1 border-black py-1 text-center rounded hover:bg-gray-100 text-sm"
+                                    >
+                                      {amount}
+                                    </button>
+                                  ))}
+                                </div>
+
+                                <div className="flex space-x-2 mt-4">
+                                  <button
+                                    onClick={closeModal}
+                                    className="w-1/2 py-2 text-center rounded border border-green-300 text-sm bg-white hover:bg-gray-100"
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    disabled={betLoading}
+                                    onClick={() => placeBat()}
+                                    className="w-1/2 py-2 text-center text-sm text-white rounded font-medium"
+                                    style={{ backgroundColor: "#4a6da7" }}
+                                  >
+                                    {betLoading ? "loading" : "Place Bet"}
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+                        </React.Fragment>
+                      ))}
                     </div>
-                  </>
-                )}
-              </div>
+                  </div>
+                </>
+              )}
             </div>
-          ))
+          </div>
+        ))
         : null}
 
       <TossSportsConponents

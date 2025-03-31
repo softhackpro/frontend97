@@ -18,7 +18,7 @@ const ExposureDetailPopup = ({ isOpen, onClose, userId }) => {
       );
       setData(response.data.data);
     } catch (error) {
-      // console.log(error.message);
+      // //(error.message);
     }
   };
 

@@ -23,7 +23,7 @@ const ChnagePasswordPopup = ({ onClose, user_id, setPasswordPopup }) => {
   const handleClick = async () => {
     const data= JSON.parse(localStorage.getItem('user'))
     const user_id= data.user_id
-    console.log(user_id)
+    //(user_id)
     try {
       const result = await axios.post(
         "https://admin.titan97.live/Apicall/update_users_profile",
@@ -32,10 +32,10 @@ const ChnagePasswordPopup = ({ onClose, user_id, setPasswordPopup }) => {
           password:formData.newPassword
         }
       );
-      console.log(result);
+      //(result);
       toast.success(result.data.message)
     } catch (error) {
-      console.log(error);
+      //(error);
       toast.error('password updated successfuly')('something went wrong');
     }finally{
       onClose()

@@ -29,12 +29,12 @@ export const TossSportsConponents = ({
     const teamname = firstMatch?.nat?.match(/\((\w{2,4}) vs (\w{2,4})\)/);
     if (teamname) {
       const teams = [teamname[1], teamname[2]];
-      console.log(teams);
+      //(teams);
       setTeam(teams);
     }
   }, [data]);
 
-  console.log(data);
+  //(data);
 
   return (
     <>
@@ -166,7 +166,7 @@ export const TossSportsConponents = ({
 };
 
 const TeamCard = ({ data, mainData, handleBackClick, index, teamname }) => {
-  console.log(data, "assssssssssssssssssssssssssssssss");
+  //(data, "assssssssssssssssssssssssssssssss");
   if (!data) return null;
   return (
     <div className=" flex flex-col">
