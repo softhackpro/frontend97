@@ -86,6 +86,13 @@ const Fullgame = () => {
         updatedBet = selectedBet?.size / 100;
       }
 
+      let win_a = updatedBet * betAmount;
+      let loss_a = betAmount;
+      if (betOpenType === 'Lay') {
+        win_a = betAmount;
+        loss_a = updatedBet * betAmount;
+      }
+      
       const d = {
         selection_id: selectedBet?.mid,
         bet_type: selectedBet?.type,
@@ -95,13 +102,13 @@ const Fullgame = () => {
         bet_rate: sendUpdateBet,
         match_id: selectedBet?.gmid,
         market_type: selectedBet?.type,
-        win_amount: updatedBet * betAmount,
-        loss_amount: betAmount,
+        win_amount: win_a,
+        loss_amount: loss_a,
         gtype: selectedBet?.mname,
         market_name: match_name,
-      };
+      }
 
-      //(d);
+      console.log(d);
 
       const response = await axios.post(
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
@@ -114,8 +121,8 @@ const Fullgame = () => {
           bet_rate: sendUpdateBet,
           match_id: selectedBet?.gmid,
           market_type: selectedBet?.type,
-          win_amount: updatedBet * betAmount,
-          loss_amount: betAmount,
+          win_amount: win_a,
+          loss_amount: loss_a,
           gtype: selectedBet?.mname,
           market_name: match_name,
         }
@@ -127,6 +134,8 @@ const Fullgame = () => {
       }
       closeModal();
     } catch (error) {
+      console.log(error);
+      
       toast.error("something went wrong");
     } finally {
       setBetLoading(false);
@@ -454,10 +463,10 @@ const Fullgame = () => {
                                         //   Bhaiya this is for you yha pe rate point me nahi nai h to isme 1 minus hoga ya nai pata nai aur call kriyega 
                                         betOpenType === "Lay" ? (
                                           betOpenTypeName === item.nat ? (
-                                            <p className={` text-red-500 `} > ( {(betAmount * (item.odds[item.odds.length / 2]?.odds - 1)).toFixed(2)}  )</p>
+                                            <p className={` text-red-500 `} > ( {(betAmount * (item.odds[item.odds.length / 2]?.odds / 100)).toFixed(2)}  )</p>
                                           ) : <p className={`text-green-500 `} > ( {betAmount.toFixed(2)}  )</p>
                                         ) : betOpenTypeName === item.nat ? (
-                                          <p className={`text-green-500 `} > ( {(betAmount * (item.odds[item.odds.length / 2 - 1]?.odds - 1)).toFixed(2)}   )</p>
+                                          <p className={`text-green-500 `} > ( {(betAmount * (item.odds[item.odds.length / 2 - 1]?.odds / 100)).toFixed(2)}   )</p>
                                         ) : <p className={` text-red-500 `} > ( {betAmount.toFixed(2)} )</p>
                                       )
                                     }
