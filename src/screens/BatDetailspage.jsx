@@ -28,7 +28,7 @@ const BetDetailsScreen = () => {
         return acc;
       }, {});
       setData(marketMap);
-      console.log(response);
+      //(response);
     } catch (error) {
       console.error("Error fetching bet details:", error.message);
     }
@@ -42,7 +42,7 @@ const BetDetailsScreen = () => {
     setExpandedMarket((prev) => (prev === market ? null : market));
   };
 
-  console.log(data);
+  //(data);
 
   return (
     <div className="w-full h-full container mx-auto min-h-screen bg-white flex flex-col gap-1">

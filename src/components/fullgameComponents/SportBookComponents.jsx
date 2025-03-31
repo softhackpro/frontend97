@@ -293,12 +293,12 @@ export const SportBookComponents = ({
                                         )
                                       : null
                                   }
-                                  className="w-full bg-transparent"
+                                  className="w-full bg-pink-300 "
                                   disabled={
                                     !item.odds || item.odds.length === 0
                                   }
                                 >
-                                  <div className="bg-pink-300 text-center font-bold">
+                                  <div className=" text-center font-bold">
                                     {item.odds && item.odds.length > 0
                                       ? item.odds[
                                           Math.floor(item.odds.length / 2)
@@ -329,19 +329,19 @@ export const SportBookComponents = ({
                                         )
                                       : null
                                   }
-                                  className="w-full bg-transparent"
+                                  className="w-full bg-blue-300 "
                                   disabled={
                                     !item.odds || item.odds.length === 0
                                   }
                                 >
-                                  <div className="bg-blue-300 text-center font-bold">
+                                  <div className=" text-center font-bold">
                                     {item.odds && item.odds.length > 0
                                       ? item.odds[
                                           Math.floor(item.odds.length / 2) - 1
                                         ]?.odds
                                       : "-"}
                                   </div>
-                                  <div className="bg-blue-300 text-center">
+                                  <div className=" text-center">
                                     {item.odds && item.odds.length > 0
                                       ? item.odds[
                                           Math.floor(item.odds.length / 2) - 1

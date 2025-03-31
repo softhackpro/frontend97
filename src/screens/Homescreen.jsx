@@ -24,7 +24,7 @@ export const Homescreen = () => {
 
   const { allSports, getMatchListById, matchList } = useContext(SportsContext);
   const { loading } = useContext(SportsContext);
-  // console.log(user);
+  // //(user);
 
   return (
     <div>

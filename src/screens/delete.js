@@ -17,7 +17,7 @@ app.get("/get-matchdetails", async (req, res) => {
   const { gmid, sid } = req.query; // Changed from req.body to req.query for GET requests
   try {
     const response = await axios.get(`${BASE_URL}/getDetailsData?gmid=${gmid}&sid=${sid}`);
-    console.log("GET request for match details");
+    //("GET request for match details");
     res.json(response.data);
   } catch (error) {
     console.error("Error fetching matchlist:", error.message);
@@ -57,13 +57,13 @@ app.get("/stream", async (req, res) => {
 app.get("/get-video/:id", async (req, res) => {
   try {
     const videoId = req.params.id;
-    console.log(videoId, "kya hai video id");
+    //(videoId, "kya hai video id");
     const response = await axios.get(`${BASE_URL}/casino/tv_url?type=${videoId}`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    console.log(response.data, "from get-video")
+    //(response.data, "from get-video")
     const videoUrl = response.data.tv_url;
 
     res.send(`
@@ -146,7 +146,7 @@ app.get("/get-livesports", async (req, res) => {
   try {
     const response = await axios.get(`${BASE_URL}/tv_url?gmid=${gmid}&sid=${sid}`);
     const videoUrl = response.data.tv_url;
-   console.log(videoUrl)
+   //(videoUrl)
     res.send(`
       <!DOCTYPE html>
 <html lang="en">
@@ -185,7 +185,7 @@ app.get("/get-score", async (req, res) => {
     try {
       const response = await axios.get(`${BASE_URL}/score?gtv=${gtv}&sid=${sid}`);
       const videoUrl = response.data.tv_url;
-     console.log(videoUrl)
+     //(videoUrl)
       res.send(`
         <!DOCTYPE html>
   <html lang="en">
@@ -266,5 +266,5 @@ initializeSocket(server);
 // Start server
 const PORT = process.env.PORT || 4004;
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  //(`Server running on port ${PORT}`);
 });
