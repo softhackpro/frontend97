@@ -3,7 +3,6 @@ import Popup from './Popup/Popup';
 import BettingPage from './Popup/BettingPage';
 
 const AndarBahar = ({game, gmid}) => {
-  console.log(game, "ye game hai");
   const [ModalOpen, setModalOpen] = useState(false)
     const topRowNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
   const bottomRowNumbers = [9, 10, 11, 12, 13];
@@ -35,12 +34,12 @@ const AndarBahar = ({game, gmid}) => {
           <div className="font-bold text-lg">12</div>
           <div className="mt-2">0</div>
         </div>
-        <div className="rounded-md border-2 border-yellow-400 bg-blue-600 p-2 flex flex-col items-center text-white">
+        <div onClick={()=>setModalOpen(true)} className="rounded-md border-2 border-yellow-400 bg-blue-600 p-2 flex flex-col items-center text-white">
           <div className="font-semibold text-sm">1st BET A</div>
           <div className="font-bold text-lg">2</div>
           <div className="mt-2">0</div>
         </div>
-        <div className="rounded-md border-2 border-yellow-400 bg-gray-800 p-2 flex flex-col items-center text-white relative">
+        <div onClick={()=>setModalOpen(true)} className="rounded-md border-2 border-yellow-400 bg-gray-800 p-2 flex flex-col items-center text-white relative">
           <div className="font-semibold text-sm">2st BET A</div>
           <div className="font-bold text-lg">2</div>
           <div className="absolute inset-0 flex items-center justify-center">
@@ -65,12 +64,12 @@ const AndarBahar = ({game, gmid}) => {
         </div>
 
         {/* Second betting row */}
-        <div className="rounded-md border-2 border-yellow-400 bg-gray-200 p-2 flex flex-col items-center">
+        <div onClick={()=>setModalOpen(true)} className="rounded-md border-2 border-yellow-400 bg-gray-200 p-2 flex flex-col items-center">
           <div className="font-semibold text-sm">SIDE BET B</div>
           <div className="font-bold text-lg">12</div>
           <div className="mt-2">0</div>
         </div>
-        <div className="rounded-md border-2 border-yellow-400 bg-blue-600 p-2 flex flex-col items-center text-white">
+        <div onClick={()=>setModalOpen(true)} className="rounded-md border-2 border-yellow-400 bg-blue-600 p-2 flex flex-col items-center text-white">
           <div className="font-semibold text-sm">1st BET B</div>
           <div className="font-bold text-lg">2</div>
           <div className="mt-2">0</div>
@@ -78,7 +77,7 @@ const AndarBahar = ({game, gmid}) => {
         <div className="rounded-md border-2 border-yellow-400 bg-gray-800 p-2 flex flex-col items-center text-white relative">
           <div className="font-semibold text-sm">2st BET B</div>
           <div className="font-bold text-lg">2</div>
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div onClick={()=>setModalOpen(true)} className="absolute inset-0 flex items-center justify-center">
             <div className="bg-gray-600 rounded-full p-1">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -98,10 +97,10 @@ const AndarBahar = ({game, gmid}) => {
         <div className="grid grid-cols-2 gap-4 text-center font-bold">
           <div className="bg-white p-2 text-black">ODD</div>
           <div className="bg-white p-2 text-black">EVEN</div>
-          <div className="bg-sky-300 p-2">1.83</div>
-          <div className="bg-sky-300 p-2">2.12</div>
-          <div className="bg-white p-2 text-xs">0</div>
-          <div className="bg-white p-2 text-xs">0</div>
+          <div onClick={()=>setModalOpen(true)} className="bg-sky-300 p-2">1.83</div>
+          <div onClick={()=>setModalOpen(true)} className="bg-sky-300 p-2">2.12</div>
+          <div onClick={()=>setModalOpen(true)} style={{color: "black"}} className="bg-white p-2 text-xs">8</div>
+          <div onClick={()=>setModalOpen(true)} style={{color: "black"}} className="bg-white p-2 text-xs">0</div>
         </div>
       </div>
       
@@ -228,7 +227,7 @@ const AndarBahar = ({game, gmid}) => {
     </div>
   </div>
   {
-    ModalOpen ? (<BettingPage setisModalopen={setModalOpen}/>) : null
+    ModalOpen ? (<BettingPage setisModalopen={setModalOpen} game={game}/>) : null
   }
   </>
   );
