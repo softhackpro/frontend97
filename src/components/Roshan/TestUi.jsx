@@ -10,16 +10,16 @@ const TestUi = () => {
     const [selectedBet, setSelectedBet] = useState()
     const [Money, setMoney] = useState(100)
     const { user } = useContext(AuthContext);
-    // console.log(selectedBet, "ye selected bet hai");
+    // //(selectedBet, "ye selected bet hai");
     
     const fetchValue = async() =>{
         try {
             const response = await axios.get('https://titan97.live/get-allcasino/lucky15')
             setValue(response?.data?.data)
-            // console.log(response.data?.data, "ye fetched value hai");
+            // //(response.data?.data, "ye fetched value hai");
             
         } catch (error) {
-            console.log(error);
+            //(error);
             
         }
     }
@@ -60,11 +60,11 @@ const TestUi = () => {
     }
     const openThisBet  = (stat) => {
         try {
-            // console.log(stat, "ye stat hai");
+            // //(stat, "ye stat hai");
             setSelectedBet(stat)
             setisModalopen(true)
         } catch (error) {
-            console.log(error);
+            //(error);
             
         }
     }

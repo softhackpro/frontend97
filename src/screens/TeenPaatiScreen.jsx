@@ -19,7 +19,7 @@ const TeenPaatiScreen = ({ game, gmid }) => {
   const matchCard = splitTeenCards(cardsArray);
   setTimeout(async () => {
     const result = await fetchCasinoResult(gmid, game.mid);
-    // console.log(result);
+    // //(result);
 
     if (result) {
       setWinner(result.winnat);

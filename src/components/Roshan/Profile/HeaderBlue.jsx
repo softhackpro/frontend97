@@ -21,7 +21,7 @@ const HeaderBlue = () => {
       );
       setBalanceData(response.data.data);
     } catch (error) {
-      // console.log(error);
+      // //(error);
     }
   };
 

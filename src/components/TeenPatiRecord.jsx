@@ -93,7 +93,7 @@ const TeenPatiRecord = ({ detail, gmid, mid }) => {
 
       closeModal();
     } catch (error) {
-      // console.log(error);
+      // //(error);
     } finally {
       setLoading(false);
     }
