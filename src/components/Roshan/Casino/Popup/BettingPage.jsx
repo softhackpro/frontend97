@@ -1,7 +1,39 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useContext, useState } from 'react'
+import toast from 'react-hot-toast'
+import { AuthContext } from '../../../../services/auth/auth.context';
 
-const BettingPage = ({setisModalopen}) => {
+const BettingPage = ({setisModalopen, game}) => {
+  const { user } = useContext(AuthContext);
     const [Money, setMoney] = useState(100)
+    const placebet = async() =>{
+      console.log(game, "ye sid ahi");
+      
+      try {
+        const response = await axios.post("https://admin.titan97.live/Apicall/bf_placeBet_api",
+          {
+            selection_id: game?.sub[0]?.sid,
+            bet_type: game?.sub[0]?.etype,
+            user_id: user?.id,
+            bet_name: game?.sub[0]?.subtype,
+            betvalue: game?.sub[0]?.nat,
+            bet_rate: game?.sub[0]?.b,
+            match_id: game?.mid,
+            market_type: "Back",
+            win_amount: game?.sub[0]?.b * Money,
+            loss_amount: Money,
+            gtype: game?.gtype,
+            market_name: game?.mid,
+          })
+
+          toast.success("bet placed")
+          setisModalopen(false)
+          setMoney(100)
+      } catch (error) {
+        console.log(error);
+        
+      }
+    }
   return (
     <div className="fixed inset-0 flex items-center justify-center ">
         <div className="w-full max-w-md bg-[#d3edd0] text-lg text-black rounded-md shadow-lg border border-[#beddf4] p-4">
@@ -59,7 +91,7 @@ const BettingPage = ({setisModalopen}) => {
               Cancel
             </button>
             <button
-            //   onClick={placebet}
+              onClick={placebet}
               className="w-1/2 py-2 text-center text-sm text-white rounded font-medium"
               style={{ backgroundColor: "#4a6da7" }}
             >
