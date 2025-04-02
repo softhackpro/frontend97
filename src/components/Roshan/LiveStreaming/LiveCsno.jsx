@@ -24,7 +24,7 @@ const LiveCsno = ({ game, gmid }) => {
     if (result) {
       setWinner(result.winnat);
     }
-  }, 3000);
+  }, 1000);
 
   return (
     <div className="relative w-full h-[200px] bg-black ">

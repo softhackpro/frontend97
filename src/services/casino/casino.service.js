@@ -26,7 +26,7 @@ export const getCasinoGameDetailsById = async (id) => {
   try {
     const response = await axios.get(
       `https://titan97.live/get-allcasino/${id}`
-    );
+    ); 
     return response.data;
   } catch (error) {
     console.error(
