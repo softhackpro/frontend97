@@ -22,7 +22,7 @@ export const EventDetails = () => {
   const getCasinoDetailsRef = useRef(getCasinoDetails);
 
   const [game, setGame] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   // Update ref when context function changes
@@ -37,6 +37,11 @@ export const EventDetails = () => {
       return;
     }
     const fetchGameDetails = async () => {
+      if(loading){
+        console.log("return ");
+        
+        return 
+      }
       try {
         setLoading(true);
 
@@ -56,7 +61,7 @@ export const EventDetails = () => {
 
     fetchGameDetails();
 
-    const intervalId = setInterval(fetchGameDetails, 3000);
+    const intervalId = setInterval(fetchGameDetails, 1000);
 
     return () => clearInterval(intervalId);
   }, [gmid]);

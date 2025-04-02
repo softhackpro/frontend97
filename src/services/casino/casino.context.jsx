@@ -60,6 +60,7 @@ const CasinoProvider = ({ children }) => {
       return null;
     } finally {
       setLoading(false);
+      await getCasinoResult(type, mid)
     }
   };
 
