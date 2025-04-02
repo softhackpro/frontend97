@@ -3,27 +3,26 @@ import React, { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
 import { AuthContext } from '../../../../services/auth/auth.context';
 
-const BettingPage = ({setisModalopen, game}) => {
+const BettingPage = ({setisModalopen, game, betRate, Player}) => {
   const { user } = useContext(AuthContext);
     const [Money, setMoney] = useState(100)
     const placebet = async() =>{
-      console.log(game, "ye sid ahi");
       
       try {
         const response = await axios.post("https://admin.titan97.live/Apicall/bf_placeBet_api",
           {
             selection_id: game?.sub[0]?.sid,
-            bet_type: game?.sub[0]?.etype,
+            bet_type: game?.sub[0]?.gtype,
             user_id: user?.id,
             bet_name: game?.sub[0]?.subtype,
             betvalue: game?.sub[0]?.nat,
-            bet_rate: game?.sub[0]?.b,
+            bet_rate: betRate,
             match_id: game?.mid,
             market_type: "Back",
             win_amount: game?.sub[0]?.b * Money,
             loss_amount: Money,
-            gtype: game?.gtype,
-            market_name: game?.mid,
+            gtype: "Casino",
+            market_name: Player,
           })
 
           toast.success("bet placed")
@@ -47,7 +46,7 @@ const BettingPage = ({setisModalopen, game}) => {
               </button>
               <input
                 type="text"
-                // value={selectedBet.b}
+                value={betRate}
                 className="p-2 text-center w-full border-r border-l border-[#aaaaaa] bg-gray-100"
                 readOnly
               />

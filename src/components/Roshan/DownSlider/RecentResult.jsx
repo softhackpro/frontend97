@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Popup from '../Casino/Popup/Popup';
+import axios from 'axios';
 
-const RecentResult = () => {
+const RecentResult = ({result}) => {
   const [ModalOpen, setModalOpen]  = useState()
+  const [fetchedResult, setFetchedResult] = useState([])
+  console.log(fetchedResult, "ye fetched result hai");
+  
+  const getlastResult = async() => {
+    try {
+      const res = await axios.get(`https://titan97.live/get-lastgamecasino/${result}`)
+      console.log(res?.data?.data?.res, "recent result");
+      setFetchedResult(res?.data?.data?.res)
+    } catch (error) {
+      
+    }
+  }
+  useEffect(()=>{
+      getlastResult()
+  },[result])
   // Sample data for the result circles
-  const results = ['R', 'R', 'R', 'R', 'R', 'R', "0", "9", "T", "B", "D", "P", "P", "P"];
+  // const results = ['R', 'R', 'R', 'R', 'R', 'R', "0", "9", "T", "B", "D", "P", "P", "P"];
 
   return (
     <>
@@ -13,13 +29,13 @@ const RecentResult = () => {
         Recent Result
       </h2>
       <div className="flex space-x-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
-        {results.map((result, index) => (
+        {fetchedResult.map((result, index) => (
           <div
             onClick={()=>setModalOpen(true)}
             key={index}
             className="w-8 h-8 min-w-8 rounded-full bg-blue-400 flex items-center justify-center text-black font-medium"
           >
-            {result}
+            {result.win}
           </div>
         ))}
       </div>
