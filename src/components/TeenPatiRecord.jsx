@@ -48,6 +48,9 @@ const TeenPatiRecord = ({ detail, gmid, mid }) => {
       playerIndex: playerIndex,
       betType: "Lay",
     });
+
+    console.log(player);
+    
   };
 
   const handleBetAmountChange = (amount) => {
@@ -74,15 +77,17 @@ const TeenPatiRecord = ({ detail, gmid, mid }) => {
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
         {
           selection_id: mid,
-          bet_type: selectedBet.type,
+          bet_type: detail.subtype,
           user_id: user?.user_id,
           bet_name: selectedBet.team,
-          betvalue: selectedBet.odds,
+          betvalue: selectedBet.team,
           match_id: gmid,
-          market_type: selectedBet.type,
+          market_type: 'casino',
           win_amount: selectedBet.odds * betAmount,
           loss_amount: betAmount,
-          gtype: detail.subtype || detail.mname,
+          gtype: 'casino',
+          market_name: detail.subtype,
+          bet_rate: selectedBet.odds
         }
       );
       if (response.data.success) {
