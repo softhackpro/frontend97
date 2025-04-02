@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Popup from './Popup/Popup';
 import BettingPage from './Popup/BettingPage';
+import LiveCsno from '../LiveStreaming/LiveCsno';
 
 const AndarBahar = ({game, gmid}) => {
 
@@ -12,6 +13,7 @@ const AndarBahar = ({game, gmid}) => {
   const recentResults = ['B', 'B', 'B', 'B', 'A'];
   return (
     <>
+    <LiveCsno game={game} gmid={gmid} />
     <iframe src={`https://titan97.live/get-video/${gmid}`} frameborder="0"></iframe>
     <div className=" max-w-md mx-auto bg-gray-200 p-4 rounded-lg shadow-md">
 
