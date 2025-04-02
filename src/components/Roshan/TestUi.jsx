@@ -32,11 +32,12 @@ const TestUi = () => {
     }, []);
     
     const placebet = async () => {
+      
         try {
             const response = await axios.post(
                 "https://admin.titan97.live/Apicall/bf_placeBet_api",
                 {
-                  selection_id: selectedBet?.bs,
+                  selection_id: selectedBet?.mid,
                   bet_type: value?.gtype,
                   user_id: user?.user_id,
                   bet_name: selectedBet?.nat,
@@ -46,8 +47,8 @@ const TestUi = () => {
                   market_type: "Back",
                   win_amount: selectedBet?.b * Money,
                   loss_amount: Money,
-                  gtype: value?.gtype,
-                  market_name: selectedBet?.nat,
+                  gtype: "casino",
+                  market_name: selectedBet?.nat, 
                 }
               )
             toast.success("Bet placed")
