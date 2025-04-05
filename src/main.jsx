@@ -39,6 +39,9 @@ import BetHistory from "./components/Roshan/BetHistory.jsx";
 import AccountStmt from "./components/Roshan/AccountStmt.jsx";
 import RollingCommision from "./components/Roshan/RollingCommision.jsx";
 import GameUnavailable from "./components/Roshan/Casino/Popup/GameUnavailable.jsx";
+import ProfitLossEvent from "./components/Roshan/ProfitLossEvent.jsx";
+import ProfitLossMarkets from "./components/Roshan/ProfitLossMarkets.jsx";
+import NewProfitLoss from "./components/Roshan/NewProfitLoss.jsx";
 
 export const socket = io("https://titan97.live", {
   reconnection: true,
@@ -81,6 +84,9 @@ createRoot(document.getElementById("root")).render(
                   element={<RollingCommision />}
                 />
                 <Route path="/ProfitLoss" element={<ProfitLoss />} />
+                <Route path="/profitlossmarkets" element={<ProfitLossMarkets />} />
+                <Route path="/NewProfitLoss" element={<NewProfitLoss />} />
+                <Route path="/ProfitLossEvent/:id" element={<ProfitLossEvent />} />
                 <Route path="/AccountStmt" element={<AccountStmt />} />
                 <Route path="/Unavailable" element={<GameUnavailable />} />
               </Route>

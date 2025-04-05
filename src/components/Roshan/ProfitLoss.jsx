@@ -1,9 +1,40 @@
-import React, { useState } from "react";
-
+import React, { useContext, useState } from "react";
+import moment from "moment";
+import axios from "axios";
+import { AuthContext } from "../../services/auth/auth.context";
+import { Link } from "react-router";
 const ProfitLoss = () => {
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+    const { user } = useContext(AuthContext);
+    const yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
+    const today = moment().format("YYYY-MM-DD");
+  const [startDate, setStartDate] = useState(yesterday);
+  const [endDate, setEndDate] = useState(today);
+  const [value, setValue] = useState();
+  
+  const handleGetpnl = async () => {
+    const requestData = {
+      userId: user?.user_id,
+      fromdate: startDate,
+      todate: endDate,
+    };
 
+    try {
+      const response = await axios.post(
+        "https://admin.titan97.live/Apicall/profitlossgtype",
+        requestData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      
+      setValue(response.data.profit_loss)
+      // You can update state here to show the result in UI
+    } catch (error) {
+      console.error("API Error:", error);
+    }
+  };
   const data = [
     { sport: "Cricket", profitLoss: -39, commission: 0, profit: 50, loss: 89, money: 100 },
   ];
@@ -27,7 +58,7 @@ const ProfitLoss = () => {
           onChange={(e) => setEndDate(e.target.value)}
           className="w-full border border-gray-300 p-2 rounded mb-3"
         />
-        <button className="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700">
+        <button onClick={handleGetpnl} className="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700">
           Get P&L
         </button>
       </div>
@@ -47,20 +78,20 @@ const ProfitLoss = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => (
+              {value?.map((item, index) => (
                 <tr key={index} className="even:bg-gray-50">
                   <td className="border border-gray-300 px-4 py-2 text-blue-600 underline cursor-pointer">
-                    {item.sport}
+                  <Link to={`/ProfitLossEvent/${item.gtype_category}`}>  {item.gtype_category} </Link>
                   </td>
                   <td
                     className={`border border-gray-300 px-4 py-2 font-semibold ${
-                      item.profitLoss < 0 ? "text-red-500" : "text-green-600"
+                      item.net_profit_loss < 0 ? "text-red-500" : "text-green-600"
                     }`}
                   >
-                    {item.profitLoss}
+                    {item.profit_loss ? profit_loss : item.net_profit_loss}
                   </td>
-                  <td className="border border-gray-300 px-4 py-2">{item.commission}</td>
-                  <td className="border border-gray-300 px-4 py-2 text-green-600">{item.profit}</td>
+                  <td className="border border-gray-300 px-4 py-2">{item.commission ? item.commission : 0}</td>
+                  <td className="border border-gray-300 px-4 py-2 text-green-600">{item.net_profit_loss}</td>
                 </tr>
               ))}
             </tbody>
