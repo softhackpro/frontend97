@@ -5,31 +5,62 @@ import { AuthContext } from '../../../../services/auth/auth.context';
 
 const BettingPage = ({setisModalopen, game, betRate, Player}) => {
   const { user } = useContext(AuthContext);
+  console.log(user);
+  
     const [Money, setMoney] = useState(100)
+
+
     const placebet = async() =>{
+
+      console.log("game ", betRate, Player);
+      
+
+      // const d = {
+      //   selection_id: game?.sub[0]?.sid,
+      //   bet_type: 'back',
+      //   user_id: user?.user_id,
+      //   bet_name: game?.sub[0]?.subtype,
+      //   betvalue: game?.sub[0]?.nat,
+      //   bet_rate: betRate,
+      //   match_id: game?.mid,
+      //   market_type: game?.gtype,
+      //   win_amount: game?.sub[0]?.b * Money,
+      //   loss_amount: Money,
+      //   gtype: "Casino",
+      //   market_name: Player,
+      // }
+
+      // console.log(d);
+      // return
       
       try {
         const response = await axios.post("https://admin.titan97.live/Apicall/bf_placeBet_api",
           {
             selection_id: game?.sub[0]?.sid,
-            bet_type: game?.sub[0]?.gtype,
-            user_id: user?.id,
+            bet_type: 'back',
+            user_id: user?.user_id,
             bet_name: game?.sub[0]?.subtype,
             betvalue: game?.sub[0]?.nat,
             bet_rate: betRate,
             match_id: game?.mid,
-            market_type: "Back",
+            market_type: game?.gtype,
             win_amount: game?.sub[0]?.b * Money,
             loss_amount: Money,
             gtype: "Casino",
             market_name: Player,
           })
-
-          toast.success("bet placed")
+            console.log(response.data);
+            
+          if(response.data.success){
+              toast.success("bet placed")
           setisModalopen(false)
           setMoney(100)
+          }else{
+            toast.error(response.data.error)
+          }
+        
       } catch (error) {
-        console.log(error);
+        //(error);
         
       }
     }

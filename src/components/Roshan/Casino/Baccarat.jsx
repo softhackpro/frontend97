@@ -16,7 +16,7 @@ const Baccarat = ({game, gmid}) => {
       setModalOpen(true)
       
     } catch (error) {
-      console.log("error");
+      //("error");
       setModalOpen(false)
     }
    }

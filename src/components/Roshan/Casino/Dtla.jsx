@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import BettingPage from "./Popup/BettingPage";
 
 const Dtla = ({game, gmid}) => {
+
+  console.log(game);
+
   const [ModalOpen, setModalOpen] = useState(false)
   return (<>
     <div className="mb-16 bg-gray-800 p-4 rounded-md w-full text-white">

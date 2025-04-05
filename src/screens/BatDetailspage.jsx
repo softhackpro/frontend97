@@ -42,7 +42,8 @@ const BetDetailsScreen = () => {
     setExpandedMarket((prev) => (prev === market ? null : market));
   };
 
-  //(data);
+  console.log(data);
+  
 
   return (
     <div className="w-full h-full container mx-auto min-h-screen bg-white flex flex-col gap-1">
@@ -104,10 +105,11 @@ const BetDetailsScreen = () => {
                 <div key={index} className="border-b border-gray-300 p-2">
                   <p className="text-sm font-semibold">{bet.match_name}</p>
 
-                  <div className="w-full bg-gray-200">
+                  <div className="w-full flex justify-between items-center bg-gray-200">
                     <div className="p-1 text-center w-fit bg-white border-gray-200 border-b text-sm font-bold">
                       Matched
                     </div>
+                    <div className=" text-sm font-semibold text-center h-full"> { bet.updated_at} </div>
                   </div>
 
                   {/* Back Bet */}
@@ -171,6 +173,8 @@ const BetDetailsScreen = () => {
                       <div className="text-center">{`${bet.win_amount} (-${bet.loss_amount})`}</div>
                     </div>
                   )}
+
+                  
 
                   {/* Checkbox for Info */}
                   <div className="p-1 text-xs flex items-center">

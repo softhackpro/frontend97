@@ -276,7 +276,7 @@ export const SportBookComponents = ({
                                 {item.gstatus}
                               </div>
                             ) : (
-                              <div className="w-1/2 flex h-full">
+                              <div className="w-1/2 flex ">
                                 <button
                                   onClick={() =>
                                     item.odds && item.odds.length > 0

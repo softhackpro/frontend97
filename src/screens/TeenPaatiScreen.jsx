@@ -19,14 +19,14 @@ const TeenPaatiScreen = ({ game, gmid }) => {
   const matchCard = splitTeenCards(cardsArray);
   const fetchData = async () => {
     try {
-      console.log("sadasdaasda");
+      //("sadasdaasda");
       
       const result = await fetchCasinoResult(gmid, game.mid);
-      console.log("Fetched result:", result); 
+      //("Fetched result:", result); 
     } catch (error) {
       console.error("Error fetching casino result:", error);
     } finally {
-      console.log("helo I recalll");
+      //("helo I recalll");
       
       await fetchCasinoResult(gmid, game.mid); 
     }

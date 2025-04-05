@@ -49,8 +49,8 @@ const TeenPatiRecord = ({ detail, gmid, mid }) => {
       betType: "Lay",
     });
 
-    console.log(player);
-    
+    //(player);
+
   };
 
   const handleBetAmountChange = (amount) => {
@@ -66,18 +66,39 @@ const TeenPatiRecord = ({ detail, gmid, mid }) => {
     setBetAmount(0);
   };
 
+
+
   const placeBet = async () => {
     if (!user) {
       setShowAgeVerificationModal(true);
       return;
     }
+
+
+    // const d =   {
+    //   selection_id: mid,
+    //   bet_type: selectedBet.type,
+    //   user_id: user?.user_id,
+    //   bet_name: selectedBet.team,
+    //   betvalue: selectedBet.team,
+    //   match_id: gmid,
+    //   market_type: 'casino',
+    //   win_amount: selectedBet.odds * betAmount,
+    //   loss_amount: betAmount,
+    //   gtype: 'casino',
+    //   market_name: detail.subtype,
+    //   bet_rate: selectedBet.odds
+    // }
+    // //(d);
+    // return
+
     setLoading(true);
     try {
       const response = await axios.post(
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
         {
           selection_id: mid,
-          bet_type: detail.subtype,
+          bet_type: selectedBet.type,
           user_id: user?.user_id,
           bet_name: selectedBet.team,
           betvalue: selectedBet.team,
@@ -110,6 +131,7 @@ const TeenPatiRecord = ({ detail, gmid, mid }) => {
       openBetModal.betType === betType
     );
   };
+  //(detail.playersInfo);
 
   return (
     <div className="w-full max-w-4xl overflow-hidden mb-3 relative">
@@ -166,28 +188,35 @@ const TeenPatiRecord = ({ detail, gmid, mid }) => {
               </div>
 
               {/* Lay Price */}
-              <div className="w-1/5 p-2 h-10  bg-blue-600 rounded-md relative flex flex-col items-center  shadow-md">
-                {player.l === 0 && player.ls === 0 ? (
-                  <div className="absolute h-full inset-0 bg-black/80 flex items-center justify-center rounded-md">
-                    <FaLock className="text-white text-lg" />
+              {
+                player?.l && player?.ls ? (
+                  <div className="w-1/5 p-2 h-10  bg-blue-600 rounded-md relative flex flex-col items-center  shadow-md">
+                    {player.l === 0 && player.ls === 0 ? (
+                      <div className="absolute h-full inset-0 bg-black/80 flex items-center justify-center rounded-md">
+                        <FaLock className="text-white text-lg" />
+                      </div>
+                    ) : (
+                      <button
+                        className="w-full h-full flex flex-col items-center"
+                        onClick={() =>
+                          handleLayClick(playerIndex, player, player.l, player.ls)
+                        }
+                        disabled={player.l === 0 && player.ls === 0}
+                      >
+                        <span className="text-white font-bold text-xs sm:text-sm">
+                          {player.l}
+                        </span>
+                        <span className="text-white text-[10px] sm:text-xs">
+                          {player.ls}
+                        </span>
+                      </button>
+                    )}
                   </div>
                 ) : (
-                  <button
-                    className="w-full h-full flex flex-col items-center"
-                    onClick={() =>
-                      handleLayClick(playerIndex, player, player.l, player.ls)
-                    }
-                    disabled={player.l === 0 && player.ls === 0}
-                  >
-                    <span className="text-white font-bold text-xs sm:text-sm">
-                      {player.l}
-                    </span>
-                    <span className="text-white text-[10px] sm:text-xs">
-                      {player.ls}
-                    </span>
-                  </button>
-                )}
-              </div>
+                  null
+                )
+              }
+
             </div>
 
             {/* Inline Betting Modal */}
