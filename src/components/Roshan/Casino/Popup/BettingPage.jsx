@@ -5,7 +5,6 @@ import { AuthContext } from '../../../../services/auth/auth.context';
 
 const BettingPage = ({setisModalopen, game, betRate, Player}) => {
   const { user } = useContext(AuthContext);
-  console.log(user);
   
     const [Money, setMoney] = useState(100)
 
@@ -15,22 +14,22 @@ const BettingPage = ({setisModalopen, game, betRate, Player}) => {
       console.log("game ", betRate, Player);
       
 
-      // const d = {
-      //   selection_id: game?.sub[0]?.sid,
-      //   bet_type: 'back',
-      //   user_id: user?.user_id,
-      //   bet_name: game?.sub[0]?.subtype,
-      //   betvalue: game?.sub[0]?.nat,
-      //   bet_rate: betRate,
-      //   match_id: game?.mid,
-      //   market_type: game?.gtype,
-      //   win_amount: game?.sub[0]?.b * Money,
-      //   loss_amount: Money,
-      //   gtype: "Casino",
-      //   market_name: Player,
-      // }
+      const d = {
+        selection_id: game?.sub[0]?.sid,
+        bet_type: 'back',
+        user_id: user?.user_id,
+        bet_name: game?.sub[0]?.subtype,
+        betvalue: game?.sub[0]?.nat,
+        bet_rate: betRate,
+        match_id: game?.mid,
+        market_type: game?.gtype,
+        win_amount: game?.sub[0]?.b * Money,
+        loss_amount: Money,
+        gtype: "Casino",
+        market_name: Player,
+      }
 
-      // console.log(d);
+      console.log(d);
       // return
       
       try {
@@ -49,7 +48,6 @@ const BettingPage = ({setisModalopen, game, betRate, Player}) => {
             gtype: "Casino",
             market_name: Player,
           })
-            console.log(response.data);
             
           if(response.data.success){
               toast.success("bet placed")
