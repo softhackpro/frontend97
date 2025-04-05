@@ -11,9 +11,9 @@ const Dtla = ({ game, gmid }) => {
   const [tigerData, setTigerData] = useState([]);
   const [lionData, setLionData] = useState([]);
   const [betRate, setBetRate] = useState();
-
+const [player, setPlayer] = useState("");
   
-  const handleBetClick = (event, rate) => {
+  const handleBetClick = (event, rate,player) => {
     const buttonRect = event.currentTarget.getBoundingClientRect();
 
     
@@ -26,6 +26,7 @@ const Dtla = ({ game, gmid }) => {
     setModalPosition(position);
     setModalOpen(true);
     setBetRate(rate);
+    setPlayer(player);
   };
 
   // Handle click outside to close modal
@@ -98,7 +99,7 @@ const Dtla = ({ game, gmid }) => {
                       ) : (
                         <button
                           className="betting-button bg-blue-500 px-4 py-1 rounded-md"
-                          onClick={ (e) =>  handleBetClick(e, item.b )}
+                          onClick={ (e) =>  handleBetClick(e, item.b, item?.nat )}
                         >
                           {item?.b}
                         </button>
@@ -134,7 +135,7 @@ const Dtla = ({ game, gmid }) => {
                       ) : (
                         <button
                           className="betting-button bg-blue-500 px-4 py-1 rounded-md"
-                          onClick={ (e) =>  handleBetClick(e, item.b )}
+                          onClick={ (e) =>  handleBetClick(e, item.b, item?.nat )}
                         >
                           {item?.b}
                         </button>
@@ -163,7 +164,7 @@ const Dtla = ({ game, gmid }) => {
                       ) : (
                         <button
                           className="betting-button bg-blue-500 px-4 py-1 rounded-md"
-                          onClick={ (e) =>  handleBetClick(e, item.b)}
+                          onClick={ (e) =>  handleBetClick(e, item.b, item?.nat )}
                         >
                           {item?.b}
                         </button>
@@ -251,7 +252,7 @@ const Dtla = ({ game, gmid }) => {
             left: `${modalPosition.left}px`,
           }}
         >
-          <BettingPage setisModalopen={setModalOpen} betRate={betRate} Player={game?.gtype} game={game} />
+          <BettingPage setisModalopen={setModalOpen} betRate={betRate} Player={player} game={game} />
         </div>
       )}
     </div>
