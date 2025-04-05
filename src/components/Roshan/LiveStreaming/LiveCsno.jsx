@@ -34,7 +34,7 @@ const LiveCsno = ({ game, gmid }) => {
       <div className="absolute inset-0 flex p-2 text-white z-30 bg-transparent">
         {/* Players' Cards (Left) */}
         <div className="flex flex-col gap-2 p-2 rounded-md">
-          <PlayerCards cardsDetail={matchCard} />
+          {/* <PlayerCards cardsDetail={matchCard} /> */}
         </div>
         {/* Winner (Bottom Left) */}
         {winner && (

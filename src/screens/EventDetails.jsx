@@ -16,7 +16,7 @@ export const EventDetails = () => {
   const { id: gmid } = useParams();
   const { getCasinoDetails } = useContext(CasinoContext);
   const validGameIds = [
-    "teen", "lucky15", "ballbyball", "ab4", "aaa", "kbc", "baccarat", "dtl20", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3"
+    "teen", "lucky15", "ballbyball", "ab4", "aaa", "kbc", "baccarat", "dt202", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3"
   ];
   // Use ref to maintain stable reference to the context function
   const getCasinoDetailsRef = useRef(getCasinoDetails);
@@ -38,7 +38,7 @@ export const EventDetails = () => {
     }
     const fetchGameDetails = async () => {
       if(loading){
-        console.log("return ");
+        //("return ");
         
         return 
       }
@@ -98,7 +98,7 @@ export const EventDetails = () => {
         gmid === "baccarat" ? <Baccarat game={game} gmid={gmid}/> : null
       }
       {
-        gmid == "dtl20" ? <DragonTiger20 game={game} gmid={gmid}/> : null
+        gmid == "dt202" ? <DragonTiger20 game={game} gmid={gmid}/> : null
       }
       {
         gmid == "dt20" ? <Dtla game={game} gmid={gmid}/> : null
