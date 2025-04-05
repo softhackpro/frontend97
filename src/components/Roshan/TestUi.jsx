@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { CiCircleInfo } from "react-icons/ci";
 import { AuthContext } from "../../services/auth/auth.context";
+import BallByBallCurrent from "./Casino/Popup/BallByBallCurrent";
 
 const TestUi = () => {
     const [value, setValue] = useState()
@@ -166,14 +167,9 @@ const TestUi = () => {
             <div className="p-2 bg-[#c2d5e4] text-[#3b5160] font-bold text-center text-nowrap text-sm mb-2 overflow-hidden">
                 <p className="text_box">Ball By Ball Titan 97</p>
             </div>
-            <div className="bg-black flex items-center gap-1 overflow-scroll">
-                <p className="text-xl font-bold text-white py-2 px-1 text-nowrap">Recent Result</p>
-                {
-                    new Array(10).fill('').map(() => <div className="shrink-0 w-[3rem] h-[2.5rem] flex justify-center items-center bg-yellow-300 rounded-4xl">0</div>)
-                }
-            </div>
+            <BallByBallCurrent />
         </div>
-
+<br /><br /><br /><br />
 
         {
     isModalOpen ? ( <div className="fixed inset-0 flex items-center justify-center ">
