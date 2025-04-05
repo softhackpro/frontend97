@@ -16,7 +16,7 @@ export const EventDetails = () => {
   const { id: gmid } = useParams();
   const { getCasinoDetails } = useContext(CasinoContext);
   const validGameIds = [
-    "teen", "lucky15", "ballbyball", "ab4", "aaa", "kbc", "baccarat", "dt202", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3"
+    "teen", "lucky15", "ballbyball", "ab4", "aaa", "kbc", "baccarat", "dtl20", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3"
   ];
   // Use ref to maintain stable reference to the context function
   const getCasinoDetailsRef = useRef(getCasinoDetails);
@@ -78,7 +78,7 @@ export const EventDetails = () => {
   }
 
   return (
-    <div className="flex flex-col w-full  bg-grey text-white  pb-[100px] mb-[60px]">
+    <div className="flex flex-col w-full  bg-grey text-white ">
       {game?.gtype?.includes("teen") && (
         <TeenPaatiScreen game={game} gmid={gmid} />
       )}
@@ -98,10 +98,10 @@ export const EventDetails = () => {
         gmid === "baccarat" ? <Baccarat game={game} gmid={gmid}/> : null
       }
       {
-        gmid == "dt202" ? <DragonTiger20 game={game} gmid={gmid}/> : null
+        gmid == "dt20" ? <DragonTiger20 game={game} gmid={gmid}/> : null
       }
       {
-        gmid == "dt20" ? <Dtla game={game} gmid={gmid}/> : null
+        gmid == "dtl20" ? <Dtla game={game} gmid={gmid}/> : null
       }
     </div>
   );

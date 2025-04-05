@@ -228,6 +228,7 @@ const AndarBahar = ({game, gmid}) => {
       </div>
     </div>
   </div>
+
   {
     ModalOpen ? (<BettingPage setisModalopen={setModalOpen} game={game}/>) : null
   }
