@@ -14,11 +14,11 @@ const BettingPage = ({setisModalopen, game, betRate, Player}) => {
       console.log("game ", betRate, Player);
       
 
-      const d = {
+      const d =  {
         selection_id: game?.sub[0]?.sid,
         bet_type: 'back',
         user_id: user?.user_id,
-        bet_name: game?.sub[0]?.subtype,
+        bet_name: Player,
         betvalue: game?.sub[0]?.nat,
         bet_rate: betRate,
         match_id: game?.mid,
@@ -26,7 +26,7 @@ const BettingPage = ({setisModalopen, game, betRate, Player}) => {
         win_amount: game?.sub[0]?.b * Money,
         loss_amount: Money,
         gtype: "Casino",
-        market_name: Player,
+        market_name: game?.gtype,
       }
 
       console.log(d);
@@ -38,15 +38,15 @@ const BettingPage = ({setisModalopen, game, betRate, Player}) => {
             selection_id: game?.sub[0]?.sid,
             bet_type: 'back',
             user_id: user?.user_id,
-            bet_name: game?.sub[0]?.subtype,
-            betvalue: game?.sub[0]?.nat,
+            bet_name: Player,
+            betvalue: betRate,
             bet_rate: betRate,
             match_id: game?.mid,
             market_type: game?.gtype,
             win_amount: game?.sub[0]?.b * Money,
             loss_amount: Money,
             gtype: "Casino",
-            market_name: Player,
+            market_name: game?.gtype,
           })
             
           if(response.data.success){

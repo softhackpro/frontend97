@@ -28,7 +28,6 @@ const BetDetailsScreen = () => {
         return acc;
       }, {});
       setData(marketMap);
-      //(response);
     } catch (error) {
       console.error("Error fetching bet details:", error.message);
     }
