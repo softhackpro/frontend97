@@ -33,18 +33,21 @@ const TestUi = () => {
     }, []);
     
     const placebet = async () => {
+      console.log(selectedBet, "selected bet");
+      console.log(value, "ye value hai");
+      
       
         try {
             const response = await axios.post(
                 "https://admin.titan97.live/Apicall/bf_placeBet_api",
                 {
-                  selection_id: selectedBet?.mid,
+                  selection_id: value?.mid,
                   bet_type: value?.gtype,
                   user_id: user?.user_id,
                   bet_name: selectedBet?.nat,
                   betvalue: selectedBet?.nat,
                   bet_rate: selectedBet?.b,
-                  match_id: value?.mid,
+                  match_id: value?.gtype,
                   market_type: "Back",
                   win_amount: selectedBet?.b * Money,
                   loss_amount: Money,
@@ -56,6 +59,8 @@ const TestUi = () => {
             setisModalopen(false)
             setSelectedBet(null)
             setMoney(100)
+            console.log(response, "ye response hai");
+            
         } catch (error) {
             toast.error("Server ERROR")
         }

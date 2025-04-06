@@ -5,12 +5,12 @@ import axios from 'axios';
 const RecentResult = ({result}) => {
   const [ModalOpen, setModalOpen]  = useState()
   const [fetchedResult, setFetchedResult] = useState([])
-  console.log(fetchedResult, "ye fetched result hai");
+  //(fetchedResult, "ye fetched result hai");
   
   const getlastResult = async() => {
     try {
       const res = await axios.get(`https://titan97.live/get-lastgamecasino/${result}`)
-      console.log(res?.data?.data?.res, "recent result");
+      //(res?.data?.data?.res, "recent result");
       setFetchedResult(res?.data?.data?.res)
     } catch (error) {
       

@@ -6,7 +6,9 @@ import AgeVerificationModal from "../components/modals/AgeVerificationModal";
 import LoginModal from "../components/modals/LoginModal";
 import toast from "react-hot-toast";
 
-const TeenPatiRecord = ({ detail, gmid, mid }) => {
+const TeenPatiRecord = ({ detail, gmid, mid, game }) => {
+  
+  
   const [selectedBet, setSelectedBet] = useState(null);
   const [betAmount, setBetAmount] = useState(0);
   const betAmounts = [5, 100, 200, 300, 500, 1000, 2000, 5000];
@@ -70,23 +72,28 @@ const TeenPatiRecord = ({ detail, gmid, mid }) => {
     }
     setLoading(true);
     try {
+      
       const response = await axios.post(
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
         {
-          selection_id: mid,
-          bet_type: selectedBet.type,
+          selection_id: game?.mid,
+          bet_type: game?.gtype,
           user_id: user?.user_id,
           bet_name: selectedBet.team,
-          betvalue: selectedBet.odds,
-          match_id: gmid,
+          betvalue: selectedBet.team,
+          bet_rate: selectedBet.odds,
+          match_id: game?.gtype,
           market_type: selectedBet.type,
           win_amount: selectedBet.odds * betAmount,
           loss_amount: betAmount,
-          gtype: detail.subtype || detail.mname,
+          gtype: "Casino",
+          market_name: selectedBet.team
         }
       );
       if (response.data.success) {
         toast.success("bet placed");
+        console.log(response);
+        
       } else {
         toast.error(response.data.error || "something went wronge");
       }

@@ -93,10 +93,10 @@ export const EventDetails = () => {
         gmid === "baccarat" ? <Baccarat game={game} gmid={gmid}/> : null
       }
       {
-        gmid == "dtl20" ? <DragonTiger20 game={game} gmid={gmid}/> : null
+        gmid == "dt20" ? <DragonTiger20 game={game} gmid={gmid}/> : null
       }
       {
-        gmid == "dt20" ? <Dtla game={game} gmid={gmid}/> : null
+        gmid == "dtl20" ? <Dtla game={game} gmid={gmid}/> : null
       }
     </div>
   );

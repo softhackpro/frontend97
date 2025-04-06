@@ -108,7 +108,7 @@ const Fullgame = () => {
         market_name: match_name,
       }
 
-      console.log(d);
+      //(d);
 
       const response = await axios.post(
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
@@ -134,7 +134,7 @@ const Fullgame = () => {
       }
       closeModal();
     } catch (error) {
-      console.log(error);
+      //(error);
       
       toast.error("something went wrong");
     } finally {
@@ -247,9 +247,9 @@ const Fullgame = () => {
     setWinAmount(betAmount);
     setBetOpenType("Lay")
     setBetOpenTypeName(item.nat)
-    console.log("ddddddddddddddddddddd");
+    //("ddddddddddddddddddddd");
 
-    console.log(loss_amount, odds, betAmount);
+    //(loss_amount, odds, betAmount);
 
   };
 

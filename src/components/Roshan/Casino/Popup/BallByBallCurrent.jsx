@@ -7,11 +7,11 @@ const BallByBallCurrent = () => {
     const fetchRecentResult = async() =>{
         try {
             const res = await axios.get(`https://titan97.live/get-lastgamecasino/lucky15`)
-            console.log(res.data.data, "ball by ball");
+            //(res.data.data, "ball by ball");
             
             setFetchedRecent(res.data.data.res)
         } catch (error) {
-             console.log(error);
+             //(error);
              
         }
     }

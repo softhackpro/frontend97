@@ -2,51 +2,85 @@ import React, { useState } from "react";
 import BettingPage from "./Popup/BettingPage";
 
 const Dtla = ({game, gmid}) => {
+  console.log(game, "from dtla");
+  const [Dtlgame, setDtlGame] = useState("Dragon")
   const [ModalOpen, setModalOpen] = useState(false)
+     const [betRate, setBetrate] = useState()
+     const [Player, setPlayer] = useState()
+     const setbet = (a, b, c) =>{
+    console.log(a, b, c, "coming");
+    
+      try {
+        setBetrate(b)
+        setPlayer(c)
+        setModalOpen(true)
+        
+      } catch (error) {
+        //("error");
+        setModalOpen(false)
+      }
+     }
   return (<>
-    <div className="mb-16 bg-gray-800 p-4 rounded-md w-full text-white">
+    <div className=" bg-gray-800 p-4 rounded-md w-full text-white">
         <iframe src={`https://titan97.live/get-video/${gmid}`} frameborder="0"></iframe>
       {/* Tabs */}
       <div className="flex border-b border-gray-600">
-        <button className="flex-1 text-center py-2 border-b-2 border-yellow-400">Dragon</button>
-        <button className="flex-1 text-center py-2">Tiger</button>
-        <button className="flex-1 text-center py-2">Lion</button>
+        <button onClick={()=>setDtlGame("Dragon")} className={`flex-1 text-center py-2 ${Dtlgame === "Dragon" ? "border-b-2 border-yellow-400" : ""} `}>Dragon</button>
+        <button onClick={()=>setDtlGame("Tiger")} className={`flex-1 text-center py-2 ${Dtlgame === "Tiger" ? "border-b-2 border-yellow-400" : ""} `}>Tiger</button>
+        <button onClick={()=>setDtlGame("Lion")} className={`flex-1 text-center py-2 ${Dtlgame === "Lion" ? "border-b-2 border-yellow-400" : ""} `}>Lion</button>
       </div>
 
       {/* Betting Options */}
       <div className="mt-4 space-y-2">
         <div onClick={()=>setModalOpen(true)} className="flex justify-between items-center bg-gray-700 p-2 rounded-md">
           <span>Winner</span>
-          <button className="bg-blue-500 px-4 py-1 rounded-md">2.94</button>
+          {
+           game?.sub[0]?.gstatus === "SUSPENDED" ? <button className="bg-gray-500 px-4 py-1 rounded-md opacity-50 cursor-not-allowed">
+           🔒
+         </button> : <button onClick={()=>setbet(game, game.sub[0].b,  game.sub[0].nat  )} className="bg-blue-500 px-4 py-1 rounded-md">{game?.sub[0]?.b}</button>
+          }
+          
         </div>
         
         <div className="flex justify-between items-center bg-gray-700 p-2 rounded-md">
-          <span>❤️♦</span>
-          <button className="bg-gray-500 px-4 py-1 rounded-md opacity-50 cursor-not-allowed">
-            🔒
-          </button>
+          <span>Black</span>
+          {
+           game?.sub[1]?.gstatus === "SUSPENDED" ? <button className="bg-gray-500 px-4 py-1 rounded-md opacity-50 cursor-not-allowed">
+           🔒
+         </button> : <button className="bg-blue-500 px-4 py-1 rounded-md">{game?.sub[1]?.b}</button>
+          }
         </div>
 
         <div className="flex justify-between items-center bg-gray-700 p-2 rounded-md">
-          <span>♠♣</span>
-          <button className="bg-gray-500 px-4 py-1 rounded-md opacity-50 cursor-not-allowed">
-            🔒
-          </button>
+          <span>Red</span>
+          {
+           game?.sub[2]?.gstatus === "SUSPENDED" ? <button className="bg-gray-500 px-4 py-1 rounded-md opacity-50 cursor-not-allowed">
+           🔒
+         </button> : <button className="bg-blue-500 px-4 py-1 rounded-md">{game?.sub[2]?.b}</button>
+          }
         </div>
 
         <div onClick={()=>setModalOpen(true)} className="flex justify-between items-center bg-gray-700 p-2 rounded-md">
           <span>Odd</span>
-          <button className="bg-blue-500 px-4 py-1 rounded-md">1.83</button>
+          {
+           game?.sub[3]?.gstatus === "SUSPENDED" ? <button className="bg-gray-500 px-4 py-1 rounded-md opacity-50 cursor-not-allowed">
+           🔒
+         </button> : <button className="bg-blue-500 px-4 py-1 rounded-md">{game?.sub[3]?.b}</button>
+          }
         </div>
 
         <div onClick={()=>setModalOpen(true)} className="flex justify-between items-center bg-gray-700 p-2 rounded-md">
           <span>Even</span>
-          <button className="bg-blue-500 px-4 py-1 rounded-md">2.12</button>
+          {
+           game?.sub[4]?.gstatus === "SUSPENDED" ? <button className="bg-gray-500 px-4 py-1 rounded-md opacity-50 cursor-not-allowed">
+           🔒
+         </button> : <button className="bg-blue-500 px-4 py-1 rounded-md">{game?.sub[4]?.b}</button>
+          }
         </div>
       </div>
 
       {/* Cards */}
-      <div className="mt-4 flex justify-center flex-wrap gap-1">
+      {/* <div className="mt-4 flex justify-center flex-wrap gap-1">
         {["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"].map((card, index) => (
           <div
             key={index}
@@ -55,7 +89,7 @@ const Dtla = ({game, gmid}) => {
             {card}
           </div>
         ))}
-      </div>
+      </div> */}
    {/* recent details  */}
       <div className="mt-4 bg-black p-2 rounded-md flex items-center">
         <span className="text-white font-bold mr-2">Recent Result</span>
@@ -70,9 +104,9 @@ const Dtla = ({game, gmid}) => {
           ))}
         </div>
       </div>
-    </div>
+    </div> 
     {
-      ModalOpen ? (<BettingPage setisModalopen={setModalOpen}/>) : null
+      ModalOpen ? (<BettingPage setisModalopen={setModalOpen} betRate={betRate} Player={Player} game={game}/>) : null
     }
     </>
   );

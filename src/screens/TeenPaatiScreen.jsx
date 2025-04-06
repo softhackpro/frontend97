@@ -65,6 +65,7 @@ const TeenPaatiScreen = ({ game, gmid }) => {
               detail={detail}
               gmid={gmid}
               mid={game.mid}
+              game={game}
             />
           ))}
       </div>

@@ -33,7 +33,7 @@ const ProfitLossEvent = () => {
               setValue(response.data)
 
         } catch (error) {
-            console.log(error);
+            //(error);
             
         }
     }

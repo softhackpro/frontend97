@@ -7,25 +7,31 @@ const BettingPage = ({setisModalopen, game, betRate, Player}) => {
   const { user } = useContext(AuthContext);
     const [Money, setMoney] = useState(100)
     const placebet = async() =>{
+      console.log(game, "ye game hai bro");
+      console.log(betRate, "ye vetrate hai bro");
+      console.log(Player, "ye player hai bhai");
+      
       
       try {
         const response = await axios.post("https://admin.titan97.live/Apicall/bf_placeBet_api",
           {
-            selection_id: game?.sub[0]?.sid,
-            bet_type: game?.sub[0]?.gtype,
-            user_id: user?.id,
-            bet_name: game?.sub[0]?.subtype,
-            betvalue: game?.sub[0]?.nat,
+            selection_id: game?.mid,
+            bet_type: game?.gtype,
+            user_id: user?.user_id,
+            bet_name: Player,
+            betvalue: Player,
             bet_rate: betRate,
-            match_id: game?.mid,
+            match_id: game?.gtype,
             market_type: "Back",
-            win_amount: game?.sub[0]?.b * Money,
+            win_amount: betRate * Money,
             loss_amount: Money,
             gtype: "Casino",
             market_name: Player,
           })
 
           toast.success("bet placed")
+          console.log(response, "response from baccaraet");
+          
           setisModalopen(false)
           setMoney(100)
       } catch (error) {
