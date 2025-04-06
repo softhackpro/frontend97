@@ -4,7 +4,8 @@ import BettingPage from './Popup/BettingPage';
 import LiveCsno from '../LiveStreaming/LiveCsno';
 
 const AndarBahar = ({game, gmid}) => {
-
+  console.log(game, "andar bahar");
+  
   const [ModalOpen, setModalOpen] = useState(false)
     const topRowNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
   const bottomRowNumbers = [9, 10, 11, 12, 13];

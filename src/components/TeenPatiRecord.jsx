@@ -6,7 +6,9 @@ import AgeVerificationModal from "../components/modals/AgeVerificationModal";
 import LoginModal from "../components/modals/LoginModal";
 import toast from "react-hot-toast";
 
-const TeenPatiRecord = ({ detail, gmid, mid }) => {
+const TeenPatiRecord = ({ detail, gmid, mid, game }) => {
+  
+  
   const [selectedBet, setSelectedBet] = useState(null);
   const [betAmount, setBetAmount] = useState(0);
   const betAmounts = [5, 100, 200, 300, 500, 1000, 2000, 5000];
@@ -48,9 +50,6 @@ const TeenPatiRecord = ({ detail, gmid, mid }) => {
       playerIndex: playerIndex,
       betType: "Lay",
     });
-
-    //(player);
-
   };
 
   const handleBetAmountChange = (amount) => {
@@ -66,53 +65,35 @@ const TeenPatiRecord = ({ detail, gmid, mid }) => {
     setBetAmount(0);
   };
 
-
-
   const placeBet = async () => {
     if (!user) {
       setShowAgeVerificationModal(true);
       return;
     }
-
-
-    // const d =   {
-    //   selection_id: mid,
-    //   bet_type: selectedBet.type,
-    //   user_id: user?.user_id,
-    //   bet_name: selectedBet.team,
-    //   betvalue: selectedBet.team,
-    //   match_id: gmid,
-    //   market_type: 'casino',
-    //   win_amount: selectedBet.odds * betAmount,
-    //   loss_amount: betAmount,
-    //   gtype: 'casino',
-    //   market_name: detail.subtype,
-    //   bet_rate: selectedBet.odds
-    // }
-    // //(d);
-    // return
-
     setLoading(true);
     try {
+      
       const response = await axios.post(
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
         {
-          selection_id: mid,
-          bet_type: selectedBet.type,
+          selection_id: game?.mid,
+          bet_type: game?.gtype,
           user_id: user?.user_id,
           bet_name: selectedBet.team,
           betvalue: selectedBet.team,
-          match_id: gmid,
-          market_type: 'casino',
+          bet_rate: selectedBet.odds,
+          match_id: game?.gtype,
+          market_type: selectedBet.type,
           win_amount: selectedBet.odds * betAmount,
           loss_amount: betAmount,
-          gtype: 'casino',
-          market_name: detail.subtype,
-          bet_rate: selectedBet.odds
+          gtype: "Casino",
+          market_name: selectedBet.team
         }
       );
       if (response.data.success) {
         toast.success("bet placed");
+        console.log(response);
+        
       } else {
         toast.error(response.data.error || "something went wronge");
       }
@@ -131,7 +112,6 @@ const TeenPatiRecord = ({ detail, gmid, mid }) => {
       openBetModal.betType === betType
     );
   };
-  //(detail.playersInfo);
 
   return (
     <div className="w-full max-w-4xl overflow-hidden mb-3 relative">
@@ -188,35 +168,28 @@ const TeenPatiRecord = ({ detail, gmid, mid }) => {
               </div>
 
               {/* Lay Price */}
-              {
-                player?.l && player?.ls ? (
-                  <div className="w-1/5 p-2 h-10  bg-blue-600 rounded-md relative flex flex-col items-center  shadow-md">
-                    {player.l === 0 && player.ls === 0 ? (
-                      <div className="absolute h-full inset-0 bg-black/80 flex items-center justify-center rounded-md">
-                        <FaLock className="text-white text-lg" />
-                      </div>
-                    ) : (
-                      <button
-                        className="w-full h-full flex flex-col items-center"
-                        onClick={() =>
-                          handleLayClick(playerIndex, player, player.l, player.ls)
-                        }
-                        disabled={player.l === 0 && player.ls === 0}
-                      >
-                        <span className="text-white font-bold text-xs sm:text-sm">
-                          {player.l}
-                        </span>
-                        <span className="text-white text-[10px] sm:text-xs">
-                          {player.ls}
-                        </span>
-                      </button>
-                    )}
+              <div className="w-1/5 p-2 h-10  bg-blue-600 rounded-md relative flex flex-col items-center  shadow-md">
+                {player.l === 0 && player.ls === 0 ? (
+                  <div className="absolute h-full inset-0 bg-black/80 flex items-center justify-center rounded-md">
+                    <FaLock className="text-white text-lg" />
                   </div>
                 ) : (
-                  null
-                )
-              }
-
+                  <button
+                    className="w-full h-full flex flex-col items-center"
+                    onClick={() =>
+                      handleLayClick(playerIndex, player, player.l, player.ls)
+                    }
+                    disabled={player.l === 0 && player.ls === 0}
+                  >
+                    <span className="text-white font-bold text-xs sm:text-sm">
+                      {player.l}
+                    </span>
+                    <span className="text-white text-[10px] sm:text-xs">
+                      {player.ls}
+                    </span>
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Inline Betting Modal */}

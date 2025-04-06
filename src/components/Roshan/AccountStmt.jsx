@@ -9,7 +9,7 @@ const AccountStmt = () => {
   const [startDate, setStartDate] = useState(yesterday);
   const [endDate, setEndDate] = useState(today);
   const [value, setValue] = useState();
-  console.log(value, "value");
+  //(value, "value");
   
   const handleGetStatement = async () => {
     const requestData = {

@@ -5,60 +5,37 @@ import { AuthContext } from '../../../../services/auth/auth.context';
 
 const BettingPage = ({setisModalopen, game, betRate, Player}) => {
   const { user } = useContext(AuthContext);
-  
     const [Money, setMoney] = useState(100)
-
-
     const placebet = async() =>{
-
-      console.log("game ", betRate, Player);
+      console.log(game, "ye game hai bro");
+      console.log(betRate, "ye vetrate hai bro");
+      console.log(Player, "ye player hai bhai");
       
-
-      const d =  {
-        selection_id: game?.sub[0]?.sid,
-        bet_type: 'back',
-        user_id: user?.user_id,
-        bet_name: Player,
-        betvalue: game?.sub[0]?.nat,
-        bet_rate: betRate,
-        match_id: game?.mid,
-        market_type: game?.gtype,
-        win_amount: game?.sub[0]?.b * Money,
-        loss_amount: Money,
-        gtype: "Casino",
-        market_name: game?.gtype,
-      }
-
-      console.log(d);
-      // return
       
       try {
         const response = await axios.post("https://admin.titan97.live/Apicall/bf_placeBet_api",
           {
-            selection_id: game?.sub[0]?.sid,
-            bet_type: 'back',
+            selection_id: game?.mid,
+            bet_type: game?.gtype,
             user_id: user?.user_id,
             bet_name: Player,
-            betvalue: betRate,
+            betvalue: Player,
             bet_rate: betRate,
-            match_id: game?.mid,
-            market_type: game?.gtype,
-            win_amount: game?.sub[0]?.b * Money,
+            match_id: game?.gtype,
+            market_type: "Back",
+            win_amount: betRate * Money,
             loss_amount: Money,
             gtype: "Casino",
-            market_name: game?.gtype,
+            market_name: Player,
           })
-            
-          if(response.data.success){
-              toast.success("bet placed")
+
+          toast.success("bet placed")
+          console.log(response, "response from baccaraet");
+          
           setisModalopen(false)
           setMoney(100)
-          }else{
-            toast.error(response.data.error)
-          }
-        
       } catch (error) {
-        //(error);
+        console.log(error);
         
       }
     }

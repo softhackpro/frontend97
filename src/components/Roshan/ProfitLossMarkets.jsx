@@ -40,7 +40,7 @@ const ProfitLossMarkets = () => {
               setValue(response.data.bet_details)
 
         } catch (error) {
-            console.log(error);
+            //(error);
             
         }
     }

@@ -39,10 +39,10 @@ const NewProfitLoss = () => {
               );
               
               setValue(response.data.bet_details)
-              console.log(response);
+              //(response);
               
         } catch (error) {
-            console.log(error);
+            //(error);
             
         }
     }
