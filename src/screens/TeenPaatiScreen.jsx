@@ -17,14 +17,24 @@ const TeenPaatiScreen = ({ game, gmid }) => {
   const gameDetails = transformDataTeenPatti(game.sub);
 
   const matchCard = splitTeenCards(cardsArray);
-  setTimeout(async () => {
-    const result = await fetchCasinoResult(gmid, game.mid);
-    // //(result);
-
-    if (result) {
-      setWinner(result.winnat);
+  const fetchData = async () => {
+    try {
+      //("sadasdaasda");
+      
+      const result = await fetchCasinoResult(gmid, game.mid);
+      //("Fetched result:", result); 
+    } catch (error) {
+      console.error("Error fetching casino result:", error);
+    } finally {
+      //("helo I recalll");
+      
+      await fetchCasinoResult(gmid, game.mid); 
     }
-  }, 3000);
+  };
+  
+  useEffect(() => {
+    fetchData();
+  }, [gmid, game?.mid]); 
 
   return (
     <div className="relative w-full h-[200px] bg-black ">

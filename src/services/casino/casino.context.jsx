@@ -5,7 +5,7 @@ export const CasinoContext = createContext();
 
 const CasinoProvider = ({ children }) => {
   const [allCasinoGames, setAllCasinoGames] = useState([]);
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -14,12 +14,12 @@ const CasinoProvider = ({ children }) => {
   }, []);
 
   const fetchCasinoGames = async () => {
-    setLoading(true); 
+    setLoading(true);
     setError(null);
     try {
       const res = await getAllCasinoGame();
       // //(res, "from casino context");
-      
+
       setAllCasinoGames(res);
     } catch (err) {
       setError(err.message || "Failed to fetch casino games");
@@ -47,19 +47,28 @@ const CasinoProvider = ({ children }) => {
   };
 
   const fetchCasinoResult = async (type, mid) => {
-    //("here");
-    
+
     setLoading(true);
     setError(null);
+    if (loading) {
+      return
+
+    }
     try {
+
+      console.log("skfdasnfd");
+
+      // return 
+
       const result = await getCasinoResult(type, mid);
-     
+
       return result;
     } catch (err) {
       setError(err.message || "Failed to fetch casino result");
       return null;
     } finally {
       setLoading(false);
+      await getCasinoResult(type, mid)
     }
   };
 
@@ -67,7 +76,7 @@ const CasinoProvider = ({ children }) => {
     <CasinoContext.Provider
       value={{
         allCasinoGames,
-    
+
         loading,
         error,
         getCasinoById,

@@ -44,7 +44,7 @@ const Popup = ({setModalOpen}) => {
 
       {/* Cards Display */}
       <div className="flex justify-center p-2 bg-white">
-        {cards.map((card) => (
+        {cards && cards.length && cards.map((card) => (
           <div key={card.id} className="mx-1">
             <div className="text-center text-xs font-semibold mb-1">{card.id}</div>
             <div className="border border-gray-300 rounded-lg overflow-hidden w-12">

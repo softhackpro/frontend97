@@ -15,7 +15,7 @@ const AndarBahar = ({game, gmid}) => {
   return (
     <>
     <LiveCsno game={game} gmid={gmid} />
-    <iframe src={`https://titan97.live/get-video/${gmid}`} frameborder="0"></iframe>
+    {/* <iframe src={`https://titan97.live/get-video/${gmid}`} frameborder="0"></iframe> */}
     <div className=" max-w-md mx-auto bg-gray-200 p-4 rounded-lg shadow-md">
 
 
@@ -109,7 +109,7 @@ const AndarBahar = ({game, gmid}) => {
       </div>
       
       {/* Card suit buttons */}
-      <div className="grid grid-cols-4 gap-2">
+      {/* <div className="grid grid-cols-4 gap-2">
         <div className="flex flex-col items-center">
           <div className="mb-1">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-black">
@@ -173,16 +173,16 @@ const AndarBahar = ({game, gmid}) => {
           </div>
           <div className="text-xs text-center">0</div>
         </div>
-      </div>
+      </div> */}
     </div>
     <div className="max-w-md mx-auto">
     {/* Main container with gray background */}
-    <div className="bg-gray-300 p-4 rounded-md">
-      {/* Number display at the top */}
+    {/* <div className="bg-gray-300 p-4 rounded-md">
+    
       <div className="text-center font-bold text-xl mb-2">12</div>
       
-      {/* Top row of number tiles */}
-      <div className="flex justify-center mb-2">
+    
+     <div className="flex justify-center mb-2">
         {topRowNumbers.map((num) => (
           <div key={num} className="relative mx-0.5">
             <div className="w-10 h-10 bg-gray-700 border-2 border-yellow-500 flex items-center justify-center">
@@ -196,9 +196,8 @@ const AndarBahar = ({game, gmid}) => {
           </div>
         ))}
       </div>
-      
-      {/* Bottom row of number tiles */}
-      <div className="flex mb-25 justify-center">
+    
+      {/* <div className="flex mb-25 justify-center">
         {bottomRowNumbers.map((num) => (
           <div key={num} className="relative mx-0.5">
             <div className="w-10 h-10 bg-gray-700 border-2 border-yellow-500 flex items-center justify-center">
@@ -211,8 +210,8 @@ const AndarBahar = ({game, gmid}) => {
             <div className="text-center text-sm">0</div>
           </div>
         ))}
-      </div>
-    </div>
+      </div> 
+    </div> */}
     
     {/* Recent Results Section */}
     <div className="bg-black text-white mt-1 flex items-center p-2 rounded-md">
@@ -230,6 +229,7 @@ const AndarBahar = ({game, gmid}) => {
       </div>
     </div>
   </div>
+
   {
     ModalOpen ? (<BettingPage setisModalopen={setModalOpen} game={game}/>) : null
   }
