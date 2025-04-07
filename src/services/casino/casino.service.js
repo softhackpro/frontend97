@@ -6,7 +6,7 @@ export const getAllCasinoGame = async () => {
     // //(response, "from casino service");
     const validGameIds = [
       "teen", "lucky15", "ballbyball", "ab4", "aaa", "kbc", "baccarat", 
-      "dtl20", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3", "poker"
+      "dtl20", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3", "poker", "lucky7", "worli"
     ];
     const games = response.data?.data?.t1 || []
     // //(games, " ye games hai");
