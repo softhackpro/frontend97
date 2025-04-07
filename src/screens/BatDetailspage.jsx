@@ -119,7 +119,7 @@ const BetDetailsScreen = () => {
                     <div className="text-center">Profit</div>
                   </div>
 
-                  {bet.bet_type.toLowerCase() === "back" && (
+                  {(bet.bet_type.toLowerCase() === 'back'  || bet?.market_type.toString().toLowerCase() === "back") && (
                     <div className="w-full grid grid-cols-4 text-xs text-black p-1 border-b bg-blue-300">
                       <div
                         style={{
@@ -150,7 +150,7 @@ const BetDetailsScreen = () => {
                     <div className="text-center">Liability</div>
                   </div>
 
-                  {bet.bet_type.toLowerCase() === "lay" && (
+                  {(bet.bet_type.toLowerCase() === 'lay'  || bet?.market_type.toString().toLowerCase() === "lay" )&& (
                     <div className="w-full grid grid-cols-4 text-xs p-1 border-b bg-red-300">
                       <div
                         style={{

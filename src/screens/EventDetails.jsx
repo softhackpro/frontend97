@@ -14,12 +14,16 @@ import Dtla from "../components/Roshan/Casino/Dtla";
 import Poker from "../components/Roshan/Casino/Poker";
 import Lucky7 from "../components/Roshan/Casino/Lucky7";
 import Worli from "../components/Roshan/Casino/Lucky7";
+import BettingOddsTable from "../components/aniket/BattingOddTable";
+import { Lucky7a } from "./Lucky7a";
+import { Lucky7b } from "./Lucky7b";
+import { Card32 } from "./Card32";
 
 export const EventDetails = () => {
   const { id: gmid } = useParams();
   const { getCasinoDetails } = useContext(CasinoContext);
   const validGameIds = [
-    "teen", "lucky15", "ballbyball", "lucky7", "worli", "poker", "ab4", "aaa", "kbc", "baccarat", "dtl20", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3"
+    "teen", "lucky15", "ballbyball", "lucky7", "worli", "poker", "ab4", "aaa", "kbc", "baccarat", "dtl20", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3", "lucky7eu", "card32eu"
   ];
   // Use ref to maintain stable reference to the context function
   const getCasinoDetailsRef = useRef(getCasinoDetails);
@@ -40,10 +44,10 @@ export const EventDetails = () => {
       return;
     }
     const fetchGameDetails = async () => {
-      if(loading){
-        //("return ");
-        
-        return 
+      if (loading) {
+        console.log("return ");
+
+        return
       }
       try {
         setLoading(true);
@@ -60,13 +64,13 @@ export const EventDetails = () => {
       } finally {
         setLoading(false);
       }
-    }; 
+    };
 
-    fetchGameDetails();
+    // fetchGameDetails();
 
     const intervalId = setInterval(fetchGameDetails, 1000);
 
-    return () => clearInterval(intervalId); 
+    return () => clearInterval(intervalId);
   }, [gmid]);
   // Only gmid in the dependency array
 
@@ -89,28 +93,37 @@ export const EventDetails = () => {
         gmid === "lucky15" || gmid === "ballbyball" ? <TestUi /> : null
       }
       {
-        gmid === "ab4" ? <AndarBahar game={game} gmid={gmid}/> : null
+        gmid === "ab4" ? <AndarBahar game={game} gmid={gmid} /> : null
       }
       {
-        gmid === "aaa" ? <AmarAkbarAnthony game={game} gmid={gmid}/> : null
+        gmid === "aaa" ? <AmarAkbarAnthony game={game} gmid={gmid} /> : null
       }
       {
-        gmid === "kbc" ? <Kbc game={game} gmid={gmid}/> : null
+        gmid === "kbc" ? <Kbc game={game} gmid={gmid} /> : null
       }
       {
-        gmid === "baccarat" ? <Baccarat game={game} gmid={gmid}/> : null
+        gmid === "baccarat" ? <Baccarat game={game} gmid={gmid} /> : null
       }
       {
-        gmid == "dt20" ? <DragonTiger20 game={game} gmid={gmid}/> : null
+        gmid == "dt20" ? <DragonTiger20 game={game} gmid={gmid} /> : null
       }
       {
-        gmid == "dtl20" ? <Dtla game={game} gmid={gmid}/> : null
+        gmid == "dtl20" ? <Dtla game={game} gmid={gmid} /> : null
       }
       {
-        gmid == "poker" ? <Poker game={game} gmid={gmid}/> : null
+        gmid == "poker" ? <Poker game={game} gmid={gmid} /> : null
       }
       {
-        gmid == "worli" ? <Worli game={game} gmid={gmid}/> : null
+        gmid == "worli" ? <Worli game={game} gmid={gmid} /> : null
+      }
+      {
+        gmid == "lucky7" ? <Lucky7a game={game} gmid={gmid} /> : null
+      }
+      {
+        gmid == "lucky7eu" ? <Lucky7b game={game} gmid={gmid} /> : null
+      }
+      {
+        gmid == "card32eu" ? <Card32 game={game} gmid={gmid} /> : null
       }
     </div>
   );
