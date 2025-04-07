@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
 import { AuthContext } from '../../../../services/auth/auth.context';
 
-const BettingPage = ({setisModalopen, game, betRate, Player}) => {
+const BettingPage = ({setisModalopen, game, betRate, Player, Type}) => {
   const { user } = useContext(AuthContext);
     const [Money, setMoney] = useState(100)
     const placebet = async() =>{
@@ -22,7 +22,7 @@ const BettingPage = ({setisModalopen, game, betRate, Player}) => {
             betvalue: Player,
             bet_rate: betRate,
             match_id: game?.gtype,
-            market_type: "Back",
+            market_type: Type || "Back",
             win_amount: betRate * Money,
             loss_amount: Money,
             gtype: "Casino",

@@ -8,7 +8,7 @@ const Dtla = ({game, gmid}) => {
      const [betRate, setBetrate] = useState()
      const [Player, setPlayer] = useState()
      const setbet = (a, b, c) =>{
-    console.log(a, b, c, "coming");
+    // console.log(a, b, c, "coming");
     
       try {
         setBetrate(b)

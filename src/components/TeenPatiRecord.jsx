@@ -16,7 +16,7 @@ const TeenPatiRecord = ({ detail, gmid, mid, game }) => {
     useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const { user } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);      
 
   // Track which player has an open bet modal
   const [openBetModal, setOpenBetModal] = useState({

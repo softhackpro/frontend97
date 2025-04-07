@@ -20,7 +20,7 @@ const CasinoProvider = ({ children }) => {
       const res = await getAllCasinoGame();
       // //(res, "from casino context");
 
-      setAllCasinoGames(res);
+      setAllCasinoGames(res); 
     } catch (err) {
       setError(err.message || "Failed to fetch casino games");
     } finally {
