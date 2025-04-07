@@ -12,12 +12,14 @@ import Baccarat from "../components/Roshan/Casino/Baccarat";
 import DragonTiger20 from "../components/Roshan/Casino/DragonTiger20";
 import Dtla from "../components/Roshan/Casino/Dtla";
 import Poker from "../components/Roshan/Casino/Poker";
+import Lucky7 from "../components/Roshan/Casino/Lucky7";
+import Worli from "../components/Roshan/Casino/Lucky7";
 
 export const EventDetails = () => {
   const { id: gmid } = useParams();
   const { getCasinoDetails } = useContext(CasinoContext);
   const validGameIds = [
-    "teen", "lucky15", "ballbyball", "poker", "ab4", "aaa", "kbc", "baccarat", "dtl20", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3"
+    "teen", "lucky15", "ballbyball", "lucky7", "worli", "poker", "ab4", "aaa", "kbc", "baccarat", "dtl20", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3"
   ];
   // Use ref to maintain stable reference to the context function
   const getCasinoDetailsRef = useRef(getCasinoDetails);
@@ -64,7 +66,7 @@ export const EventDetails = () => {
 
     const intervalId = setInterval(fetchGameDetails, 1000);
 
-    return () => clearInterval(intervalId);
+    return () => clearInterval(intervalId); 
   }, [gmid]);
   // Only gmid in the dependency array
 
@@ -106,6 +108,9 @@ export const EventDetails = () => {
       }
       {
         gmid == "poker" ? <Poker game={game} gmid={gmid}/> : null
+      }
+      {
+        gmid == "worli" ? <Worli game={game} gmid={gmid}/> : null
       }
     </div>
   );
