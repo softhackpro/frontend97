@@ -119,7 +119,9 @@ const Fullgame = () => {
         toast.error(response.data.error || "something went wronge");
       }
       closeModal();
-    } catch (error) 
+    } catch (error) {
+    console.log(error);
+    
       toast.error("something went wrong");
     } finally {
       setBetLoading(false);

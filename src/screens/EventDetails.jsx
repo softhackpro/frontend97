@@ -11,12 +11,13 @@ import Kbc from "../components/Roshan/Casino/Kbc";
 import Baccarat from "../components/Roshan/Casino/Baccarat";
 import DragonTiger20 from "../components/Roshan/Casino/DragonTiger20";
 import Dtla from "../components/Roshan/Casino/Dtla";
+import Poker from "../components/Roshan/Casino/Poker";
 
 export const EventDetails = () => {
   const { id: gmid } = useParams();
   const { getCasinoDetails } = useContext(CasinoContext);
   const validGameIds = [
-    "teen", "lucky15", "ballbyball", "ab4", "aaa", "kbc", "baccarat", "dtl20", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3"
+    "teen", "lucky15", "ballbyball", "poker", "ab4", "aaa", "kbc", "baccarat", "dtl20", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3"
   ];
   // Use ref to maintain stable reference to the context function
   const getCasinoDetailsRef = useRef(getCasinoDetails);
@@ -102,6 +103,9 @@ export const EventDetails = () => {
       }
       {
         gmid == "dtl20" ? <Dtla game={game} gmid={gmid}/> : null
+      }
+      {
+        gmid == "poker" ? <Poker game={game} gmid={gmid}/> : null
       }
     </div>
   );
