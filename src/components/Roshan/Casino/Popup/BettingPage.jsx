@@ -11,8 +11,9 @@ const BettingPage = ({setisModalopen, game, betRate, Player, Type}) => {
       console.log(betRate, "ye vetrate hai bro");
       console.log(Player, "ye player hai bhai");
       
-      
+      // return
       try {
+        
         const response = await axios.post("https://admin.titan97.live/Apicall/bf_placeBet_api",
           {
             selection_id: game?.mid,
