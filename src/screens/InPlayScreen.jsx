@@ -1,8 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ButtonGroup from "../components/ButtonGroup";
-
 import GroupBox from "../components/GroupBox";
-
 import HorizontalScrollList from "../components/HorizontalScrollbar/HorizontalScrollBarList";
 import BottomNavigationBar from "../components/BottomNavigationBar";
 
@@ -24,15 +22,25 @@ const secondMenu = [
 const InPlayScreen = () => {
   const [activeCategory, setActiveCategory] = useState("inPlay");
   const { inPlayMatches } = useContext(SportsContext);
+  const [updatedInPlayMatches, setUpdatedInPlayMatches] = useState([]);
 
-  //(inPlayMatches);
+  useEffect(() => {
+    const updatedData = [
+      ...inPlayMatches.filter(item => item.name === 'Cricket'),
+      ...inPlayMatches.filter(item => item.name !== 'Cricket'),
+    ];
+    
+    setUpdatedInPlayMatches(updatedData);
+  }, [inPlayMatches]);
+
+
 
   return (
     <div className="pb-[150px]">
       <ButtonGroup onClickItem={setActiveCategory} active={activeCategory} />
 
-      {inPlayMatches.length > 0 ? (
-        inPlayMatches.map((matches, i) => {
+      {updatedInPlayMatches.length > 0 ? (
+        updatedInPlayMatches.map((matches, i) => {
           if (matches[activeCategory].length < 1) return null;
 
           return (
