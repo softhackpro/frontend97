@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import BettingPage from "./Popup/BettingPage";
+import RecentResult from "../DownSlider/RecentResult";
 
 const Dtla = ({game, gmid}) => {
   //(game, "from dtla");
@@ -91,7 +92,7 @@ const Dtla = ({game, gmid}) => {
         ))}
       </div> */}
    {/* recent details  */}
-      <div className="mt-4 bg-black p-2 rounded-md flex items-center">
+      {/* <div className="mt-4 bg-black p-2 rounded-md flex items-center">
         <span className="text-white font-bold mr-2">Recent Result</span>
         <div className="flex gap-1">
           {["L", "T", "T", "T", "L", "T"].map((result, index) => (
@@ -103,7 +104,8 @@ const Dtla = ({game, gmid}) => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
+      <RecentResult result={gmid} />
     </div> 
     {
       ModalOpen ? (<BettingPage setisModalopen={setModalOpen} betRate={betRate} Player={Player} game={game}/>) : null
