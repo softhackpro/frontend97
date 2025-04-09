@@ -120,7 +120,7 @@ const Fullgame = () => {
       }
       closeModal();
     } catch (error) {
-    console.log(error);
+    // console.log(error);
     
       toast.error("something went wrong");
     } finally {
@@ -150,17 +150,17 @@ const Fullgame = () => {
 
   const fetchBetHistory = async () => {
 
-    console.log(mainApiData);
+    // console.log(mainApiData);
     const matchOdds = mainApiData.find(item => item.mname === 'MATCH_ODDS');
 
     const team1 = matchOdds?.section?.[0]?.nat;
     const team2 = matchOdds?.section?.[1]?.nat;
-    console.log({
-      user_id: user?.user_id,
-      team_1: team1,
-      team_2: team2,
-      market_id: matchOdds?.mid,
-    });
+    // console.log({
+    //   user_id: user?.user_id,
+    //   team_1: team1,
+    //   team_2: team2,
+    //   market_id: matchOdds?.mid,
+    // });
 
     try {
       const response = await axios.post(
@@ -172,7 +172,7 @@ const Fullgame = () => {
           market_id: matchOdds?.mid,
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
       setBetHistory(response.data)
 
     } catch (error) {
@@ -323,12 +323,19 @@ const Fullgame = () => {
     );
     setMatchDetail(res.data.data[0]);
     setScore(!openScore);
+
+    socket.emit("joinScoreSocket", {gmid: res.data.data[0].oldgmid})
+
+    socket.on("update", (date) => {
+      console.log("updated Data " , data);
+      
+    })
   };
 
-  //(betAmountShow);
+  console.log(matchdetail);
+  
 
 
-  console.log(betHistory);
 
 
   // useEffect(() => {
