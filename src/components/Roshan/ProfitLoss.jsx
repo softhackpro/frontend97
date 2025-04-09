@@ -43,9 +43,27 @@ const ProfitLoss = () => {
     <div className="flex flex-col justify-center  bg-gray-100 p-4">
       {/* Filter Section */}
       <div className="w-full max-w-md bg-white shadow-md rounded-lg p-4 mb-6">
-        <select className="w-full border border-gray-300 p-2 rounded mb-3">
-          <option>Data Source</option>
-        </select>
+      <select
+  className="w-full border border-gray-300 p-2 rounded mb-3"
+  onChange={(e) => {
+    const value = e.target.value;
+    if (value === "yesterday") {
+      const yesterday = moment().subtract(1, "days").format("YYYY-MM-DD");
+      setStartDate(yesterday);
+    } else if (value === "oneMonthAgo") {
+      const oneMonthAgo = moment().subtract(1, "months").format("YYYY-MM-DD");
+      setStartDate(oneMonthAgo);
+    } else if (value === "oneYearAgo") {
+      const oneYearAgo = moment().subtract(1, "years").format("YYYY-MM-DD");
+      setStartDate(oneYearAgo);
+    }
+  }}
+>
+  <option value="">Data Source</option>
+  <option value="yesterday">Live Data</option>
+  <option value="oneMonthAgo">Backup Data</option>
+  <option value="oneYearAgo">Old Data</option>
+</select>
         <input
           type="date"
           value={startDate}

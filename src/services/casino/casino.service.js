@@ -5,7 +5,7 @@ export const getAllCasinoGame = async () => {
     const response = await axios.get("https://titan97.live/get-casinotable");
     // //(response, "from casino service");
     const validGameIds = [
-      "teen", "lucky15", "ballbyball", "ab4", "aaa", "kbc", "baccarat", 
+      "teen", "lucky15", "ballbyball", "ab4", "aaa", "kbc", "baccarat", "baccarat2",
       "dtl20", "dt20", "teen33", "teen42", "teen41", "teen32", "teen20", "teen3", "poker", "lucky7", "worli", "lucky7eu", "card32eu"
     ];
     const games = response.data?.data?.t1 || []

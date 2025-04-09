@@ -3,6 +3,8 @@ import Popup from '../Casino/Popup/Popup';
 import axios from 'axios';
 
 const RecentResult = ({result}) => {
+  console.log(result);
+  
   const [ModalOpen, setModalOpen]  = useState()
   const [fetchedResult, setFetchedResult] = useState([])
   //(fetchedResult, "ye fetched result hai");

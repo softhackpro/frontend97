@@ -68,7 +68,6 @@ const AmarAkbarAnthony = ({ game, gmid }) => {
     setBetRate(betRate)
   }
 
-  console.log(game);
 
   return (
     <>
@@ -129,7 +128,7 @@ const AmarAkbarAnthony = ({ game, gmid }) => {
 
               item?.gstatus === "SUSPENDED" ? (
                 <div key={index} className={`${index === 0 ? 'bg-red-700' : 'bg-blue-600'} text-white p-2 text-center`}>
-                  <div className="font-bold text-lg"> SUBSBEND </div>
+                  <div className="font-bold text-lg"> SUSPEND </div>
                 </div>
               ) : (
                 <div onClick={() => handleBet(item?.nat, item?.b)} key={index} className={`${index === 0 ? 'bg-red-700' : 'bg-blue-600'} text-white p-2 text-center`}>
@@ -221,9 +220,10 @@ const AmarAkbarAnthony = ({ game, gmid }) => {
         </div>
       ))} */}
       {/* </div> */}
-
-        <div className=' h-10'></div>
+      <br />
       <RecentResult result={gmid} />
+        <div className=' h-20'></div>
+      
       {
         ModalOpen ? (<BettingPage setisModalopen={setModalOpen} game={game} Player={player} betRate={betRate} />) : null
       }
