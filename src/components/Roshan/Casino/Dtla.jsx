@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import BettingPage from "./Popup/BettingPage";
 
 const Dtla = ({game, gmid}) => {
-  console.log(game, "from dtla");
+  //(game, "from dtla");
   const [Dtlgame, setDtlGame] = useState("Dragon")
   const [ModalOpen, setModalOpen] = useState(false)
      const [betRate, setBetrate] = useState()
      const [Player, setPlayer] = useState()
      const setbet = (a, b, c) =>{
-    // console.log(a, b, c, "coming");
+    // //(a, b, c, "coming");
     
       try {
         setBetrate(b)

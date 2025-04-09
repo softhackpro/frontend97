@@ -68,7 +68,7 @@ const AmarAkbarAnthony = ({ game, gmid }) => {
     setBetRate(betRate)
   }
 
-  console.log(game);
+  //(game);
 
   return (
     <>

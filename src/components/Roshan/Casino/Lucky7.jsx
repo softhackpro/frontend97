@@ -4,14 +4,14 @@ import BettingPage from './Popup/BettingPage';
 import RecentResult from '../DownSlider/RecentResult';
 
 const Worli = ({game, gmid}) => {
-   console.log(game, "from worli");
+   //(game, "from worli");
    
    const [ModalOpen, setModalOpen] = useState(false)
    const [betRate, setBetrate] = useState()
    const [Player, setPlayer] = useState()
    const [Type, setType] = useState()
    const setbet = (a, b, c) =>{
-    // console.log(a, b, c, "coming");
+    // //(a, b, c, "coming");
     
       try {
         setType(a)

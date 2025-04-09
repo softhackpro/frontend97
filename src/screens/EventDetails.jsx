@@ -45,7 +45,7 @@ export const EventDetails = () => {
     }
     const fetchGameDetails = async () => {
       if (loading) {
-        console.log("return ");
+        //("return ");
 
         return
       }

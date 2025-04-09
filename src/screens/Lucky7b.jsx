@@ -6,7 +6,7 @@ import RecentResult from "../components/Roshan/DownSlider/RecentResult"
 
 export const Lucky7b = ({ game, gmid }) => {
 
-    console.log(game);
+    //(game);
     
     const [betRate, setBetRate] = useState()
     const [player, setPlayer] = useState()

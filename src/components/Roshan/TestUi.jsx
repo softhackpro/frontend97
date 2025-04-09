@@ -33,8 +33,8 @@ const TestUi = () => {
     }, []);
     
     const placebet = async () => {
-      console.log(selectedBet, "selected bet");
-      console.log(value, "ye value hai");
+      //(selectedBet, "selected bet");
+      //(value, "ye value hai");
       
       
         try {
@@ -59,7 +59,7 @@ const TestUi = () => {
             setisModalopen(false)
             setSelectedBet(null)
             setMoney(100)
-            console.log(response, "ye response hai");
+            //(response, "ye response hai");
             
         } catch (error) {
             toast.error("Server ERROR")
