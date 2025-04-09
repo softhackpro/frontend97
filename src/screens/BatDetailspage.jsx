@@ -41,7 +41,7 @@ const BetDetailsScreen = () => {
     setExpandedMarket((prev) => (prev === market ? null : market));
   };
 
-  console.log(data);
+  //(data);
   
 
   return (

@@ -7,9 +7,9 @@ const BettingPage = ({setisModalopen, game, betRate, Player, Type}) => {
   const { user } = useContext(AuthContext);
     const [Money, setMoney] = useState(100)
     const placebet = async() =>{
-      console.log(game, "ye game hai bro");
-      console.log(betRate, "ye vetrate hai bro");
-      console.log(Player, "ye player hai bhai");
+      //(game, "ye game hai bro");
+      //(betRate, "ye vetrate hai bro");
+      //(Player, "ye player hai bhai");
       
       // return
       try {
@@ -31,12 +31,12 @@ const BettingPage = ({setisModalopen, game, betRate, Player, Type}) => {
           })
 
           toast.success("bet placed")
-          console.log(response, "response from baccaraet");
+          //(response, "response from baccaraet");
           
           setisModalopen(false)
           setMoney(100)
       } catch (error) {
-        console.log(error);
+        //(error);
         
       }
     }

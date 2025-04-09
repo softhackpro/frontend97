@@ -92,7 +92,7 @@ const TeenPatiRecord = ({ detail, gmid, mid, game }) => {
       );
       if (response.data.success) {
         toast.success("bet placed");
-        console.log(response);
+        //(response);
         
       } else {
         toast.error(response.data.error || "something went wronge");

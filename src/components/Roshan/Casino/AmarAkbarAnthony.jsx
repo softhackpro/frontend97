@@ -68,7 +68,6 @@ const AmarAkbarAnthony = ({ game, gmid }) => {
     setBetRate(betRate)
   }
 
-
   return (
     <>
       <iframe src={`https://titan97.live/get-video/${gmid}`} frameborder="0"></iframe>

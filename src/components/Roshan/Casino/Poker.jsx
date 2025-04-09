@@ -9,7 +9,7 @@ const Poker = ({ gmid, game }) => {
    const [Player, setPlayer] = useState()
    const [Type, setType] = useState()
    const setbet = (a, b, c) =>{
-    // console.log(a, b, c, "coming");
+    // //(a, b, c, "coming");
     
       try {
         setType(a)
