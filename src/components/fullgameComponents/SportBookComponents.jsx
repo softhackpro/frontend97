@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import React from "react";
-import { BsLock } from "react-icons/bs";
-
+import axios from "axios";
 export const SportBookComponents = ({
   data,
   handleBackClick,
@@ -28,7 +27,11 @@ export const SportBookComponents = ({
     "cricketcasino",
   ]);
 
-  useEffect(() => {
+  const [bettingData, setBettingData] = useState(null);
+  const [hasFetch, setHasFetch] = useState(false);
+  const [isOpenModel, setIsOpenModel] = useState(false)
+  const [selectedModelData, setSelecteModelData] = useState([])
+    useEffect(() => {
     if (activeSections === 0) {
       if (activeGameFSections === "all") {
         setDisplayDataOptions([
@@ -58,6 +61,62 @@ export const SportBookComponents = ({
       }
     }
   }, [activeGameFSections, activeGameSSections, activeSections]);
+
+ // ✅ initially false
+ 
+ 
+
+  useEffect(() => {
+    const filter = [
+      "meter",
+      "oddeven",
+      "khado",
+      "fancy1",
+      "fancy",
+      "cricketcasino",
+    ];
+  
+    const filteredData = data.filter(item =>
+      filter.includes(item?.gtype?.toString().toLowerCase())
+    );
+  
+    const fetchBetFancy = async () => {
+      const result = {};
+    
+      const requests = filteredData.flatMap(item =>
+        (item.section || []).map(async sec => {
+          const runnerName = sec?.nat;
+          if (runnerName) {
+            try {
+              const { data } = await axios.post("https://admin.titan97.live/Apicall/get_session_bet_info_api", {
+                runner_name: runnerName,
+                fs_id: "2",
+                match_id: "729388038",
+                selection_id: "102489358806"
+              });
+              console.log(data);
+              
+              result[runnerName] = data.data;
+            } catch (error) {
+              console.error(`Error fetching for runner: ${runnerName}`, error);
+            }
+          }
+        })
+      );
+    
+      await Promise.all(requests);
+      setBettingData(result);
+      setHasFetch(true);
+      console.log(result);
+      
+    };
+    
+  
+    if (!hasFetch && data?.length > 0) {
+      fetchBetFancy();
+    }
+  }, [data, hasFetch]);
+  
 
   const fancyNData = [
     {
@@ -112,6 +171,12 @@ export const SportBookComponents = ({
       value: "khado",
     },
   ];
+
+  const handleBookClick  =(nat) => {
+    setIsOpenModel(true)
+    const data = bettingData[nat];
+    setSelecteModelData(data)
+  }
 
   return (
     <div>
@@ -174,9 +239,8 @@ export const SportBookComponents = ({
             {fancyNData.map((item, index) => (
               <div
                 onClick={() => setActiveGameFSections(item.value)}
-                className={` text-black p-1 cursor-pointer pl-2 pr-2 text-xs font-bold rounded-md ${
-                  item.value === activeGameFSections ? "bg-white" : ""
-                } `}
+                className={` text-black p-1 cursor-pointer pl-2 pr-2 text-xs font-bold rounded-md ${item.value === activeGameFSections ? "bg-white" : ""
+                  } `}
               >
                 {item.label}
               </div>
@@ -189,9 +253,8 @@ export const SportBookComponents = ({
             {sportsBookNData.map((item, index) => (
               <div
                 onClick={() => setActiveGameSSections(item.value)}
-                className={` text-black p-1 cursor-pointer pl-2 pr-2 text-xs font-bold rounded-md ${
-                  item.value === activeGameSSections ? "bg-white" : ""
-                } `}
+                className={` text-black p-1 cursor-pointer pl-2 pr-2 text-xs font-bold rounded-md ${item.value === activeGameSSections ? "bg-white" : ""
+                  } `}
               >
                 {item.label}
               </div>
@@ -269,28 +332,37 @@ export const SportBookComponents = ({
                               {item?.nat}
                             </div>
 
+                            {
+                              bettingData && bettingData[item.nat].length ? (
+                                <div className="  bg-blue-600 rounded-md font-semibold text-white p-1 text-center h-fit text-[10px] m-auto "> Book</div>
+                              ) : null
+                            } 
+
+{/* <div onClick={ () => handleBookClick(item.nat)} className="  bg-blue-600 rounded-md font-semibold text-white p-1 text-center h-fit text-[10px] m-auto "> Book</div> */}
+
                             {item.gstatus !== "" &&
-                            item.gstatus !== "ACTIVE" &&
-                            item.gstatus !== "OPEN" ? (
+                              item.gstatus !== "ACTIVE" &&
+                              item.gstatus !== "OPEN" ? (
                               <div className="text-black font-semibold flex items-center justify-center w-1/2 bg-red-500/30">
                                 {item.gstatus}
                               </div>
                             ) : (
                               <div className="w-1/2 flex ">
+
                                 <button
                                   onClick={() =>
                                     item.odds && item.odds.length > 0
                                       ? handleLayClick(
-                                          dataIndex,
-                                          sectionIndex,
-                                          item,
-                                          item.odds[item.odds.length / 2 - 1]
-                                            ?.odds,
-                                          data.mname,
-                                          data.gmid,
-                                          data.mid,
-                                          item.odds[item.odds.length / 2]?.size
-                                        )
+                                        dataIndex,
+                                        sectionIndex,
+                                        item,
+                                        item.odds[item.odds.length / 2 - 1]
+                                          ?.odds,
+                                        data.mname,
+                                        data.gmid,
+                                        data.mid,
+                                        item.odds[item.odds.length / 2]?.size
+                                      )
                                       : null
                                   }
                                   className="w-full bg-pink-300 "
@@ -301,15 +373,15 @@ export const SportBookComponents = ({
                                   <div className=" text-center font-bold">
                                     {item.odds && item.odds.length > 0
                                       ? item.odds[
-                                          Math.floor(item.odds.length / 2)
-                                        ]?.odds
+                                        Math.floor(item.odds.length / 2)
+                                      ]?.odds
                                       : "-"}
                                   </div>
                                   <div className="bg-pink-300 text-center">
                                     {item.odds && item.odds.length > 0
                                       ? item.odds[
-                                          Math.floor(item.odds.length / 2)
-                                        ]?.size
+                                        Math.floor(item.odds.length / 2)
+                                      ]?.size
                                       : "-"}
                                   </div>
                                 </button>
@@ -317,16 +389,16 @@ export const SportBookComponents = ({
                                   onClick={() =>
                                     item.odds && item.odds.length > 0
                                       ? handleBackClick(
-                                          dataIndex,
-                                          sectionIndex,
-                                          item,
-                                          item.odds[item.odds.length / 2 - 1]
-                                            ?.odds,
-                                          data.mname,
-                                          data.gmid,
-                                          data.mid,
-                                          item.odds[item.odds.length / 2]?.size
-                                        )
+                                        dataIndex,
+                                        sectionIndex,
+                                        item,
+                                        item.odds[item.odds.length / 2 - 1]
+                                          ?.odds,
+                                        data.mname,
+                                        data.gmid,
+                                        data.mid,
+                                        item.odds[item.odds.length / 2]?.size
+                                      )
                                       : null
                                   }
                                   className="w-full bg-blue-300 "
@@ -337,15 +409,15 @@ export const SportBookComponents = ({
                                   <div className=" text-center font-bold">
                                     {item.odds && item.odds.length > 0
                                       ? item.odds[
-                                          Math.floor(item.odds.length / 2) - 1
-                                        ]?.odds
+                                        Math.floor(item.odds.length / 2) - 1
+                                      ]?.odds
                                       : "-"}
                                   </div>
                                   <div className=" text-center">
                                     {item.odds && item.odds.length > 0
                                       ? item.odds[
-                                          Math.floor(item.odds.length / 2) - 1
-                                        ]?.size
+                                        Math.floor(item.odds.length / 2) - 1
+                                      ]?.size
                                       : "-"}
                                   </div>
                                 </button>
@@ -458,6 +530,69 @@ export const SportBookComponents = ({
           </div>
         ))}
       </div>
+
+          <BettingModal isModalOpen={isOpenModel} setIsModalOpen={setIsOpenModel} bookData={selectedModelData} />
     </div>
   );
 };
+
+
+
+const  BettingModal = ({isModalOpen = false, setIsModalOpen, bookData}) => {
+  // State to track if the modal is open or closed
+  
+
+  if (!isModalOpen){
+    return null
+  }
+
+  // Toggle modal visibility
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  return (
+    <>
+      <div className="w-full  fixed top-2 ">
+
+        <div className="w-full z-50  mx-auto shadow-lg rounded-md">
+          {/* Header bar */}
+          <div className="flex justify-between items-center bg-blue-800 text-white px-3 py-1 rounded-t-md">
+            <div className="text-sm font-medium">Book</div>
+            <div 
+              className="text-sm cursor-pointer" 
+              onClick={toggleModal}
+            >×</div>
+          </div>
+          
+          {/* Table */}
+          <div className="border border-gray-300 rounded-b-md overflow-hidden">
+            {/* Table header */}
+            <div className="flex border-b border-gray-300 bg-gray-100">
+              <div className="w-1/2 text-xs font-medium py-1 px-2 text-center border-r border-gray-300">Run</div>
+              <div className="w-1/2 text-xs font-medium py-1 px-2 text-center">Amount</div>
+            </div>
+            
+            {/* Table rows */}
+            <div className="max-h-64 overflow-y-auto">
+              {bookData.map((item) => (
+                <div 
+                  key={item.run} 
+                  className="flex border-b border-gray-300 last:border-b-0"
+                  style={{
+                    backgroundColor: item.amount > 0 ? '#cce5ff' : '#ffcccb'
+                  }}
+                >
+                  <div className="w-1/2 text-xs py-1 px-2 text-center border-r border-gray-300">{item.run}</div>
+                  <div className="w-1/2 text-xs py-1 px-2 text-center">{item.amount}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+    </div>
+    </>
+  
+  );
+}

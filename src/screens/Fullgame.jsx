@@ -147,16 +147,16 @@ const Fullgame = () => {
 
   const fetchMatchDetails = async () => {
     try {
-        const res = await axios.get(
-      `https://titan97.live/get-matchdetails?gmid=${id}&sid=${sid}`
-    );
-    setMatchDetail(res.data.data[0]);
-    console.log(res.data.data[0]);
-    
+      const res = await axios.get(
+        `https://titan97.live/get-matchdetails?gmid=${id}&sid=${sid}`
+      );
+      setMatchDetail(res.data.data[0]);
+      console.log(res.data.data[0]);
+
     } catch (error) {
-      
+
     }
-  
+
   }
 
   useEffect(() => {
@@ -231,7 +231,7 @@ const Fullgame = () => {
   }, [matchdetail])
 
   useEffect(() => {
-    const filterData = mainApiData.filter((item) => item.gtype === "fancy1");
+    const filterData = mainApiData.filter((item) => item.gtype === "fancy1" && item?.section.length >= 2 && item?.section[0].nat.toString().includes('Toss') && item?.section[1].nat.toString().includes('Toss'));
     setTossData(filterData);
   }, [mainApiData]);
 
@@ -342,6 +342,8 @@ const Fullgame = () => {
     setApiData(filteredData);
   }, [mainApiData, activeTab]);
 
+
+
   if (loder) {
     return <CircularHorizontalLoader />;
   }
@@ -391,15 +393,15 @@ const Fullgame = () => {
         className={`transition-[max-height] duration-[1000ms] ease-in-out overflow-hidden ${openScore ? "max-h-[1000px]" : "max-h-0"
           }`}
       >
-       {
-        matchScore ? (
-          <CricketScoreboard data={matchScore} />
-        ) : (
-          <div className=" h-40 flex items-center justify-center bg-black w-full"> 
-                <FaSpinner className=" animate-spin text-white text-3xl" />
-          </div>
-        )
-       }
+        {
+          matchScore ? (
+            <CricketScoreboard data={matchScore} />
+          ) : (
+            <div className=" h-40 flex items-center justify-center bg-black w-full">
+              <FaSpinner className=" animate-spin text-white text-3xl" />
+            </div>
+          )
+        }
       </div>
 
       {/* Tabs */}
