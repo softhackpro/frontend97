@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
 import axios from "axios";
+import { UNSAFE_SingleFetchRedirectSymbol, useParams, useSearchParams } from "react-router";
+import { AuthContext } from "../../services/auth/auth.context";
 export const SportBookComponents = ({
   data,
   handleBackClick,
@@ -31,7 +33,13 @@ export const SportBookComponents = ({
   const [hasFetch, setHasFetch] = useState(false);
   const [isOpenModel, setIsOpenModel] = useState(false)
   const [selectedModelData, setSelecteModelData] = useState([])
-    useEffect(() => {
+  const { user } = useContext(AuthContext);
+  const [searchParams] = useSearchParams();
+  const sid = searchParams.get("sid");
+  const { id } = useParams();
+
+
+  useEffect(() => {
     if (activeSections === 0) {
       if (activeGameFSections === "all") {
         setDisplayDataOptions([
@@ -62,9 +70,10 @@ export const SportBookComponents = ({
     }
   }, [activeGameFSections, activeGameSSections, activeSections]);
 
- // ✅ initially false
- 
- 
+  // ✅ initially false
+
+
+  // console.log(data);
 
   useEffect(() => {
     const filter = [
@@ -75,27 +84,44 @@ export const SportBookComponents = ({
       "fancy",
       "cricketcasino",
     ];
-  
+
+    // const filteredData = data[0]
+
     const filteredData = data.filter(item =>
       filter.includes(item?.gtype?.toString().toLowerCase())
     );
-  
+
+    // console.log("filter data ", filteredData);
+
     const fetchBetFancy = async () => {
       const result = {};
-    
+
       const requests = filteredData.flatMap(item =>
+
         (item.section || []).map(async sec => {
           const runnerName = sec?.nat;
           if (runnerName) {
             try {
+              console.log("sendeddata ", {
+                runner_name: runnerName,
+                fs_id: user?.user_id,
+                match_id: id,
+                selection_id: item?.mid
+              });
+
+              console.log("sende data ", {
+                runner_name: runnerName,
+                fs_id: user?.user_id,
+                match_id: id,
+                selection_id: item?.mid
+              });
+
               const { data } = await axios.post("https://admin.titan97.live/Apicall/get_session_bet_info_api", {
                 runner_name: runnerName,
-                fs_id: "2",
-                match_id: "729388038",
-                selection_id: "102489358806"
+                fs_id: user?.user_id,
+                match_id: id,
+                selection_id: item?.mid
               });
-              console.log(data);
-              
               result[runnerName] = data.data;
             } catch (error) {
               console.error(`Error fetching for runner: ${runnerName}`, error);
@@ -103,20 +129,21 @@ export const SportBookComponents = ({
           }
         })
       );
-    
+
       await Promise.all(requests);
       setBettingData(result);
       setHasFetch(true);
       console.log(result);
-      
+
     };
-    
-  
+
+
     if (!hasFetch && data?.length > 0) {
+      setHasFetch(true)
       fetchBetFancy();
     }
   }, [data, hasFetch]);
-  
+
 
   const fancyNData = [
     {
@@ -172,11 +199,13 @@ export const SportBookComponents = ({
     },
   ];
 
-  const handleBookClick  =(nat) => {
+  const handleBookClick = (nat) => {
     setIsOpenModel(true)
     const data = bettingData[nat];
     setSelecteModelData(data)
   }
+
+
 
   return (
     <div>
@@ -333,21 +362,24 @@ export const SportBookComponents = ({
                             </div>
 
                             {
-                              bettingData && bettingData[item.nat].length ? (
-                                <div className="  bg-blue-600 rounded-md font-semibold text-white p-1 text-center h-fit text-[10px] m-auto "> Book</div>
+                              bettingData && bettingData?.[item?.nat]?.length > 0 ? (
+                                <div onClick={() => handleBookClick(item?.nat)} className="bg-blue-600 rounded-md cursor-pointer font-semibold text-white p-1 text-center h-fit text-[10px] m-auto">
+                                  Book
+                                </div>
                               ) : null
-                            } 
+                            }
 
-{/* <div onClick={ () => handleBookClick(item.nat)} className="  bg-blue-600 rounded-md font-semibold text-white p-1 text-center h-fit text-[10px] m-auto "> Book</div> */}
+
+                            {/* <div onClick={ () => handleBookClick(item.nat)} className="  bg-blue-600 rounded-md font-semibold text-white p-1 text-center h-fit text-[10px] m-auto "> Book</div> */}
 
                             {item.gstatus !== "" &&
                               item.gstatus !== "ACTIVE" &&
                               item.gstatus !== "OPEN" ? (
-                              <div className="text-black font-semibold flex items-center justify-center w-1/2 bg-red-500/30">
+                              <div className="text-black font-semibold w-[40%] ml-auto flex items-center justify-center bg-red-500/30">
                                 {item.gstatus}
                               </div>
                             ) : (
-                              <div className="w-1/2 flex ">
+                              <div className="w-[40%] ml-auto flex ">
 
                                 <button
                                   onClick={() =>
@@ -531,18 +563,18 @@ export const SportBookComponents = ({
         ))}
       </div>
 
-          <BettingModal isModalOpen={isOpenModel} setIsModalOpen={setIsOpenModel} bookData={selectedModelData} />
+      <BettingModal isModalOpen={isOpenModel} setIsModalOpen={setIsOpenModel} bookData={selectedModelData} />
     </div>
   );
 };
 
 
 
-const  BettingModal = ({isModalOpen = false, setIsModalOpen, bookData}) => {
+const BettingModal = ({ isModalOpen = false, setIsModalOpen, bookData }) => {
   // State to track if the modal is open or closed
-  
 
-  if (!isModalOpen){
+
+  if (!isModalOpen) {
     return null
   }
 
@@ -559,12 +591,12 @@ const  BettingModal = ({isModalOpen = false, setIsModalOpen, bookData}) => {
           {/* Header bar */}
           <div className="flex justify-between items-center bg-blue-800 text-white px-3 py-1 rounded-t-md">
             <div className="text-sm font-medium">Book</div>
-            <div 
-              className="text-sm cursor-pointer" 
+            <div
+              className="text-sm cursor-pointer"
               onClick={toggleModal}
             >×</div>
           </div>
-          
+
           {/* Table */}
           <div className="border border-gray-300 rounded-b-md overflow-hidden">
             {/* Table header */}
@@ -572,12 +604,12 @@ const  BettingModal = ({isModalOpen = false, setIsModalOpen, bookData}) => {
               <div className="w-1/2 text-xs font-medium py-1 px-2 text-center border-r border-gray-300">Run</div>
               <div className="w-1/2 text-xs font-medium py-1 px-2 text-center">Amount</div>
             </div>
-            
+
             {/* Table rows */}
             <div className="max-h-64 overflow-y-auto">
               {bookData.map((item) => (
-                <div 
-                  key={item.run} 
+                <div
+                  key={item.run}
                   className="flex border-b border-gray-300 last:border-b-0"
                   style={{
                     backgroundColor: item.amount > 0 ? '#cce5ff' : '#ffcccb'
@@ -591,8 +623,8 @@ const  BettingModal = ({isModalOpen = false, setIsModalOpen, bookData}) => {
           </div>
         </div>
 
-    </div>
+      </div>
     </>
-  
+
   );
 }

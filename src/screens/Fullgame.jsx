@@ -30,7 +30,7 @@ const Fullgame = () => {
   const [updatedBet, setupdatedBet] = useState("");
   const [selectedBet, setSelectedBet] = useState(null);
   const [betAmount, setBetAmount] = useState(0);
-  const betAmounts = [5, 100, 200, 300, 500, 1000, 2000, 5000];
+  const betAmounts = [100, 200, 300, 500, 1000, 2000, 5000, 10000];
   // Track which row has an open modal
   const [showAgeVerificationModal, setShowAgeVerificationModal] =
     useState(false);
@@ -54,7 +54,9 @@ const Fullgame = () => {
   const [betOpenType, setBetOpenType] = useState(null);
   const [betOpenTypeName, setBetOpenTypeName] = useState(null);
   const [betHistory, setBetHistory] = useState([]);
+  const [bookBetHistory, setBookMakerBetHistory] = useState([]);
   const [matchScore, setMatchScore] = useState(null);
+  const [hasCall, setHasCall] = useState(true)
 
   const fetchGameDetails = async () => {
     try {
@@ -117,6 +119,7 @@ const Fullgame = () => {
       );
       if (response.data.success) {
         toast.success("bet placed");
+        setHasCall(true)
       } else {
         toast.error(response.data.error || "something went wronge");
       }
@@ -129,13 +132,6 @@ const Fullgame = () => {
       setBetLoading(false);
     }
   };
-
-  // useEffect(() => {
-  //   let intervalId;
-
-  //   intervalId = setInterval(fetchGameDetails, 1000);
-  //   return () => clearInterval(intervalId);
-  // }, []);
 
   const fetchGame = useCallback(async () => {
     try {
@@ -151,12 +147,8 @@ const Fullgame = () => {
         `https://titan97.live/get-matchdetails?gmid=${id}&sid=${sid}`
       );
       setMatchDetail(res.data.data[0]);
-      console.log(res.data.data[0]);
-
     } catch (error) {
-
     }
-
   }
 
   useEffect(() => {
@@ -190,15 +182,44 @@ const Fullgame = () => {
     } catch (error) {
       console.error(error);
     }
+  } 
+   const fetchBetHistory2 = async () => {
+
+    
+    const boomaker = mainApiData.find(item => item.mname === 'Bookmaker');
+
+    const team1 = boomaker?.section?.[0]?.nat;
+    const team2 = boomaker?.section?.[1]?.nat;
+
+
+    try {
+      const response = await axios.post(
+        "https://admin.titan97.live/Apicall/calculatebook_bets",
+        {
+          fs_id: user?.user_id,
+          team_1: team1,
+          team_2: team2,
+          market_id: boomaker?.mid,
+        }
+      );
+      //(response.data);
+      setBookMakerBetHistory(response.data)
+      
+
+    } catch (error) {
+      console.error(error);
+    }
   }
 
 
 
   useEffect(() => {
-    if (user) {
+    if (user && hasCall && mainApiData && mainApiData.length) {
+      setHasCall(false)
+      fetchBetHistory2()
       fetchBetHistory()
     }
-  }, [mainApiData])
+  }, [mainApiData, hasCall])
 
   useEffect(() => {
     socket.emit("joinRoom", { gmid: id, sid });
@@ -331,9 +352,7 @@ const Fullgame = () => {
   };
 
   useEffect(() => {
-    //(activeTab);
-    //(mainApiData);
-    //(apiData);
+
     if (activeTab === "All") {
       setApiData(mainApiData);
       return;
@@ -541,6 +560,13 @@ const Fullgame = () => {
                                   <div className=" text-red-500 "> {betHistory[item.nat]} </div>
                                 ) : (
                                   <div className=" text-green-500"> {betHistory[item.nat]} </div>
+                                ) : null
+                              }
+                              {
+                                data.mname === 'Bookmaker' ? bookBetHistory[item.nat] < 0 ? (
+                                  <div className=" text-red-500 "> {bookBetHistory[item.nat]} </div>
+                                ) : (
+                                  <div className=" text-green-500"> {bookBetHistory[item.nat]} </div>
                                 ) : null
                               }
                             </div>
