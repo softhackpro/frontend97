@@ -18,7 +18,7 @@ const ProfitLossMarkets = () => {
       const [startDate, setStartDate] = useState(yesterday);
       const [endDate, setEndDate] = useState(today);
     const [value, setValue] = useState();
-    
+    const [mid, setMid] = useState();
     const requestData = {
         userId: user?.user_id,
         fromdate: startDate,
@@ -37,8 +37,10 @@ const ProfitLossMarkets = () => {
                   },
                 }
               );
+              console.log(response, "ye purana wala haai");
+              
               setValue(response.data.bet_details)
-
+              setMid(response.data.match_id)
         } catch (error) {
             //(error);
             
@@ -122,11 +124,11 @@ const ProfitLossMarkets = () => {
               <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
                 <td className="border border-gray-300 p-2">{id}</td>
                 <td className="border border-gray-300 p-2">
-                  <Link to={`/NewProfitLoss?id=${item.game_name}&gtype=${id}&match_id=${match_id}`} className="text-blue-500 hover:underline">{item.game_name}</Link>
+                  <Link to={`/NewProfitLoss?id=${item.game_name ? item.game_name : item.bet_name}&gtype=${id}&match_id=${item.round_id ? item.round_id : mid}`} className="text-blue-500 hover:underline">{item.game_name ? item.gamename : item.bet_name}</Link>
                 </td>
                 
                 <td className="border border-gray-300 p-2 text-right">
-                  {item.round_id }
+                  {item.round_id ? item.round_id : "server error" }
                 </td>
                 <td className="border border-gray-300 p-2">
                   {item.result ? item.result : 0}

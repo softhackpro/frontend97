@@ -23,26 +23,40 @@ const NewProfitLoss = () => {
     const requestData = {
         userId: user?.user_id,
         identifier: id,
-        match_id: match_id,
+        match_id: match_id, 
+        gtype: gtype
+      };
+      const requestCData = {
+        userId: user?.user_id,
+        identifier: `${id}_${match_id}`,
+        match_id: id, 
         gtype: gtype
       };
     const fetchprofitlossevent = async() => {
-        
+        let updatedData = ""
+        if (gtype === "casino" ){
+          updatedData = requestCData
+        }else if (gtype === "cricket"){
+          updatedData = requestData
+        }
+
         try {
             const response = await axios.post(`https://admin.titan97.live/Apicall/allbetsdetails`,
-                requestData,
+              updatedData,
                 {
                   headers: {
                     "Content-Type": "application/json",
                   },
                 }
               );
+              console.log(response, "ye new pl se hai");
               
               setValue(response.data.bet_details)
               //(response);
               
         } catch (error) {
             //(error);
+            console.log(error);
             
         }
     }
@@ -56,98 +70,70 @@ const NewProfitLoss = () => {
   
 
   return (
-    <div className="w-full max-w-4xl">
-      {/* Header */}
-      <div className="bg-gray-700 text-white p-3 font-bold">
-        Profit/Loss Events
-      </div>
-      
-      {/* Controls */}
-      <div className="flex flex-wrap justify-between items-center p-4 bg-gray-100">
-        <div className="flex items-center mb-2 sm:mb-0">
-          <span className="mr-2">Show</span>
-          <select 
-            className="border rounded px-2 py-1"
-            value={entriesPerPage}
-            onChange={(e) => setEntriesPerPage(parseInt(e.target.value))}
-          >
-            <option value={25}>25</option>
-            <option value={50}>50</option>
-            <option value={100}>100</option>
-          </select>
-          <span className="ml-2">entries</span>
+<div className="max-w-4xl mx-auto">
+  <div className="bg-gray-700 text-white p-3 font-bold">
+    Bet History
+  </div>
+
+  <div className="flex justify-end my-2">
+    <button className="bg-blue-300 px-4 py-1 mr-1">Back</button>
+    <button className="bg-pink-300 px-4 py-1 mr-1">Lay</button>
+    <button className="bg-white border px-4 py-1">Void</button>
+  </div>
+
+  {/* Horizontal scroll wrapper */}
+  <div className="w-full overflow-x-auto">
+    <div className="min-w-[800px]">
+      <div className="flex bg-gray-200">
+        <div className="w-1/6 p-3 font-bold border-r border-gray-300">
+          Sport Name
         </div>
-        
-        <div className="flex items-center">
-          <span className="mr-2">Search:</span>
-          <input 
-            type="text" 
-            className="border rounded p-1 w-48"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+        <div className="w-1/4 p-3 font-bold border-r border-gray-300">
+          Event Name
+        </div>
+        <div className="w-1/6 p-3 font-bold border-r border-gray-300">
+          Market
+        </div>
+        <div className="w-1/6 p-3 font-bold border-r border-gray-300">
+          Date
+        </div>
+        <div className="w-1/12 p-3 font-bold border-r border-gray-300">
+          Time
+        </div>
+        <div className="w-1/12 p-3 font-bold">
+          Win
         </div>
       </div>
-      
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border border-gray-300 p-2 text-left font-bold">
-                Sport Name
-                <span className="ml-1">▲</span>
-              </th>
-              <th className="border border-gray-300 p-2 text-left font-bold">
-                Event Name
-                <span className="ml-1 text-gray-400">↕</span>
-              </th>
-              <th className="border border-gray-300 p-2 text-center font-bold">
-                Market Name
-              </th>
-              <th className="border border-gray-300 p-2 text-center font-bold">
-                Result
-              </th>
-              <th className="border border-gray-300 p-2 text-left font-bold">
-               Profit/Loss
-              </th>
-              <th className="border border-gray-300 p-2 text-left font-bold">
-               Commision
-              </th>
-              <th className="border border-gray-300 p-2 text-left font-bold">
-               Settle Time
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {value?.map((item, index) => (
-              <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-                <td className="border border-gray-300 p-2">{gtype}</td>
-                <td className="border border-gray-300 p-2">
-                  <Link to={`/profitlossmarkets/${item.game_name}`} className="text-blue-500 hover:underline">{item.game_name}</Link>
-                </td>
-                
-                <td className="border border-gray-300 p-2 text-right">
-                  {item.round_id }
-                </td>
-                <td className="border border-gray-300 p-2">
-                  {item.result ? item.result : 0}
-                </td>
-                <td className={`border border-gray-300 p-2 text-right ${parseFloat(item.net_profit_loss) < 0 ? 'text-red-500' : 'text-green-500'}`}>
-                  {item.profit_loss ? item.profit_loss: item.net_profit_loss}
-                </td>
-                <td className="border border-gray-300 p-2 text-right">
-                  {item.commision ? item.commision : 0}
-                </td>
-                <td className="border border-gray-300 p-2 text-right">
-                  {item.time ? item.time : "Date"}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+
+      {value?.map((bet, index) => (
+        <div
+          key={index}
+          className={`flex ${bet.back === "back" ? 'bg-red-200' : 'bg-blue-100'}`}
+        >
+          <div className="w-1/6 p-3 border-r border-gray-300">
+            {gtype}
+          </div>
+          <div className="w-1/4 p-3 border-r border-gray-300">
+            {bet.bet_type}
+          </div>
+          <div className="w-1/6 p-3 border-r border-gray-300">
+            {bet.betvalue}
+          </div>
+          <div className="w-1/6 p-3 border-r border-gray-300">
+            {bet.bet_rate}
+          </div>
+          <div className="w-1/12 p-3 border-r border-gray-300">
+            {bet.bet_id}
+          </div>
+          <div className="w-1/12 p-3">
+            {bet.created_at}
+          </div>
+        </div>
+      ))}
     </div>
+  </div>
+</div>
+
   );
 };
 
