@@ -73,7 +73,7 @@ export const SportBookComponents = ({
   // ✅ initially false
 
 
-  // console.log(data);
+  // //(data);
 
   useEffect(() => {
     const filter = [
@@ -91,7 +91,7 @@ export const SportBookComponents = ({
       filter.includes(item?.gtype?.toString().toLowerCase())
     );
 
-    // console.log("filter data ", filteredData);
+    // //("filter data ", filteredData);
 
     const fetchBetFancy = async () => {
       const result = {};
@@ -102,20 +102,6 @@ export const SportBookComponents = ({
           const runnerName = sec?.nat;
           if (runnerName) {
             try {
-              console.log("sendeddata ", {
-                runner_name: runnerName,
-                fs_id: user?.user_id,
-                match_id: id,
-                selection_id: item?.mid
-              });
-
-              console.log("sende data ", {
-                runner_name: runnerName,
-                fs_id: user?.user_id,
-                match_id: id,
-                selection_id: item?.mid
-              });
-
               const { data } = await axios.post("https://admin.titan97.live/Apicall/get_session_bet_info_api", {
                 runner_name: runnerName,
                 fs_id: user?.user_id,
@@ -133,7 +119,7 @@ export const SportBookComponents = ({
       await Promise.all(requests);
       setBettingData(result);
       setHasFetch(true);
-      console.log(result);
+      //(result);
 
     };
 

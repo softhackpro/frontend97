@@ -114,7 +114,7 @@ const Fullgame = () => {
         market_name: match_name,
       }
 
-      console.log(d);
+      //(d);
 
       // return 
 
@@ -261,7 +261,7 @@ const Fullgame = () => {
     socket.emit("joinScoreSocket", { gmid: matchdetail?.oldgmid });
 
     socket.on("scoreUpdate", (data) => {
-      console.log(data);
+      //(data);
 
       setMatchScore(data?.data);
     });

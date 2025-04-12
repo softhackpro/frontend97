@@ -37,7 +37,7 @@ const ProfitLossMarkets = () => {
                   },
                 }
               );
-              console.log(response, "ye purana wala haai");
+              //(response, "ye purana wala haai");
               
               setValue(response.data.bet_details)
               setMid(response.data.match_id)
