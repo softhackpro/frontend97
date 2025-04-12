@@ -99,6 +99,26 @@ const Fullgame = () => {
       }
 
       //(d);
+      const d = {
+        selection_id: selectedBet?.mid,
+        bet_type: selectedBet?.type,
+        user_id: user?.user_id,
+        bet_name: selectedBet?.team,
+        betvalue: selectedBet?.odds,
+        bet_rate: sendUpdateBet,
+        match_id: selectedBet?.gmid,
+        market_type: selectedBet?.type,
+        win_amount: win_a,
+        loss_amount: loss_a,
+        gtype: selectedBet?.mname,
+        market_name: match_name,
+      }
+
+      console.log(d);
+
+      // return 
+
+      
 
       const response = await axios.post(
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
@@ -624,7 +644,7 @@ const Fullgame = () => {
                                         dataIndex,
                                         sectionIndex,
                                         item,
-                                        item.odds[item.odds.length / 2 - 1]
+                                        item.odds[item.odds.length / 2 ]
                                           ?.odds,
                                         data.mname,
                                         data.gmid,

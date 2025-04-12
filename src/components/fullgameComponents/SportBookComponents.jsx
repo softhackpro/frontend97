@@ -388,7 +388,7 @@ export const SportBookComponents = ({
                                         dataIndex,
                                         sectionIndex,
                                         item,
-                                        item.odds[item.odds.length / 2 - 1]
+                                        item.odds[item.odds.length / 2 ]
                                           ?.odds,
                                         data.mname,
                                         data.gmid,
@@ -429,7 +429,7 @@ export const SportBookComponents = ({
                                         data.mname,
                                         data.gmid,
                                         data.mid,
-                                        item.odds[item.odds.length / 2]?.size
+                                        item.odds[item.odds.length / 2 - 1]?.size
                                       )
                                       : null
                                   }
