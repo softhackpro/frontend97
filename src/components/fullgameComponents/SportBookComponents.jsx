@@ -70,10 +70,40 @@ export const SportBookComponents = ({
     }
   }, [activeGameFSections, activeGameSSections, activeSections]);
 
-  // ✅ initially false
+
+  const fetchBookHistoryForSpecific = async (runnerName, mid) => {
+
+    //(runnerName);
+    
+    try {
+      const { data } = await axios.post("https://admin.titan97.live/Apicall/get_session_bet_info_api", {
+        runner_name: runnerName,
+        fs_id: user?.user_id,
+        match_id: id,
+        selection_id: mid
+      });
+      const betData = data.data;
+
+      //(bettingData[runnerName]);
+      setBettingData(prev => ({
+        ...prev,
+        [runnerName]: betData
+      }));
+    } catch (error) {
+      console.error(`Error fetching for runner: ${runnerName}`, error);
+    }
+  }
+
+  //(bettingData);
+  
 
 
-  // //(data);
+   const handleBet = async (nat, mid) => {
+    //("start ");
+    await placeBat();
+    //("compelee"); 
+    fetchBookHistoryForSpecific(nat, mid)
+  }
 
   useEffect(() => {
     const filter = [
@@ -85,13 +115,9 @@ export const SportBookComponents = ({
       "cricketcasino",
     ];
 
-    // const filteredData = data[0]
-
     const filteredData = data.filter(item =>
       filter.includes(item?.gtype?.toString().toLowerCase())
     );
-
-    // //("filter data ", filteredData);
 
     const fetchBetFancy = async () => {
       const result = {};
@@ -191,6 +217,7 @@ export const SportBookComponents = ({
     setSelecteModelData(data)
   }
 
+ 
 
 
   return (
@@ -529,7 +556,7 @@ export const SportBookComponents = ({
                                   </button>
                                   <button
                                     disabled={betLoading}
-                                    onClick={() => placeBat()}
+                                    onClick={() => handleBet(item?.nat, data?.mid)}
                                     className="w-1/2 py-2 text-center text-sm text-white rounded font-medium"
                                     style={{ backgroundColor: "#4a6da7" }}
                                   >
