@@ -42,7 +42,7 @@ const BetDetailsScreen = () => {
   };
 
   //(data);
-  
+
 
   return (
     <div className="w-full h-full container mx-auto min-h-screen bg-white flex flex-col gap-1">
@@ -76,9 +76,8 @@ const BetDetailsScreen = () => {
               </p>
               <div className="p-1 border border-gray-200">
                 <FaChevronRight
-                  className={`transition-transform ${
-                    expandedMarket === market ? "rotate-90" : ""
-                  }`}
+                  className={`transition-transform ${expandedMarket === market ? "rotate-90" : ""
+                    }`}
                 />
               </div>
             </div>
@@ -94,9 +93,8 @@ const BetDetailsScreen = () => {
                 <p>{market}</p>
                 <div className="p-1 border border-gray-200">
                   <FaChevronRight
-                    className={`transition-transform ${
-                      expandedMarket === market ? "rotate-90" : ""
-                    }`}
+                    className={`transition-transform ${expandedMarket === market ? "rotate-90" : ""
+                      }`}
                   />
                 </div>
               </div>
@@ -108,7 +106,7 @@ const BetDetailsScreen = () => {
                     <div className="p-1 text-center w-fit bg-white border-gray-200 border-b text-sm font-bold">
                       Matched
                     </div>
-                    <div className=" text-sm font-semibold text-center h-full"> { bet.updated_at} </div>
+                    <div className=" text-sm font-semibold text-center h-full"> {bet.updated_at} </div>
                   </div>
 
                   {/* Back Bet */}
@@ -119,7 +117,7 @@ const BetDetailsScreen = () => {
                     <div className="text-center">Profit</div>
                   </div>
 
-                  {(bet.bet_type.toLowerCase() === 'back'  || bet?.market_type.toString().toLowerCase() === "back") && (
+                  {(bet.bet_type.toLowerCase() === 'back' || bet?.market_type.toString().toLowerCase() === "back") && (
                     <div className="w-full grid grid-cols-4 text-xs text-black p-1 border-b bg-blue-300">
                       <div
                         style={{
@@ -132,7 +130,7 @@ const BetDetailsScreen = () => {
                         {bet.bet_name}
                       </div>
                       {bet?.gtype === "MATCH_ODDS" ||
-                      bet?.gtype === "fancy1" ? (
+                        bet?.gtype === "fancy1" ? (
                         <div className="text-center">{`${bet.bet_rate}`}</div>
                       ) : (
                         <div className="text-center">{`${bet.betvalue}`}</div>
@@ -150,7 +148,7 @@ const BetDetailsScreen = () => {
                     <div className="text-center">Liability</div>
                   </div>
 
-                  {(bet.bet_type.toLowerCase() === 'lay'  || bet?.market_type.toString().toLowerCase() === "lay" )&& (
+                  {(bet.bet_type.toLowerCase() === 'lay' || bet?.market_type.toString().toLowerCase() === "lay") && (
                     <div className="w-full grid grid-cols-4 text-xs p-1 border-b bg-red-300">
                       <div
                         style={{
@@ -162,10 +160,11 @@ const BetDetailsScreen = () => {
                       >
                         {bet.bet_name}
                       </div>
-                      {bet?.gtype === "Bookmaker" ? (
-                        <div className="text-center">{`${bet.betvalue}`} </div>
+                      {bet?.gtype === "MATCH_ODDS" ||
+                        bet?.gtype === "fancy1" ? (
+                        <div className="text-center">{`${bet.bet_rate}`}</div>
                       ) : (
-                        <div className="text-center">{`${bet.bet_rate} ()`}</div>
+                        <div className="text-center">{`${bet.betvalue}`}</div>
                       )}
 
                       <div className="text-center">{bet.loss_amount}</div>
@@ -173,7 +172,7 @@ const BetDetailsScreen = () => {
                     </div>
                   )}
 
-                  
+
 
                   {/* Checkbox for Info */}
                   <div className="p-1 text-xs flex items-center">

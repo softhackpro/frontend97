@@ -49,14 +49,14 @@ const NewProfitLoss = () => {
                   },
                 }
               );
-              console.log(response, "ye new pl se hai");
+              //(response, "ye new pl se hai");
               
               setValue(response.data.bet_details)
               //(response);
               
         } catch (error) {
             //(error);
-            console.log(error);
+            //(error);
             
         }
     }

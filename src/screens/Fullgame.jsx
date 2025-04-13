@@ -97,9 +97,7 @@ const Fullgame = () => {
         win_a = betAmount;
         loss_a = updatedBet * betAmount;
       }
-
-      //(d);
-
+      
       const response = await axios.post(
         "https://admin.titan97.live/Apicall/bf_placeBet_api",
         {
@@ -241,7 +239,7 @@ const Fullgame = () => {
     socket.emit("joinScoreSocket", { gmid: matchdetail?.oldgmid });
 
     socket.on("scoreUpdate", (data) => {
-      console.log(data);
+      //(data);
 
       setMatchScore(data?.data);
     });
@@ -624,7 +622,7 @@ const Fullgame = () => {
                                         dataIndex,
                                         sectionIndex,
                                         item,
-                                        item.odds[item.odds.length / 2 - 1]
+                                        item.odds[item.odds.length / 2 ]
                                           ?.odds,
                                         data.mname,
                                         data.gmid,

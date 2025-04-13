@@ -70,10 +70,40 @@ export const SportBookComponents = ({
     }
   }, [activeGameFSections, activeGameSSections, activeSections]);
 
-  // ✅ initially false
+
+  const fetchBookHistoryForSpecific = async (runnerName, mid) => {
+
+    //(runnerName);
+    
+    try {
+      const { data } = await axios.post("https://admin.titan97.live/Apicall/get_session_bet_info_api", {
+        runner_name: runnerName,
+        fs_id: user?.user_id,
+        match_id: id,
+        selection_id: mid
+      });
+      const betData = data.data;
+
+      //(bettingData[runnerName]);
+      setBettingData(prev => ({
+        ...prev,
+        [runnerName]: betData
+      }));
+    } catch (error) {
+      console.error(`Error fetching for runner: ${runnerName}`, error);
+    }
+  }
+
+  //(bettingData);
+  
 
 
-  // console.log(data);
+   const handleBet = async (nat, mid) => {
+    //("start ");
+    await placeBat();
+    //("compelee"); 
+    fetchBookHistoryForSpecific(nat, mid)
+  }
 
   useEffect(() => {
     const filter = [
@@ -85,13 +115,9 @@ export const SportBookComponents = ({
       "cricketcasino",
     ];
 
-    // const filteredData = data[0]
-
     const filteredData = data.filter(item =>
       filter.includes(item?.gtype?.toString().toLowerCase())
     );
-
-    // console.log("filter data ", filteredData);
 
     const fetchBetFancy = async () => {
       const result = {};
@@ -102,20 +128,6 @@ export const SportBookComponents = ({
           const runnerName = sec?.nat;
           if (runnerName) {
             try {
-              console.log("sendeddata ", {
-                runner_name: runnerName,
-                fs_id: user?.user_id,
-                match_id: id,
-                selection_id: item?.mid
-              });
-
-              console.log("sende data ", {
-                runner_name: runnerName,
-                fs_id: user?.user_id,
-                match_id: id,
-                selection_id: item?.mid
-              });
-
               const { data } = await axios.post("https://admin.titan97.live/Apicall/get_session_bet_info_api", {
                 runner_name: runnerName,
                 fs_id: user?.user_id,
@@ -133,7 +145,7 @@ export const SportBookComponents = ({
       await Promise.all(requests);
       setBettingData(result);
       setHasFetch(true);
-      console.log(result);
+      //(result);
 
     };
 
@@ -205,6 +217,7 @@ export const SportBookComponents = ({
     setSelecteModelData(data)
   }
 
+ 
 
 
   return (
@@ -388,7 +401,7 @@ export const SportBookComponents = ({
                                         dataIndex,
                                         sectionIndex,
                                         item,
-                                        item.odds[item.odds.length / 2 - 1]
+                                        item.odds[item.odds.length / 2 ]
                                           ?.odds,
                                         data.mname,
                                         data.gmid,
@@ -429,7 +442,7 @@ export const SportBookComponents = ({
                                         data.mname,
                                         data.gmid,
                                         data.mid,
-                                        item.odds[item.odds.length / 2]?.size
+                                        item.odds[item.odds.length / 2 - 1]?.size
                                       )
                                       : null
                                   }
@@ -543,7 +556,7 @@ export const SportBookComponents = ({
                                   </button>
                                   <button
                                     disabled={betLoading}
-                                    onClick={() => placeBat()}
+                                    onClick={() => handleBet(item?.nat, data?.mid)}
                                     className="w-1/2 py-2 text-center text-sm text-white rounded font-medium"
                                     style={{ backgroundColor: "#4a6da7" }}
                                   >
