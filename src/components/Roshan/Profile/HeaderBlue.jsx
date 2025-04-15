@@ -37,9 +37,8 @@ const HeaderBlue = () => {
   return (
     <div className="bg-gradient-to-b from-green-900 to-black text-white p-3 flex justify-between items-center shadow-md">
       {/* Left Side - Logo and Title */}
-      <div className="flex items-center shadow  bg-gradient-to-b from-green-700 to-black px-2 rounded">
+      <div onClick={() => navigate("/bets")} className="flex items-center shadow  bg-gradient-to-b from-green-700 to-black px-2 rounded">
         <div
-          onClick={() => navigate("/bets")}
           className=" p-2 rounded"
         >
           <BsCoin className="text-white text-lg" />

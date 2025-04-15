@@ -48,9 +48,21 @@ const MatchList = ({
   // Function to render match rows based on data structure
   const renderMatches = (matches) => {
     
-    const sortedMatch = matches.sort((a, b) => b.iplay - a.iplay);
-    matches = sortedMatch;
-    return matches.flatMap((match, index) => {
+    const sortedMatches = matches.sort((a, b) => {
+      // First: prioritize iplay
+      if (a.iplay !== b.iplay) {
+        return b.iplay - a.iplay; // true (1) should come before false (0)
+      }
+    
+      // Second: sort by stime if both have same iplay value
+      const dateA = new Date(a.section[0].stime);
+      const dateB = new Date(b.section[0].stime);
+    
+      return dateA - dateB; // For ascending order
+      // return dateB - dateA; // For descending order
+    });
+    
+    return sortedMatches.flatMap((match, index) => {
       // Check if match has children
       if (match.children && match.children.length > 0) {
         return match.children.map((childMatch, childIndex) => (
